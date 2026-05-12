@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, RefreshCw, Heart, Share2 } from "lucide-react";
+import { ArrowLeft, RefreshCw, Heart } from "lucide-react";
 import { calculateAll } from "@/lib/numerology";
 import { getReading } from "@/actions/getReading";
 import ResultCard from "@/components/results/ResultCard";
 import ReadingDisplay from "@/components/results/ReadingDisplay";
+import { Card, CardContent } from "@/components/ui/card";
+import ShareButton from "@/components/ui/ShareButton";
 import { tr } from "@/content/tr";
 
 interface PageProps {
@@ -30,33 +32,32 @@ export default async function SonucPage({ searchParams }: PageProps) {
   const birthDate = params.d;
   const fullName = params.n;
 
-  // Parametre eksikse hata göster
   if (!birthDate) {
     return (
-      <div className="max-w-2xl mx-auto text-center py-16">
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-8">
-          <h1 className="text-2xl font-bold text-red-700 dark:text-red-400 mb-4">
-            {tr.calculationErrorTitle}
-          </h1>
-          <p className="text-red-600 dark:text-red-300 mb-6">
-            {tr.calculationError}
-          </p>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            {tr.backToCalculator}
-          </Link>
-        </div>
+      <div className="max-w-lg mx-auto text-center py-16">
+        <Card className="border-destructive/30 bg-destructive/5">
+          <CardContent className="p-8">
+            <h1 className="text-xl font-semibold text-destructive mb-3">
+              {tr.calculationErrorTitle}
+            </h1>
+            <p className="text-[hsl(var(--muted-foreground))] mb-6 text-sm">
+              {tr.calculationError}
+            </p>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-700 hover:to-purple-800 text-white font-semibold px-5 py-2.5 rounded-lg transition-all text-sm"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              {tr.backToCalculator}
+            </Link>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
-  // Sayıları hesapla
   const calculations = calculateAll(birthDate, fullName);
 
-  // Gemini'den yorum al
   const readingResult = await getReading({
     birthDate,
     fullName,
@@ -66,83 +67,77 @@ export default async function SonucPage({ searchParams }: PageProps) {
 
   return (
     <div className="max-w-5xl mx-auto">
-      {/* Geri butonu */}
+      {/* Back button */}
       <div className="mb-6">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200 font-medium transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] font-medium transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           {tr.backToCalculator}
         </Link>
       </div>
 
-      {/* Sayfa başlığı */}
+      {/* Page title */}
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-indigo-700 dark:text-indigo-300">
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[hsl(var(--foreground))]">
           {tr.numerologyReadingTitle}
         </h1>
         {fullName && (
-          <p className="text-slate-500 dark:text-slate-400 mt-1">
-            {fullName} • {birthDate}
+          <p className="text-[hsl(var(--muted-foreground))] mt-1.5 text-sm">
+            {fullName} · {birthDate}
           </p>
         )}
       </div>
 
-      <div className="space-y-8">
-        {/* Sayı kartları */}
+      <div className="space-y-6">
+        {/* Number cards */}
         <ResultCard calculations={calculations} fullName={fullName} />
 
-        {/* AI Yorumu veya Hata */}
+        {/* AI Reading or error */}
         {readingResult.success && readingResult.data ? (
           <ReadingDisplay
             interpretation={readingResult.data.interpretation}
             model={readingResult.data.model}
           />
         ) : (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-red-700 dark:text-red-400 mb-2">
-              {tr.calculationErrorTitle}
-            </h2>
-            <p className="text-red-600 dark:text-red-300 text-sm">
-              {readingResult.error ?? tr.calculationError}
-            </p>
-          </div>
+          <Card className="border-destructive/30 bg-destructive/5">
+            <CardContent className="p-6">
+              <h2 className="text-base font-semibold text-destructive mb-1.5">
+                {tr.calculationErrorTitle}
+              </h2>
+              <p className="text-[hsl(var(--muted-foreground))] text-sm">
+                {readingResult.error ?? tr.calculationError}
+              </p>
+            </CardContent>
+          </Card>
         )}
 
-        {/* Hızlı İşlemler */}
-        <section className="bg-white dark:bg-slate-800 rounded-2xl shadow border border-indigo-100 dark:border-slate-700 p-6">
-          <h2 className="text-lg font-semibold text-slate-700 dark:text-slate-200 mb-4">
-            {tr.quickActions}
-          </h2>
-          <div className="grid sm:grid-cols-3 gap-3">
-            <Link
-              href="/uyumluluk"
-              className="flex items-center justify-center gap-2 p-3 bg-pink-50 dark:bg-pink-900/20 hover:bg-pink-100 dark:hover:bg-pink-900/40 border border-pink-200 dark:border-pink-800 rounded-xl text-pink-700 dark:text-pink-300 font-medium text-sm transition-colors"
-            >
-              <Heart className="w-4 h-4" />
-              {tr.checkCompatibility}
-            </Link>
-            <Link
-              href="/"
-              className="flex items-center justify-center gap-2 p-3 bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 border border-indigo-200 dark:border-indigo-800 rounded-xl text-indigo-700 dark:text-indigo-300 font-medium text-sm transition-colors"
-            >
-              <RefreshCw className="w-4 h-4" />
-              {tr.newCalculation}
-            </Link>
-            <button
-              onClick={() => {
-                if (typeof window !== "undefined") {
-                  navigator.clipboard.writeText(window.location.href);
-                }
-              }}
-              className="flex items-center justify-center gap-2 p-3 bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 border border-emerald-200 dark:border-emerald-800 rounded-xl text-emerald-700 dark:text-emerald-300 font-medium text-sm transition-colors"
-            >
-              <Share2 className="w-4 h-4" />
-              {tr.shareResult}
-            </button>
-          </div>
-        </section>
+        {/* Quick Actions */}
+        <Card className="border-[hsl(var(--border))] shadow-sm">
+          <CardContent className="p-5">
+            <h2 className="text-sm font-semibold text-[hsl(var(--foreground))] mb-4 uppercase tracking-widest text-[hsl(var(--muted-foreground))]">
+              {tr.quickActions}
+            </h2>
+            <div className="grid sm:grid-cols-3 gap-3">
+              <Link
+                href="/uyumluluk"
+                className="flex items-center justify-center gap-2 p-3 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))] hover:bg-pink-50 dark:hover:bg-pink-950/20 hover:border-pink-200 dark:hover:border-pink-800/60 text-[hsl(var(--foreground))] font-medium text-sm transition-all group"
+              >
+                <Heart className="w-4 h-4 text-pink-500 group-hover:scale-110 transition-transform" />
+                {tr.checkCompatibility}
+              </Link>
+              <Link
+                href="/"
+                className="flex items-center justify-center gap-2 p-3 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))] hover:bg-violet-50 dark:hover:bg-violet-950/20 hover:border-violet-200 dark:hover:border-violet-800/60 text-[hsl(var(--foreground))] font-medium text-sm transition-all group"
+              >
+                <RefreshCw className="w-4 h-4 text-violet-500 group-hover:rotate-180 transition-transform duration-300" />
+                {tr.newCalculation}
+              </Link>
+              <ShareButton label={tr.shareResult} />
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

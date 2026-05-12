@@ -1,0 +1,12 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        CORTEX_KEY: ${CORTEX_KEY}
+    ports:
+      - "3000:3000"
+    environment:
+      - CORTEX_KEY=${CORTEX_KEY}
+    restart: unless-stopped

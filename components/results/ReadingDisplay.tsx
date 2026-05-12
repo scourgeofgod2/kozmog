@@ -1,5 +1,7 @@
 import { tr } from "@/content/tr";
 import { Sparkles } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface ReadingDisplayProps {
   interpretation: string;
@@ -8,38 +10,36 @@ interface ReadingDisplayProps {
 
 export default function ReadingDisplay({ interpretation, model }: ReadingDisplayProps) {
   return (
-    <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-indigo-100 dark:border-slate-700 overflow-hidden">
-      {/* Başlık */}
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6">
-        <h2 className="text-2xl font-bold flex items-center gap-2">
-          <Sparkles className="w-6 h-6" />
-          {tr.yourPersonalReading}
-        </h2>
-        <p className="opacity-80 text-sm mt-1">{tr.aiGeneratedInsights}</p>
-      </div>
+    <Card className="overflow-hidden border-[hsl(var(--border))] shadow-lg shadow-violet-100/50 dark:shadow-violet-950/30">
+      <CardHeader className="p-0">
+        <div className="bg-gradient-to-br from-purple-600 via-violet-600 to-indigo-600 p-6 text-white">
+          <h2 className="text-xl font-semibold tracking-tight flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            {tr.yourPersonalReading}
+          </h2>
+          <p className="text-violet-200 text-sm mt-1">{tr.aiGeneratedInsights}</p>
+        </div>
+      </CardHeader>
 
-      {/* İçerik */}
-      <div className="p-6 md:p-8">
+      <CardContent className="p-6 md:p-8">
         <div
-          className="prose prose-indigo dark:prose-invert max-w-none
-            prose-h3:text-indigo-700 prose-h3:dark:text-indigo-300
-            prose-h4:text-purple-700 prose-h4:dark:text-purple-300
-            prose-strong:text-indigo-800 prose-strong:dark:text-indigo-200
-            prose-p:text-slate-700 prose-p:dark:text-slate-300
-            prose-li:text-slate-700 prose-li:dark:text-slate-300
-            prose-ul:my-3 prose-li:my-1"
+          className="prose dark:prose-invert max-w-none text-sm leading-relaxed"
           dangerouslySetInnerHTML={{ __html: interpretation }}
         />
-      </div>
 
-      {/* AI Model etiketi */}
-      {model && (
-        <div className="px-6 pb-4 flex justify-end">
-          <span className="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-full">
-            AI: {model}
-          </span>
-        </div>
-      )}
-    </section>
+        {model && (
+          <div className="mt-6 flex justify-end">
+            <Badge
+              variant="secondary"
+              className="text-xs text-[hsl(var(--muted-foreground))] bg-[hsl(var(--muted))] border-[hsl(var(--border))]"
+            >
+              AI: {model}
+            </Badge>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

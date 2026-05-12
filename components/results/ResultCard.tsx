@@ -1,4 +1,5 @@
 import NumberBadge from "@/components/ui/NumberBadge";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { tr } from "@/content/tr";
 import { isMasterNumber } from "@/lib/numerology";
 import type { NumerologyCalculations } from "@/types/numerology";
@@ -18,21 +19,25 @@ export default function ResultCard({ calculations, fullName }: ResultCardProps) 
     (soulUrge !== undefined && isMasterNumber(soulUrge));
 
   return (
-    <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-indigo-100 dark:border-slate-700 overflow-hidden">
-      <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-6">
-        <h2 className="text-2xl font-bold">{tr.yourCoreNumbers}</h2>
-        {fullName && <p className="opacity-80 mt-1 text-sm">{fullName}</p>}
-      </div>
+    <Card className="overflow-hidden border-[hsl(var(--border))] shadow-lg shadow-violet-100/50 dark:shadow-violet-950/30">
+      <CardHeader className="p-0">
+        <div className="bg-gradient-to-br from-violet-600 via-purple-600 to-purple-700 p-6 text-white">
+          <h2 className="text-xl font-semibold tracking-tight">{tr.yourCoreNumbers}</h2>
+          {fullName && (
+            <p className="text-violet-200 text-sm mt-0.5">{fullName}</p>
+          )}
+        </div>
+      </CardHeader>
 
-      <div className="p-6">
+      <CardContent className="p-5">
         {hasMaster && (
-          <div className="mb-6 flex items-start gap-3 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border border-yellow-200 dark:border-yellow-800">
-            <AlertTriangle className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+          <div className="mb-5 flex items-start gap-3 p-4 bg-amber-50 dark:bg-amber-950/20 rounded-xl border border-amber-200/70 dark:border-amber-800/40">
+            <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold text-yellow-800 dark:text-yellow-300 text-sm">
+              <p className="font-semibold text-amber-800 dark:text-amber-300 text-sm">
                 {tr.masterNumberDetected}
               </p>
-              <p className="text-yellow-700 dark:text-yellow-400 text-xs mt-0.5">
+              <p className="text-amber-700 dark:text-amber-500 text-xs mt-0.5 leading-relaxed">
                 Bu, yüksek ruhsal potansiyeli ve daha büyük yaşam zorluklarını gösterir.
               </p>
             </div>
@@ -53,7 +58,7 @@ export default function ResultCard({ calculations, fullName }: ResultCardProps) 
             <NumberBadge number={personalityNumber} label={tr.personalityNumber} subtitle={tr.howOthersSeeYou} />
           )}
         </div>
-      </div>
-    </section>
+      </CardContent>
+    </Card>
   );
 }

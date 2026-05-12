@@ -7,7 +7,7 @@ import { tr } from "@/content/tr";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-inter",
   display: "swap",
 });
@@ -22,14 +22,12 @@ export const metadata: Metadata = {
   authors: [{ name: "Kozmograf" }],
   creator: "Kozmograf",
   publisher: "Kozmograf",
-  metadataBase: new URL("https://kozmograf.com"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "tr_TR",
-    url: "https://kozmograf.com",
     siteName: "Kozmograf Numeroloji",
     title: tr.ogTitle,
     description: tr.ogDescription,
@@ -59,12 +57,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr" className={inter.variable}>
-      <body className="font-sans bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 min-h-screen">
-        <Header />
-        <main className="container mx-auto px-4 max-w-7xl py-8">
-          {children}
-        </main>
-        <Footer />
+      <body className="font-sans bg-[hsl(var(--background))] text-[hsl(var(--foreground))] min-h-screen antialiased">
+        <div className="relative min-h-screen">
+          {/* Subtle background gradient */}
+          <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,80,220,0.08),transparent)] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,80,220,0.15),transparent)]" />
+          <Header />
+          <main className="container mx-auto px-4 max-w-7xl py-10">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

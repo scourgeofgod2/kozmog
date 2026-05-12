@@ -1,9 +1,9 @@
 "use server";
 
-// AI Yorum Server Action
-// PHP result.php + numerology_api.php getNumerologyReading() fonksiyonunun karşılığı
+// AI Yorum Server Action — claude.gg API (OpenAI-compatible) kullanır
 
-import { getNumerologyReading } from "@/lib/gemini";
+import { callClaude } from "@/lib/claude";
+import { getSystemPrompt, buildUserQuery } from "@/lib/prompts";
 import type { NumerologyCalculations, ReadingFocus, ReadingResult } from "@/types/numerology";
 
 export interface GetReadingResult {
@@ -24,17 +24,43 @@ export async function getReading(params: {
     return { success: false, error: "Doğum tarihi eksik." };
   }
 
-  if (!process.env.GEMINI_API_KEY) {
-    return { success: false, error: "API yapılandırması eksik." };
+  if (!process.env.CORTEX_KEY) {
+    return { success: false, error: "API yapılandırması eksik. CORTEX_KEY ortam değişkeni ayarlanmamış." };
   }
 
   try {
-    const result = await getNumerologyReading({
+    const systemPrompt = getSystemPrompt(focus);
+    const userQuery = buildUserQuery({
       birthDate,
       fullName,
-      calculations,
-      focus,
+      lifePath: calculations.lifePath,
+      birthDay: calculations.birthDay,
+      personalYear: calculations.personalYear,
+      destinyNumber: calculations.destinyNumber,
+      soulUrge: calculations.soulUrge,
+      personalityNumber: calculations.personalityNumber,
     });
+
+    const rawText = await callClaude(systemPrompt, userQuery);
+
+    // Convert markdown to basic HTML
+    const interpretation = rawText
+      .replace(/^## (.+)$/gm, "<h3>$1</h3>")
+      .replace(/^### (.+)$/gm, "<h4>$1</h4>")
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*(.+?)\*/g, "<em>$1</em>")
+      .replace(/^- (.+)$/gm, "<li>$1</li>")
+      .replace(/(<li>.*<\/li>\n?)+/g, "<ul>$&</ul>")
+      .replace(/\n\n/g, "</p><p>")
+      .replace(/^(?!<[hul])(.+)$/gm, "<p>$1</p>")
+      .replace(/<p><\/p>/g, "");
+
+    const result: ReadingResult = {
+      calculations,
+      interpretation,
+      readingType: focus ?? "general",
+      model: "claude-sonnet-4-6",
+    };
 
     return { success: true, data: result };
   } catch (err) {
