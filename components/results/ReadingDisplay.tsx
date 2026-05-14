@@ -1,45 +1,31 @@
 import { tr } from "@/content/tr";
 import { Sparkles } from "lucide-react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 
 interface ReadingDisplayProps {
   interpretation: string;
   model?: string;
 }
 
-export default function ReadingDisplay({ interpretation, model }: ReadingDisplayProps) {
+export default function ReadingDisplay({ interpretation }: ReadingDisplayProps) {
   return (
-    <Card className="overflow-hidden border-[hsl(var(--border))] shadow-lg shadow-violet-100/50 dark:shadow-violet-950/30">
-      <CardHeader className="p-0">
-        <div className="bg-gradient-to-br from-purple-600 via-violet-600 to-indigo-600 p-6 text-white">
-          <h2 className="text-xl font-semibold tracking-tight flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center">
-              <Sparkles className="w-4 h-4" />
-            </div>
-            {tr.yourPersonalReading}
-          </h2>
-          <p className="text-violet-200 text-sm mt-1">{tr.aiGeneratedInsights}</p>
-        </div>
-      </CardHeader>
+    <div className="border-2 border-black bg-white overflow-hidden" style={{ boxShadow: "6px 6px 0px #000" }}>
+      {/* Header */}
+      <div className="bg-violet-600 text-white p-5 border-b-2 border-black">
+        <h2 className="text-xl font-black tracking-tight uppercase flex items-center gap-2">
+          <div className="w-8 h-8 bg-yellow-400 border-2 border-white flex items-center justify-center flex-shrink-0">
+            <Sparkles className="w-4 h-4 text-black" />
+          </div>
+          {tr.yourPersonalReading}
+        </h2>
+        <p className="text-violet-200 text-sm font-medium mt-1">{tr.aiGeneratedInsights}</p>
+      </div>
 
-      <CardContent className="p-6 md:p-8">
+      <div className="p-6 md:p-8">
         <div
-          className="prose dark:prose-invert max-w-none text-sm leading-relaxed"
+          className="prose max-w-none text-sm leading-relaxed"
           dangerouslySetInnerHTML={{ __html: interpretation }}
         />
-
-        {model && (
-          <div className="mt-6 flex justify-end">
-            <Badge
-              variant="secondary"
-              className="text-xs text-[hsl(var(--muted-foreground))] bg-[hsl(var(--muted))] border-[hsl(var(--border))]"
-            >
-              AI: {model}
-            </Badge>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

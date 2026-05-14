@@ -22,14 +22,15 @@ export default function ShareButton({ label }: ShareButtonProps) {
   return (
     <button
       onClick={handleCopy}
-      className="flex items-center justify-center gap-2 p-3 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))] hover:bg-emerald-50 dark:hover:bg-emerald-950/20 hover:border-emerald-200 dark:hover:border-emerald-800/60 text-[hsl(var(--foreground))] font-medium text-sm transition-all group cursor-pointer w-full"
+      className="flex items-center justify-center gap-2 p-3 border-2 border-black bg-emerald-400 font-black text-black text-sm uppercase tracking-wide hover:translate-x-[2px] hover:translate-y-[2px] transition-transform cursor-pointer w-full"
+      style={{ boxShadow: "3px 3px 0px #000" }}
     >
       {copied ? (
-        <Check className="w-4 h-4 text-emerald-500" />
+        <Check className="w-4 h-4" />
       ) : (
-        <Share2 className="w-4 h-4 text-emerald-500 group-hover:scale-110 transition-transform" />
+        <Share2 className="w-4 h-4" />
       )}
-      {copied ? "Kopyalandı!" : label}
+      {copied ? "✓ Kopyalandı!" : label}
     </button>
   );
 }

@@ -6,8 +6,8 @@ import Footer from "@/components/layout/Footer";
 import { tr } from "@/content/tr";
 
 const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-inter",
   display: "swap",
 });
@@ -56,11 +56,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr" className={inter.variable}>
+    <html lang="tr" className={inter.variable} suppressHydrationWarning>
       <body className="font-sans bg-[hsl(var(--background))] text-[hsl(var(--foreground))] min-h-screen antialiased">
         <div className="relative min-h-screen">
-          {/* Subtle background gradient */}
-          <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,80,220,0.08),transparent)] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,80,220,0.15),transparent)]" />
           <Header />
           <main className="container mx-auto px-4 max-w-7xl py-10">
             {children}

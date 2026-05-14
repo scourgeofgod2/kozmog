@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, X, Infinity, Sparkles } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
 import { tr } from "@/content/tr";
 import { cn } from "@/lib/utils";
 
@@ -23,26 +23,26 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[hsl(var(--border))] bg-[hsl(var(--background)/0.8)] backdrop-blur-md supports-[backdrop-filter]:bg-[hsl(var(--background)/0.6)]">
+    <header className="sticky top-0 z-40 w-full border-b-2 border-black bg-yellow-400">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-9 h-9 bg-gradient-to-br from-violet-500 to-purple-700 rounded-xl flex items-center justify-center shadow-md shadow-violet-200 dark:shadow-violet-900/40 group-hover:shadow-lg group-hover:shadow-violet-300 dark:group-hover:shadow-violet-800/50 transition-shadow">
-              <Infinity className="w-4.5 h-4.5 text-white" />
+            <div className="w-10 h-10 bg-black flex items-center justify-center border-2 border-black group-hover:bg-yellow-300 transition-colors">
+              <span className="text-yellow-400 font-black text-lg group-hover:text-black transition-colors">∞</span>
             </div>
             <div>
-              <span className="text-[15px] font-semibold text-[hsl(var(--foreground))] leading-tight block tracking-tight">
+              <span className="text-[16px] font-black text-black leading-tight block tracking-tight uppercase">
                 Kozmograf
               </span>
-              <span className="text-[10px] font-medium text-[hsl(var(--muted-foreground))] leading-none hidden sm:block uppercase tracking-widest">
+              <span className="text-[10px] font-bold text-black/70 leading-none hidden sm:block uppercase tracking-widest">
                 Numeroloji
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-0.5">
+          <nav className="hidden lg:flex items-center gap-0">
             {navLinks.map((link) => {
               const isActive =
                 link.href === "/"
@@ -53,10 +53,10 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+                    "px-3 py-2 text-sm font-bold uppercase tracking-wide border-b-2 transition-colors",
                     isActive
-                      ? "bg-[hsl(var(--accent))] text-[hsl(var(--accent-foreground))]"
-                      : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))]"
+                      ? "border-black bg-black text-yellow-400"
+                      : "border-transparent text-black hover:border-black hover:bg-black/5"
                   )}
                 >
                   {link.label}
@@ -69,13 +69,14 @@ export default function Header() {
           <div className="flex items-center gap-2">
             <Link
               href="/"
-              className="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-700 hover:to-purple-800 text-white text-sm font-semibold px-4 py-2 rounded-lg shadow-sm shadow-violet-300 dark:shadow-violet-900/50 transition-all hover:shadow-md hover:shadow-violet-300 dark:hover:shadow-violet-900/60 hover:-translate-y-px"
+              className="hidden sm:inline-flex items-center gap-1.5 bg-black text-yellow-400 text-sm font-black px-4 py-2 border-2 border-black uppercase tracking-wide hover:bg-yellow-300 hover:text-black transition-colors"
+              style={{ boxShadow: "2px 2px 0px rgba(0,0,0,0.3)" }}
             >
               <Sparkles className="w-3.5 h-3.5" />
               Hesapla
             </Link>
             <button
-              className="lg:hidden p-2 rounded-lg text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors"
+              className="lg:hidden p-2 border-2 border-black bg-black text-yellow-400 hover:bg-yellow-300 hover:text-black transition-colors"
               onClick={() => setMobileOpen((o) => !o)}
               aria-label="Menü"
             >
@@ -86,8 +87,8 @@ export default function Header() {
 
         {/* Mobile Nav */}
         {mobileOpen && (
-          <nav className="lg:hidden py-3 border-t border-[hsl(var(--border))]">
-            <div className="flex flex-col gap-0.5">
+          <nav className="lg:hidden py-3 border-t-2 border-black bg-yellow-400">
+            <div className="flex flex-col gap-0">
               {navLinks.map((link) => {
                 const isActive =
                   link.href === "/"
@@ -99,10 +100,10 @@ export default function Header() {
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
                     className={cn(
-                      "px-4 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                      "px-4 py-3 text-sm font-black uppercase tracking-wide border-b border-black/20 transition-colors",
                       isActive
-                        ? "bg-[hsl(var(--accent))] text-[hsl(var(--accent-foreground))]"
-                        : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))]"
+                        ? "bg-black text-yellow-400"
+                        : "text-black hover:bg-black/10"
                     )}
                   >
                     {link.label}
@@ -112,9 +113,9 @@ export default function Header() {
               <Link
                 href="/"
                 onClick={() => setMobileOpen(false)}
-                className="mx-4 mt-2 text-center bg-gradient-to-r from-violet-600 to-purple-700 text-white text-sm font-semibold px-4 py-2.5 rounded-lg shadow-sm"
+                className="mx-4 mt-3 text-center bg-black text-yellow-400 text-sm font-black px-4 py-3 border-2 border-black uppercase tracking-wide hover:bg-yellow-300 hover:text-black transition-colors"
               >
-                Ücretsiz Hesapla
+                ✦ Ücretsiz Hesapla
               </Link>
             </div>
           </nav>

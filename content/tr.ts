@@ -75,7 +75,7 @@ export const tr = {
   yourNumerologyReading: "Numeroloji Yorumunuz",
   yourCoreNumbers: "Temel Sayılarınız",
   yourPersonalReading: "Kişisel Numeroloji Yorumunuz",
-  aiGeneratedInsights: "Sayılarınıza dayalı AI destekli içgörüler",
+  aiGeneratedInsights: "Sayılarınıza dayalı kişisel içgörüler",
 
   // Sayı kartları
   lifePathNumber: "Yaşam Yolu Sayısı",

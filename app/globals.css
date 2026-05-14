@@ -1,53 +1,62 @@
 @import "tailwindcss";
 
 @theme {
-  --font-family-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 @layer base {
   :root {
-    --background: 0 0% 99%;
-    --foreground: 224 71% 4%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
+    /* NeoBrutal color palette */
+    --background: 45 60% 97%;        /* krem #FFFBF0 */
+    --foreground: 0 0% 5%;           /* neredeyse siyah */
+    --card: 0 0% 100%;               /* beyaz */
+    --card-foreground: 0 0% 5%;
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71% 4%;
-    --primary: 262 83% 58%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 9% 46%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 262 83% 97%;
-    --accent-foreground: 262 83% 38%;
-    --destructive: 0 84% 60%;
+    --popover-foreground: 0 0% 5%;
+    --primary: 48 100% 50%;          /* canlı sarı #FFD600 */
+    --primary-foreground: 0 0% 5%;   /* siyah metin */
+    --secondary: 45 40% 92%;         /* açık krem */
+    --secondary-foreground: 0 0% 5%;
+    --muted: 45 30% 90%;
+    --muted-foreground: 0 0% 35%;
+    --accent: 14 100% 57%;           /* koral/turuncu #FF5733 */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 85% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 262 83% 58%;
-    --radius: 0.75rem;
+    --border: 0 0% 0%;               /* siyah border */
+    --input: 0 0% 0%;
+    --ring: 48 100% 50%;
+    --radius: 0rem;                  /* NeoBrutal = köşeli */
+
+    /* NeoBrutal accent colors */
+    --neo-yellow: #FFD600;
+    --neo-coral: #FF5733;
+    --neo-violet: #7C3AED;
+    --neo-mint: #10B981;
+    --neo-pink: #EC4899;
+    --neo-sky: #0EA5E9;
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
-    --card: 224 71% 6%;
-    --card-foreground: 213 31% 91%;
-    --popover: 224 71% 6%;
-    --popover-foreground: 213 31% 91%;
-    --primary: 263 70% 65%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 222 47% 11%;
-    --secondary-foreground: 215 20% 65%;
-    --muted: 222 47% 11%;
-    --muted-foreground: 215 20% 55%;
-    --accent: 262 30% 18%;
-    --accent-foreground: 263 70% 75%;
-    --destructive: 0 63% 40%;
+    --background: 0 0% 8%;
+    --foreground: 45 60% 95%;
+    --card: 0 0% 12%;
+    --card-foreground: 45 60% 95%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 45 60% 95%;
+    --primary: 48 100% 50%;
+    --primary-foreground: 0 0% 5%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 45 60% 90%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 14 100% 57%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 70% 45%;
     --destructive-foreground: 0 0% 100%;
-    --border: 222 47% 14%;
-    --input: 222 47% 14%;
-    --ring: 263 70% 65%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 48 100% 50%;
   }
 }
 
@@ -58,46 +67,91 @@
   body {
     background: hsl(var(--background));
     color: hsl(var(--foreground));
-    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Smooth transitions */
+/* NeoBrutal offset shadow utilities */
+.neo-shadow {
+  box-shadow: 4px 4px 0px #000;
+}
+.neo-shadow-sm {
+  box-shadow: 3px 3px 0px #000;
+}
+.neo-shadow-lg {
+  box-shadow: 6px 6px 0px #000;
+}
+.neo-shadow-yellow {
+  box-shadow: 4px 4px 0px #FFD600;
+}
+.neo-shadow-violet {
+  box-shadow: 4px 4px 0px #7C3AED;
+}
+
+/* NeoBrutal hover effect */
+.neo-hover:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000;
+}
+.neo-hover-sm:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px #000;
+}
+
+/* Disable smooth transitions for neo brutalism feel */
 *, *::before, *::after {
-  transition-property: color, background-color, border-color, box-shadow;
-  transition-duration: 150ms;
+  transition-property: transform, box-shadow, background-color, color, border-color;
+  transition-duration: 80ms;
   transition-timing-function: ease;
 }
 
-/* Prose overrides for ReadingDisplay */
+/* Prose overrides for ReadingDisplay — NeoBrutal style */
 .prose h3 {
-  @apply text-xl font-bold mt-6 mb-3;
-  color: hsl(262 83% 48%);
+  @apply text-xl font-black mt-6 mb-3 uppercase tracking-tight;
+  color: hsl(0 0% 5%);
+  border-left: 4px solid #FFD600;
+  padding-left: 12px;
 }
 .dark .prose h3 {
-  color: hsl(263 70% 75%);
+  color: hsl(45 60% 95%);
+  border-left-color: #FFD600;
 }
 .prose h4 {
-  @apply text-lg font-semibold mt-4 mb-2;
-  color: hsl(262 60% 52%);
+  @apply text-base font-black mt-4 mb-2 uppercase tracking-tight;
+  color: hsl(0 0% 10%);
 }
 .dark .prose h4 {
-  color: hsl(263 60% 70%);
+  color: hsl(45 50% 90%);
 }
 .prose strong {
-  color: hsl(262 83% 38%);
+  font-weight: 900;
+  color: hsl(0 0% 5%);
 }
 .dark .prose strong {
-  color: hsl(263 70% 80%);
+  color: hsl(45 60% 95%);
 }
 .prose ul {
   @apply space-y-1 my-3 pl-4;
 }
 .prose li {
-  @apply text-slate-700 dark:text-slate-300;
+  color: #0a0a0a;
+  font-weight: 500;
+}
+.dark .prose li {
+  color: #f3f4f6;
+}
+.prose li::marker {
+  content: "▸ ";
+  color: #FFD600;
 }
 .prose p {
-  @apply mb-4 leading-relaxed text-slate-700 dark:text-slate-300;
+  margin-bottom: 1rem;
+  line-height: 1.7;
+  color: #0a0a0a;
+  font-weight: 500;
+}
+.dark .prose p {
+  color: #f3f4f6;
 }

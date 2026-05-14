@@ -43,7 +43,7 @@ export interface ClaudeResponse {
 const CORTEX_KEY = process.env.CORTEX_KEY ?? "";
 const CLAUDE_MODEL = "claude-sonnet-4-6";
 const CLAUDE_BASE_URL = "https://claude.gg/v1/chat/completions";
-const CLAUDE_TIMEOUT = 30000; // 30 seconds
+const CLAUDE_TIMEOUT = 90000; // 90 seconds
 
 /**
  * Validates that the CORTEX_KEY environment variable is configured
