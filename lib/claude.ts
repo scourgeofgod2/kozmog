@@ -1,113 +1,51 @@
-// Claude API client
-// Communicates with Claude API via claude.gg gateway using OpenAI-compatible format
+// Inworld Router AI client
+// OpenAI-compatible chat completions via https://api.inworld.ai/v1
 
-// ─── Type Definitions ─────────────────────────────────────────────────────
-
-export interface ClaudeClientConfig {
+export interface InworldClientConfig {
   apiKey: string;
   model: string;
   baseUrl: string;
   timeout: number;
 }
 
-export interface ClaudeMessage {
+export interface ChatMessage {
   role: "system" | "user" | "assistant";
   content: string;
 }
 
-export interface ClaudeRequest {
-  model: string;
-  messages: ClaudeMessage[];
-  temperature: number;
-  max_tokens: number;
-  stream?: boolean;
-}
-
-export interface ClaudeResponse {
-  id: string;
-  object: string;
-  created: number;
-  model: string;
-  choices: Array<{
-    index: number;
-    message: {
-      role: string;
-      content: string;
-    };
-    finish_reason: string;
-  }>;
-}
-
 // ─── Configuration ────────────────────────────────────────────────────────
 
-const CORTEX_KEY = process.env.CORTEX_KEY ?? "";
-const CLAUDE_MODEL = "claude-sonnet-4-6";
-const CLAUDE_BASE_URL = "https://claude.gg/v1/chat/completions";
-const CLAUDE_TIMEOUT = 90000; // 90 seconds
+const INWORLD_API_KEY = process.env.INWORLD_API_KEY ?? "";
+const INWORLD_MODEL = "gemini-3.1-flash-lite-preview";
+const INWORLD_BASE_URL = "https://api.inworld.ai/v1/chat/completions";
+const INWORLD_TIMEOUT = 60000;
 
-/**
- * Validates that the CORTEX_KEY environment variable is configured
- * @throws {Error} If CORTEX_KEY is missing or empty
- */
 function validateConfig(): void {
-  if (!CORTEX_KEY || CORTEX_KEY.trim().length === 0) {
+  if (!INWORLD_API_KEY || INWORLD_API_KEY.trim().length === 0) {
     throw new Error(
-      "CORTEX_KEY environment variable is not configured. Please set CORTEX_KEY in your .env.local file."
+      "INWORLD_API_KEY environment variable is not configured."
     );
   }
 }
 
-/**
- * Gets the Claude client configuration
- * @returns {ClaudeClientConfig} The configuration object
- * @throws {Error} If configuration is invalid
- */
-export function getClaudeConfig(): ClaudeClientConfig {
+export function getInworldConfig(): InworldClientConfig {
   validateConfig();
-  
   return {
-    apiKey: CORTEX_KEY,
-    model: CLAUDE_MODEL,
-    baseUrl: CLAUDE_BASE_URL,
-    timeout: CLAUDE_TIMEOUT,
+    apiKey: INWORLD_API_KEY,
+    model: INWORLD_MODEL,
+    baseUrl: INWORLD_BASE_URL,
+    timeout: INWORLD_TIMEOUT,
   };
 }
 
-// ─── API Client Functions ─────────────────────────────────────────────────
+// ─── Non-streaming call ───────────────────────────────────────────────────
 
-/**
- * Calls Claude API with the given prompts
- * @param systemPrompt - The system prompt to set context
- * @param userQuery - The user's query
- * @param options - Optional configuration (stream mode, etc.)
- * @returns The generated text response
- * @throws {Error} If the API call fails or returns invalid data
- */
-export async function callClaude(
+export async function callInworld(
   systemPrompt: string,
-  userQuery: string,
-  options?: { stream?: boolean }
+  userQuery: string
 ): Promise<string> {
   validateConfig();
-
-  const config = getClaudeConfig();
-  
-  const requestBody: ClaudeRequest = {
-    model: config.model,
-    messages: [
-      {
-        role: "system",
-        content: systemPrompt,
-      },
-      {
-        role: "user",
-        content: userQuery,
-      },
-    ],
-    temperature: 0.7,
-    max_tokens: 8000,
-    stream: options?.stream ?? false,
-  };
+  const config = getInworldConfig();
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), config.timeout);
@@ -117,164 +55,128 @@ export async function callClaude(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${config.apiKey}`,
+        Authorization: `Basic ${config.apiKey}`,
       },
-      body: JSON.stringify(requestBody),
+      body: JSON.stringify({
+        model: config.model,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userQuery },
+        ],
+        temperature: 0.7,
+        max_tokens: 4096,
+        stream: false,
+      }),
       signal: controller.signal,
     });
 
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      const errorMessage =
-        errorData?.error?.message ?? `HTTP ${response.status}`;
-      throw new Error(`Claude API error: ${errorMessage}`);
+      const err = await response.json().catch(() => ({}));
+      throw new Error(`Inworld API error: ${err?.error?.message ?? `HTTP ${response.status}`}`);
     }
 
-    const data: ClaudeResponse = await response.json();
-    
-    // Extract the message content from the response
-    const text = data?.choices?.[0]?.message?.content ?? "";
+    const data = await response.json();
+    const text: string = data?.choices?.[0]?.message?.content ?? "";
 
-    if (!text || text.trim().length === 0) {
-      throw new Error("Claude API returned empty response.");
+    if (!text.trim()) {
+      throw new Error("Inworld API returned empty response.");
     }
 
     return text;
   } catch (err) {
     clearTimeout(timeoutId);
-    
     if (err instanceof Error) {
-      // Handle abort/timeout errors
       if (err.name === "AbortError") {
-        throw new Error(
-          `Claude API request timed out after ${config.timeout / 1000} seconds.`
-        );
+        throw new Error(`Inworld API request timed out after ${config.timeout / 1000} seconds.`);
       }
       throw err;
     }
-    
-    throw new Error("Unknown error occurred while calling Claude API.");
+    throw new Error("Unknown error while calling Inworld API.");
   }
 }
 
-/**
- * Calls Claude API with streaming support
- * @param systemPrompt - The system prompt to set context
- * @param userQuery - The user's query
- * @param onChunk - Callback function called for each chunk of text
- * @returns The complete generated text
- * @throws {Error} If the API call fails or returns invalid data
- */
-export async function callClaudeStream(
+// ─── Streaming call (returns a ReadableStream of text chunks) ─────────────
+
+export async function callInworldStream(
   systemPrompt: string,
-  userQuery: string,
-  onChunk: (text: string) => void
-): Promise<string> {
+  userQuery: string
+): Promise<ReadableStream<string>> {
   validateConfig();
+  const config = getInworldConfig();
 
-  const config = getClaudeConfig();
-  
-  const requestBody: ClaudeRequest = {
-    model: config.model,
-    messages: [
-      {
-        role: "system",
-        content: systemPrompt,
-      },
-      {
-        role: "user",
-        content: userQuery,
-      },
-    ],
-    temperature: 0.7,
-    max_tokens: 8000,
-    stream: true,
-  };
+  const response = await fetch(config.baseUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Basic ${config.apiKey}`,
+    },
+    body: JSON.stringify({
+      model: config.model,
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userQuery },
+      ],
+      temperature: 0.7,
+      max_tokens: 4096,
+      stream: true,
+    }),
+  });
 
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), config.timeout);
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(`Inworld API error: ${err?.error?.message ?? `HTTP ${response.status}`}`);
+  }
 
-  try {
-    const response = await fetch(config.baseUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${config.apiKey}`,
-      },
-      body: JSON.stringify(requestBody),
-      signal: controller.signal,
-    });
+  if (!response.body) {
+    throw new Error("Inworld API response body is null.");
+  }
 
-    clearTimeout(timeoutId);
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      const errorMessage =
-        errorData?.error?.message ?? `HTTP ${response.status}`;
-      throw new Error(`Claude API error: ${errorMessage}`);
-    }
+  return new ReadableStream<string>({
+    async pull(controller) {
+      while (true) {
+        const { done, value } = await reader.read();
 
-    if (!response.body) {
-      throw new Error("Claude API response body is null.");
-    }
+        if (done) {
+          controller.close();
+          return;
+        }
 
-    // Process the streaming response
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
-    let fullText = "";
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split("\n");
 
-    while (true) {
-      const { done, value } = await reader.read();
-      
-      if (done) break;
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed.startsWith("data: ")) continue;
 
-      const chunk = decoder.decode(value, { stream: true });
-      const lines = chunk.split("\n").filter((line) => line.trim() !== "");
-
-      for (const line of lines) {
-        if (line.startsWith("data: ")) {
-          const data = line.slice(6);
-          
+          const data = trimmed.slice(6);
           if (data === "[DONE]") {
-            continue;
+            controller.close();
+            return;
           }
 
           try {
             const parsed = JSON.parse(data);
-            const content = parsed?.choices?.[0]?.delta?.content ?? "";
-            
+            const content: string = parsed?.choices?.[0]?.delta?.content ?? "";
             if (content) {
-              fullText += content;
-              onChunk(content);
+              controller.enqueue(content);
             }
           } catch {
-            // Skip invalid JSON lines
-            continue;
+            // skip malformed SSE lines
           }
         }
       }
-    }
-
-    if (!fullText || fullText.trim().length === 0) {
-      throw new Error("Claude API returned empty streaming response.");
-    }
-
-    return fullText;
-  } catch (err) {
-    clearTimeout(timeoutId);
-    
-    if (err instanceof Error) {
-      // Handle abort/timeout errors
-      if (err.name === "AbortError") {
-        throw new Error(
-          `Claude API streaming request timed out after ${config.timeout / 1000} seconds.`
-        );
-      }
-      throw err;
-    }
-    
-    throw new Error("Unknown error occurred while streaming from Claude API.");
-  }
+    },
+    cancel() {
+      reader.cancel();
+    },
+  });
 }
+
+// ─── Legacy exports (kept for any existing callClaude references) ─────────
+
+export const callClaude = callInworld;

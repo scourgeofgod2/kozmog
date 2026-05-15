@@ -1,14 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { tr } from "@/content/tr";
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-inter",
+  variable: "--font-dm-sans",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -56,7 +64,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr" className={inter.variable} suppressHydrationWarning>
+    <html lang="tr" className={`${dmSans.variable} ${playfair.variable}`} suppressHydrationWarning>
       <body className="font-sans bg-[hsl(var(--background))] text-[hsl(var(--foreground))] min-h-screen antialiased">
         <div className="relative min-h-screen">
           <Header />

@@ -2,6 +2,7 @@ import NumberBadge from "@/components/ui/NumberBadge";
 import { tr } from "@/content/tr";
 import { isMasterNumber } from "@/lib/numerology";
 import type { NumerologyCalculations } from "@/types/numerology";
+import { Zap } from "lucide-react";
 
 interface ResultCardProps {
   calculations: NumerologyCalculations;
@@ -17,27 +18,36 @@ export default function ResultCard({ calculations, fullName }: ResultCardProps) 
     (soulUrge !== undefined && isMasterNumber(soulUrge));
 
   return (
-    <div className="border-2 border-black bg-white overflow-hidden" style={{ boxShadow: "6px 6px 0px #000" }}>
+    <div className="border-2 border-black bg-white overflow-hidden" style={{ boxShadow: "7px 7px 0px #000" }}>
       {/* Header */}
-      <div className="bg-black text-white p-5 border-b-2 border-black">
-        <h2 className="text-xl font-black tracking-tight uppercase">{tr.yourCoreNumbers}</h2>
-        {fullName && (
-          <p className="text-white/60 text-sm font-medium mt-0.5">{fullName}</p>
-        )}
+      <div className="bg-[#0a0a0a] text-white p-5 border-b-2 border-black">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-black tracking-tight uppercase">{tr.yourCoreNumbers}</h2>
+            {fullName && (
+              <p className="text-white/50 text-[11px] font-medium mt-0.5 uppercase tracking-[0.12em]">{fullName}</p>
+            )}
+          </div>
+          <div className="flex gap-1">
+            {["bg-[#FFCB00]", "bg-[#FF4F1F]", "bg-[#6D28D9]"].map((bg, i) => (
+              <div key={i} className={`w-3 h-3 border border-white/20 ${bg}`} />
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="p-5">
         {hasMaster && (
           <div
-            className="mb-5 flex items-start gap-3 p-4 bg-yellow-400 border-2 border-black"
+            className="mb-5 flex items-start gap-3 p-4 bg-[#FFCB00] border-2 border-black"
             style={{ boxShadow: "3px 3px 0px #000" }}
           >
-            <span className="text-black text-lg font-black flex-shrink-0">⚡</span>
+            <Zap className="w-5 h-5 text-black flex-shrink-0 mt-0.5" />
             <div>
               <p className="font-black text-black text-sm uppercase tracking-wide">
                 {tr.masterNumberDetected}
               </p>
-              <p className="text-black/70 text-xs mt-0.5 leading-relaxed font-medium">
+              <p className="text-black/60 text-xs mt-0.5 leading-relaxed font-medium">
                 Bu, yüksek ruhsal potansiyeli ve daha büyük yaşam zorluklarını gösterir.
               </p>
             </div>

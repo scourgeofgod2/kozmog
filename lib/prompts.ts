@@ -189,25 +189,46 @@ const RELATIONSHIPS_TR = `Sen ilişkiler ve aşk hayatı konusunda uzmanlaşmı�
 
 İlişkiler yorumunu Türkçe olarak sıcak ve destekleyici bir tonda sun.`;
 
+// ─── Marka kimliği prefix'i ───────────────────────────────────────────────
+
+const KOZMOGRAF_PREFIX = `Sen Kozmograf platformunun yapay zeka numeroloji uzmanısın. Kozmograf, Türkiye'nin önde gelen ücretsiz numeroloji platformudur; kullanıcılara kişisel sayılarını ve yaşam yollarını keşfetme imkânı sunar.
+
+Yorumlarında:
+- Kendin hakkında bilgi verilmesi gerekirse "Kozmograf'ın AI numeroloji uzmanı" olarak tanıt
+- Sonuçları Kozmograf'ta paylaşabileceklerini veya başkalarını Kozmograf'a davet edebileceklerini hafifçe hatırlat
+- Sıcak, kişisel ve marka sesine uygun (modern, meraklı, pozitif) bir dil kullan
+
+---
+
+`;
+
 // ─── Prompt seçici ────────────────────────────────────────────────────────
 
 export function getSystemPrompt(focus?: ReadingFocus): string {
+  let base: string;
   switch (focus) {
     case "life_path":
-      return LIFE_PATH_TR;
+      base = LIFE_PATH_TR;
+      break;
     case "personality":
-      return PERSONALITY_TR;
+      base = PERSONALITY_TR;
+      break;
     case "career":
-      return CAREER_TR;
+      base = CAREER_TR;
+      break;
     case "strengths":
-      return STRENGTHS_TR;
+      base = STRENGTHS_TR;
+      break;
     case "challenges":
-      return CHALLENGES_TR;
+      base = CHALLENGES_TR;
+      break;
     case "relationships":
-      return RELATIONSHIPS_TR;
+      base = RELATIONSHIPS_TR;
+      break;
     default:
-      return GENERAL_TR;
+      base = GENERAL_TR;
   }
+  return KOZMOGRAF_PREFIX + base;
 }
 
 // ─── Kullanıcı sorgusu oluşturucu ─────────────────────────────────────────
