@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { DM_Sans, Playfair_Display } from "next/font/google";
+import { DM_Sans, Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { SunThemeProvider } from "@/components/providers/SunThemeProvider";
+import SunTimeDebugger from "@/components/dev/SunTimeDebugger";
+import SunArc from "@/components/ui/SunArc";
 import { tr } from "@/content/tr";
 
 const dmSans = DM_Sans({
@@ -12,15 +15,23 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
   display: "swap",
 });
 
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://kozmograf.com"),
   title: {
     default: tr.seoTitle,
     template: `%s | Kozmograf Numeroloji`,
@@ -31,11 +42,12 @@ export const metadata: Metadata = {
   creator: "Kozmograf",
   publisher: "Kozmograf",
   alternates: {
-    canonical: "/",
+    canonical: "https://kozmograf.com",
   },
   openGraph: {
     type: "website",
     locale: "tr_TR",
+    url: "https://kozmograf.com",
     siteName: "Kozmograf Numeroloji",
     title: tr.ogTitle,
     description: tr.ogDescription,
@@ -64,15 +76,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr" className={`${dmSans.variable} ${playfair.variable}`} suppressHydrationWarning>
-      <body className="font-sans bg-[hsl(var(--background))] text-[hsl(var(--foreground))] min-h-screen antialiased">
-        <div className="relative min-h-screen">
-          <Header />
-          <main className="container mx-auto px-4 max-w-7xl py-10">
-            {children}
-          </main>
-          <Footer />
-        </div>
+    <html lang="tr" className={`${dmSans.variable} ${cormorant.variable} ${inter.variable}`} suppressHydrationWarning>
+      <body className="font-sans min-h-screen antialiased">
+        <SunThemeProvider>
+          <div className="relative min-h-screen">
+            <Header />
+            <SunArc />
+            <div className="flex justify-center pb-6 -mt-2">
+              <img
+                src="/logo1.png"
+                alt="Kozmograf"
+                style={{ height: 110, width: "auto", opacity: 0.92 }}
+                draggable={false}
+              />
+            </div>
+            <main className="container mx-auto px-4 max-w-7xl py-10">
+              {children}
+            </main>
+            <Footer />
+          </div>
+          <SunTimeDebugger />
+        </SunThemeProvider>
       </body>
     </html>
   );

@@ -7,64 +7,120 @@ interface NumberBadgeProps {
   size?: "sm" | "md" | "lg";
 }
 
-const COLORS = [
-  { bg: "bg-[#FFCB00]", text: "text-black", border: "border-black" },
-  { bg: "bg-blue-400", text: "text-black", border: "border-black" },
-  { bg: "bg-[#FF4F1F]", text: "text-white", border: "border-black" },
-  { bg: "bg-emerald-400", text: "text-black", border: "border-black" },
-  { bg: "bg-[#6D28D9]", text: "text-white", border: "border-black" },
-  { bg: "bg-pink-400", text: "text-black", border: "border-black" },
-  { bg: "bg-orange-400", text: "text-black", border: "border-black" },
-  { bg: "bg-cyan-400", text: "text-black", border: "border-black" },
-  { bg: "bg-lime-400", text: "text-black", border: "border-black" },
+const KOZ_ACCENTS = [
+  { hex: "#F5C842", dim: "rgba(245,200,66,0.12)", border: "rgba(245,200,66,0.3)", text: "#080810" },
+  { hex: "#7C3AED", dim: "rgba(124,58,237,0.12)", border: "rgba(124,58,237,0.3)", text: "#fff" },
+  { hex: "#C4B5FD", dim: "rgba(196,181,253,0.10)", border: "rgba(196,181,253,0.25)", text: "#080810" },
+  { hex: "#F5C842", dim: "rgba(245,200,66,0.08)", border: "rgba(245,200,66,0.2)", text: "#080810" },
+  { hex: "#9B59F5", dim: "rgba(155,89,245,0.12)", border: "rgba(155,89,245,0.3)", text: "#fff" },
+  { hex: "#EAE6FF", dim: "rgba(234,230,255,0.08)", border: "rgba(234,230,255,0.2)", text: "#080810" },
+  { hex: "#A8882B", dim: "rgba(168,136,43,0.12)", border: "rgba(168,136,43,0.25)", text: "#fff" },
+  { hex: "#7C3AED", dim: "rgba(124,58,237,0.08)", border: "rgba(124,58,237,0.2)", text: "#fff" },
+  { hex: "#F5C842", dim: "rgba(245,200,66,0.10)", border: "rgba(245,200,66,0.25)", text: "#080810" },
 ];
 
-function getColor(num: number) {
-  return COLORS[(num - 1) % COLORS.length] ?? COLORS[0];
+function getAccent(num: number) {
+  return KOZ_ACCENTS[(num - 1) % KOZ_ACCENTS.length] ?? KOZ_ACCENTS[0];
 }
 
 export default function NumberBadge({
   number,
   label,
   subtitle,
-  size = "md",
 }: NumberBadgeProps) {
-  const color = getColor(number);
+  const accent = getAccent(number);
   const master = isMasterNumber(number);
-
-  const sizeMap = {
-    sm: { badge: "w-12 h-12 text-xl", card: "p-3" },
-    md: { badge: "w-14 h-14 text-2xl", card: "p-4" },
-    lg: { badge: "w-18 h-18 text-4xl", card: "p-5" },
-  };
-
-  const s = sizeMap[size];
 
   return (
     <div
-      className={`bg-white border-2 border-black ${s.card} flex items-center gap-4 neo-hover`}
-      style={{ boxShadow: master ? "4px 4px 0px #FFCB00" : "4px 4px 0px #000" }}
+      style={{
+        background: "var(--koz-card)",
+        border: master
+          ? "1px solid rgba(245,200,66,0.4)"
+          : "1px solid var(--koz-border)",
+        padding: "16px",
+        display: "flex",
+        alignItems: "center",
+        gap: "16px",
+        transition: "border-color 200ms ease, background 200ms ease",
+        position: "relative",
+        overflow: "hidden",
+      }}
     >
+      {master && (
+        <div style={{
+          position: "absolute",
+          top: 0, left: 0, right: 0,
+          height: "1px",
+          background: "linear-gradient(90deg, transparent, var(--koz-gold) 50%, transparent)",
+        }} />
+      )}
+
       <div
-        className={`${s.badge} ${color.bg} ${color.border} border-2 flex items-center justify-center font-black flex-shrink-0 ${color.text} tracking-tight font-display`}
+        style={{
+          width: "52px",
+          height: "52px",
+          background: accent.dim,
+          border: `1px solid ${accent.border}`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0,
+          position: "relative",
+        }}
       >
-        {number}
+        <span style={{
+          fontFamily: '"Cormorant Garamond", Georgia, serif',
+          fontSize: number >= 10 ? "1.4rem" : "1.75rem",
+          fontWeight: 700,
+          color: accent.hex,
+          lineHeight: 1,
+          letterSpacing: "-0.02em",
+        }}>
+          {number}
+        </span>
       </div>
 
-      <div className="min-w-0">
-        <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.18em] truncate">
+      <div style={{ minWidth: 0, flex: 1 }}>
+        <p style={{
+          fontSize: "9px",
+          fontWeight: 700,
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          color: "var(--koz-text-muted)",
+          margin: 0,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          fontFamily: "var(--font-inter), sans-serif",
+        }}>
           {label}
         </p>
         {subtitle && (
-          <p className="text-sm text-black mt-0.5 font-bold leading-tight">
+          <p style={{
+            fontFamily: "var(--font-inter), sans-serif",
+            fontSize: "0.75rem",
+            fontWeight: 400,
+            color: "var(--koz-text)",
+            margin: "3px 0 0",
+            lineHeight: 1.4,
+          }}>
             {subtitle}
           </p>
         )}
         {master && (
-          <span
-            className="inline-block mt-2 text-[9px] bg-[#FFCB00] text-black border-2 border-black px-2 py-0.5 font-black uppercase tracking-widest"
-            style={{ boxShadow: "1px 1px 0px #000" }}
-          >
+          <span style={{
+            display: "inline-block",
+            marginTop: "6px",
+            fontSize: "8px",
+            fontWeight: 700,
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            color: "var(--koz-void)",
+            background: "var(--koz-gold)",
+            padding: "2px 6px",
+            fontFamily: "var(--font-inter), sans-serif",
+          }}>
             ✦ Usta Sayı
           </span>
         )}

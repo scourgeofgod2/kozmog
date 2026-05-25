@@ -9,14 +9,14 @@ export const tr = {
   siteDomain: "kozmograf.com",
 
   // ===== SEO Meta =====
-  seoTitle: "Ücretsiz Numeroloji Hesaplayıcı — Yaşam Yolu Sayınızı Keşfedin | Kozmograf",
+  seoTitle: "Ücretsiz Numeroloji Analizi — Doğum Tarihi ile Yaşam Yolu Sayısı | Kozmograf",
   seoDescription:
-    "Ücretsiz numeroloji hesaplayıcı ile yaşam yolu sayınızı, kader sayınızı ve kişilik sayınızı anında öğrenin. Türkçe AI destekli numeroloji yorumu.",
+    "Doğum tarihi numeroloji hesaplama ile yaşam yolu sayınızı, kader sayınızı ve kişisel numeroloji analizinizi anında ücretsiz öğrenin. AI destekli Türkçe numeroloji analizi yap.",
   seoKeywords:
-    "numeroloji, numeroloji hesaplama, yaşam yolu sayısı, kader sayısı, nümeroloji, isim numeroloji, numeroloji hesapla",
-  ogTitle: "Kozmograf — Ücretsiz Numeroloji Hesaplayıcı",
+    "numeroloji, numeroloji hesaplama, doğum tarihi numeroloji, numeroloji analizi yap, yaşam yolu sayısı, kader sayısı, isim numeroloji, numeroloji hesapla, dogum tarihi numeroloji hesaplama",
+  ogTitle: "Kozmograf — Ücretsiz Numeroloji Analizi Yap",
   ogDescription:
-    "Doğum tarihinizi girin, sayılarınızı anında keşfedin. AI destekli Türkçe numeroloji yorumu.",
+    "Doğum tarihinizi girin, anında ücretsiz numeroloji analizi alın. AI destekli Türkçe numeroloji yorumu ile yaşam yolunuzu keşfedin.",
 
   // ===== Navigasyon =====
   navHome: "Ana Sayfa",

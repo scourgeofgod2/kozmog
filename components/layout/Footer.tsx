@@ -3,19 +3,19 @@ import { tr } from "@/content/tr";
 
 const quickLinks = [
   { href: "/", label: tr.navHome },
-  { href: "/hakkimizda", label: tr.navAbout },
-  { href: "/yorumlar", label: tr.navReadings },
+  { href: "/sayilarin-anlami", label: "Sayıların Anlamı" },
+  { href: "/yasam-yolu", label: "Yaşam Yolu" },
   { href: "/uyumluluk", label: tr.navCompatibility },
-  { href: "/blog", label: tr.navBlog },
+  { href: "/kariyer-numerolojisi", label: "Kariyer Rehberi" },
+  { href: "/gucler-ve-yetenekler", label: "Güçler & Yetenekler" },
+  { href: "/isim-numeroloji", label: "İsim Numerolojisi" },
 ];
 
 const numberLinks = [
-  { href: "/sayilar", label: tr.allNumbersTitle },
-  { href: "/sayilar/11", label: "11 Sayısının Anlamı" },
-  { href: "/sayilar/22", label: "22 Sayısının Anlamı" },
-  { href: "/sayilar/33", label: "33 Sayısının Anlamı" },
-  { href: "/saat-anlami", label: "Saat Anlamları" },
+  { href: "/usta-sayilar", label: "Usta Sayılar 11·22·33" },
+  { href: "/saat-anlami", label: "Saatlerin Anlamı" },
   { href: "/isim-numeroloji", label: "İsim Numerolojisi" },
+  { href: "/sayilarin-anlami", label: "1'den 9'a Sayılar" },
 ];
 
 const supportLinks = [
@@ -29,73 +29,149 @@ const supportLinks = [
 const marqueeItems = [
   "Yaşam Yolu", "Kader Sayısı", "Ruh Arzusu", "Usta Sayılar",
   "Uyumluluk", "Kişisel Yıl", "İsim Numerolojisi", "Doğum Günü",
+  "Melek Sayıları", "Karmik Borç", "Ruh Sayısı", "Numeroloji",
 ];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0a0a0a] text-white mt-20 border-t-4 border-[#FFCB00]">
+    <footer style={{ background: "var(--koz-void)", borderTop: "1px solid var(--koz-border)" }}>
+
+      {/* Gold rule gradient */}
+      <div className="koz-rule" />
+
       {/* Marquee band */}
-      <div className="bg-[#FFCB00] border-b-2 border-black overflow-hidden py-2.5">
+      <div
+        className="overflow-hidden py-3"
+        style={{ borderBottom: "1px solid var(--koz-border)", background: "var(--koz-deep)" }}
+      >
         <div className="marquee-track flex gap-0 whitespace-nowrap">
           {[...marqueeItems, ...marqueeItems].map((item, i) => (
-            <span key={i} className="inline-flex items-center gap-4 px-6 text-black font-black text-xs uppercase tracking-widest">
+            <span
+              key={i}
+              className="inline-flex items-center gap-4 px-6"
+              style={{
+                fontSize: "9px",
+                fontWeight: 700,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "var(--koz-text-muted)",
+              }}
+            >
               {item}
-              <span className="text-black/40">✦</span>
+              <span style={{ color: "var(--koz-gold)", opacity: 0.4 }}>✦</span>
             </span>
           ))}
         </div>
       </div>
 
-      <div className="container mx-auto px-4 max-w-7xl py-14">
-        <div className="grid md:grid-cols-4 gap-10">
-          {/* Brand */}
+      {/* Main footer body */}
+      <div className="container mx-auto px-4 max-w-7xl py-16">
+        <div className="grid md:grid-cols-4 gap-12">
+
+          {/* Brand col */}
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-6 group w-fit">
               <div
-                className="w-10 h-10 bg-[#FFCB00] border-2 border-[#FFCB00] flex items-center justify-center group-hover:bg-white transition-colors"
-                style={{ boxShadow: "3px 3px 0px rgba(255,203,0,0.3)" }}
+                className="relative w-10 h-10 flex items-center justify-center"
+                style={{
+                  border: "1px solid rgba(245,200,66,0.3)",
+                  borderRadius: "50%",
+                  background: "linear-gradient(135deg, #1E1040, #080810)",
+                }}
               >
-                <span className="text-black font-black text-xl font-display">∞</span>
+                <span
+                  className="font-display text-[#F5C842] text-2xl leading-none select-none"
+                  style={{ fontWeight: 400 }}
+                >
+                  ∞
+                </span>
               </div>
               <div>
-                <span className="text-[16px] font-black leading-tight block tracking-tight uppercase text-white">
+                <span
+                  className="text-[15px] font-black leading-tight block text-[#EAE6FF] uppercase"
+                  style={{ letterSpacing: "0.08em" }}
+                >
                   Kozmograf
                 </span>
-                <span className="text-[9px] font-bold text-white/40 leading-none uppercase tracking-[0.18em]">
+                <span
+                  className="text-[9px] font-medium leading-none uppercase text-[#7B7A9E]"
+                  style={{ letterSpacing: "0.22em" }}
+                >
                   Numeroloji
                 </span>
               </div>
             </Link>
 
-            <p className="text-white/50 text-sm mb-6 leading-relaxed font-medium max-w-[220px]">
+            <p
+              className="text-sm mb-8 leading-relaxed max-w-[220px]"
+              style={{ color: "var(--koz-text-muted)", fontWeight: 400 }}
+            >
               {tr.siteDescription}
             </p>
 
             <div
-              className="inline-block bg-[#FFCB00] border-2 border-[#FFCB00] px-3 py-1.5"
-              style={{ boxShadow: "3px 3px 0px rgba(255,203,0,0.2)" }}
+              className="inline-flex items-center gap-2 px-3 py-1.5"
+              style={{
+                border: "1px solid rgba(245,200,66,0.2)",
+                background: "rgba(245,200,66,0.04)",
+              }}
             >
-              <span className="text-black font-black text-xs uppercase tracking-widest">
-                ✦ Ücretsiz &amp; Reklamsız
+              <span style={{ color: "var(--koz-gold)", fontSize: "10px" }}>✦</span>
+              <span
+                style={{
+                  color: "var(--koz-gold)",
+                  fontSize: "9px",
+                  fontWeight: 700,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                }}
+              >
+                Ücretsiz &amp; Reklamsız
               </span>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-xs font-black uppercase tracking-[0.18em] text-[#FFCB00] mb-5 pb-2 border-b border-[#FFCB00]/20">
+            <h4
+              style={{
+                fontSize: "9px",
+                fontWeight: 700,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "var(--koz-gold)",
+                marginBottom: "1.25rem",
+                paddingBottom: "0.75rem",
+                borderBottom: "1px solid rgba(245,200,66,0.12)",
+              }}
+            >
               {tr.quickLinks}
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-white/50 hover:text-[#FFCB00] text-sm font-medium transition-colors flex items-center gap-2 group"
+                    className="group flex items-center gap-2"
+                    style={{
+                      color: "var(--koz-text-muted)",
+                      fontSize: "13px",
+                      fontWeight: 400,
+                      transition: "color 160ms ease",
+                    }}
                   >
-                    <span className="text-[#FFCB00]/40 group-hover:text-[#FFCB00] transition-colors">→</span>
+                    <span
+                      style={{
+                        color: "var(--koz-gold)",
+                        opacity: 0.3,
+                        fontSize: "10px",
+                        transition: "opacity 160ms ease",
+                      }}
+                    >
+                      →
+                    </span>
                     {link.label}
                   </Link>
                 </li>
@@ -103,19 +179,44 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Numbers */}
+          {/* Number Links */}
           <div>
-            <h4 className="text-xs font-black uppercase tracking-[0.18em] text-[#FFCB00] mb-5 pb-2 border-b border-[#FFCB00]/20">
+            <h4
+              style={{
+                fontSize: "9px",
+                fontWeight: 700,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "var(--koz-gold)",
+                marginBottom: "1.25rem",
+                paddingBottom: "0.75rem",
+                borderBottom: "1px solid rgba(245,200,66,0.12)",
+              }}
+            >
               {tr.navNumbers}
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {numberLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-white/50 hover:text-[#FFCB00] text-sm font-medium transition-colors flex items-center gap-2 group"
+                    className="group flex items-center gap-2"
+                    style={{
+                      color: "var(--koz-text-muted)",
+                      fontSize: "13px",
+                      fontWeight: 400,
+                      transition: "color 160ms ease",
+                    }}
                   >
-                    <span className="text-[#FFCB00]/40 group-hover:text-[#FFCB00] transition-colors">→</span>
+                    <span
+                      style={{
+                        color: "var(--koz-gold)",
+                        opacity: 0.3,
+                        fontSize: "10px",
+                      }}
+                    >
+                      →
+                    </span>
                     {link.label}
                   </Link>
                 </li>
@@ -125,17 +226,42 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <h4 className="text-xs font-black uppercase tracking-[0.18em] text-[#FFCB00] mb-5 pb-2 border-b border-[#FFCB00]/20">
+            <h4
+              style={{
+                fontSize: "9px",
+                fontWeight: 700,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "var(--koz-gold)",
+                marginBottom: "1.25rem",
+                paddingBottom: "0.75rem",
+                borderBottom: "1px solid rgba(245,200,66,0.12)",
+              }}
+            >
               {tr.contactSupport}
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {supportLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-white/50 hover:text-[#FFCB00] text-sm font-medium transition-colors flex items-center gap-2 group"
+                    className="group flex items-center gap-2"
+                    style={{
+                      color: "var(--koz-text-muted)",
+                      fontSize: "13px",
+                      fontWeight: 400,
+                      transition: "color 160ms ease",
+                    }}
                   >
-                    <span className="text-[#FFCB00]/40 group-hover:text-[#FFCB00] transition-colors">→</span>
+                    <span
+                      style={{
+                        color: "var(--koz-gold)",
+                        opacity: 0.3,
+                        fontSize: "10px",
+                      }}
+                    >
+                      →
+                    </span>
                     {link.label}
                   </Link>
                 </li>
@@ -145,16 +271,57 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/8 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/30">
-          <p className="font-bold uppercase tracking-wide">© {currentYear} Kozmograf. Tüm hakları saklıdır.</p>
-          <p className="text-center italic text-white/20">
-            Numeroloji yorumları yalnızca eğlence ve kişisel keşif amaçlıdır.
+        <div
+          className="flex flex-col md:flex-row items-center justify-between gap-3 mt-16 pt-8"
+          style={{ borderTop: "1px solid var(--koz-border)" }}
+        >
+          <p
+            style={{
+              color: "var(--koz-text-faint)",
+              fontSize: "11px",
+              fontWeight: 600,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+            }}
+          >
+            © {currentYear} Kozmograf. Tüm hakları saklıdır.
+          </p>
+          <p
+            className="text-center italic"
+            style={{
+              color: "var(--koz-text-faint)",
+              fontSize: "11px",
+              fontFamily: "Cormorant Garamond, Georgia, serif",
+              fontWeight: 400,
+            }}
+          >
+            Numeroloji yorumları yalnızca kişisel keşif amaçlıdır.
           </p>
           <div className="flex gap-5">
-            <Link href="/gizlilik" className="hover:text-[#FFCB00] font-bold uppercase tracking-wide transition-colors">
+            <Link
+              href="/gizlilik"
+              style={{
+                color: "var(--koz-text-faint)",
+                fontSize: "11px",
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                transition: "color 160ms ease",
+              }}
+            >
               Gizlilik
             </Link>
-            <Link href="/kullanim-sartlari" className="hover:text-[#FFCB00] font-bold uppercase tracking-wide transition-colors">
+            <Link
+              href="/kullanim-sartlari"
+              style={{
+                color: "var(--koz-text-faint)",
+                fontSize: "11px",
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                transition: "color 160ms ease",
+              }}
+            >
               Şartlar
             </Link>
           </div>

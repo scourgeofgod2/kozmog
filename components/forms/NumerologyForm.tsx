@@ -2,13 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Calculator, User, Calendar, Eraser, Sparkles } from "lucide-react";
+import { Calendar, User, Sparkles, X } from "lucide-react";
 import { tr } from "@/content/tr";
 import { calculateNumerology } from "@/actions/calculate";
 import LoadingOverlay from "@/components/ui/LoadingOverlay";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function NumerologyForm() {
   const router = useRouter();
@@ -16,6 +13,7 @@ export default function NumerologyForm() {
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -64,105 +62,304 @@ export default function NumerologyForm() {
   }
 
   return (
-    <>
+    <span>
       <LoadingOverlay visible={loading} />
 
-      <div className="border-2 border-black bg-white" style={{ boxShadow: "6px 6px 0px #000" }}>
-        {/* Header */}
-        <div className="bg-black text-white p-5 border-b-2 border-black">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-yellow-400 border-2 border-yellow-400 flex items-center justify-center flex-shrink-0">
-              <Calculator className="w-5 h-5 text-black" />
-            </div>
-            <div>
-              <h2 className="text-xl font-black tracking-tight uppercase">{tr.calculateNumbers}</h2>
-              <p className="text-white/60 text-sm font-medium mt-0.5">{tr.calculateNumbersSubtitle}</p>
-            </div>
-          </div>
+      <style>{`
+        .koz-form-input {
+          width: 100%;
+          background: rgba(8, 8, 16, 0.6);
+          border: none;
+          border-bottom: 1px solid var(--koz-border-bright);
+          color: var(--koz-text);
+          font-family: var(--font-dm-sans), "DM Sans", sans-serif;
+          font-size: 1rem;
+          font-weight: 400;
+          padding: 12px 0;
+          outline: none;
+          transition: border-color 200ms ease;
+          caret-color: var(--koz-gold);
+          appearance: none;
+          -webkit-appearance: none;
+          border-radius: 0;
+        }
+        .koz-form-input:focus {
+          border-bottom-color: var(--koz-gold);
+        }
+        .koz-form-input::placeholder {
+          color: var(--koz-text-faint);
+        }
+        .koz-form-input[type="date"]::-webkit-calendar-picker-indicator {
+          filter: invert(0.4) sepia(1) saturate(3) hue-rotate(5deg);
+          cursor: pointer;
+          opacity: 0.6;
+        }
+        .koz-form-input[type="date"]::-webkit-calendar-picker-indicator:hover {
+          opacity: 1;
+        }
+        .koz-submit-btn {
+          position: relative;
+          overflow: hidden;
+        }
+        .koz-submit-btn::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+          transform: translateX(-100%);
+          transition: transform 500ms ease;
+        }
+        .koz-submit-btn:hover::after {
+          transform: translateX(100%);
+        }
+        .koz-field-label-line {
+          width: 0;
+          height: 1px;
+          background: var(--koz-gold);
+          transition: width 300ms ease;
+        }
+        .koz-field-label-line.active {
+          width: 100%;
+        }
+      `}</style>
+
+      <div style={{
+        background: "var(--koz-card)",
+        border: "1px solid var(--koz-border)",
+        position: "relative",
+        overflow: "hidden",
+      }}>
+        <div style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "1px",
+          background: "linear-gradient(90deg, transparent, var(--koz-gold) 40%, var(--koz-violet) 70%, transparent)",
+        }} />
+
+        <div style={{
+          position: "absolute",
+          top: "-80px",
+          right: "-80px",
+          width: "200px",
+          height: "200px",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
+
+        <div style={{ padding: "28px 28px 0" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <span style={{
+              width: "32px",
+              height: "32px",
+              border: "1px solid var(--koz-gold)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--koz-gold)" strokeWidth="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </span>
+            <span>
+              <p style={{
+                fontFamily: '"Cormorant Garamond", Georgia, serif',
+                fontSize: "1.2rem",
+                fontWeight: 600,
+                fontStyle: "italic",
+                color: "var(--koz-text)",
+                margin: 0,
+                letterSpacing: "0.01em",
+              }}>{tr.calculateNumbers}</p>
+              <p style={{
+                fontSize: "10px",
+                fontWeight: 700,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "var(--koz-text-faint)",
+                margin: "2px 0 0",
+              }}>{tr.calculateNumbersSubtitle}</p>
+            </span>
+          </span>
         </div>
 
-        <div className="p-6">
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Doğum Tarihi */}
-            <div className="space-y-2">
-              <Label
-                htmlFor="birthDate"
-                className="flex items-center gap-1.5 text-sm font-black text-black uppercase tracking-wide"
-              >
-                <Calendar className="w-3.5 h-3.5" />
-                {tr.birthDateLabel}
-              </Label>
-              <Input
-                type="date"
-                id="birthDate"
-                name="birthDate"
-                required
-                max={today}
-                value={birthDate}
-                onChange={(e) => setBirthDate(e.target.value)}
-              />
-            </div>
+        <div style={{ padding: "24px 28px 28px" }}>
+          <form onSubmit={handleSubmit}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
 
-            {/* Tam Ad */}
-            <div className="space-y-2">
-              <Label
-                htmlFor="fullName"
-                className="flex items-center gap-1.5 text-sm font-black text-black uppercase tracking-wide"
-              >
-                <User className="w-3.5 h-3.5" />
-                {tr.fullNameLabel}
-                <span className="text-xs font-medium text-gray-500 ml-1 normal-case">
-                  ({tr.optional})
+              <div>
+                <span style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "8px" }}>
+                  <Calendar style={{ width: "11px", height: "11px", color: "var(--koz-gold)", flexShrink: 0 }} />
+                  <label
+                    htmlFor="birthDate"
+                    style={{
+                      fontSize: "9px",
+                      fontWeight: 700,
+                      letterSpacing: "0.2em",
+                      textTransform: "uppercase",
+                      color: focusedField === "birthDate" ? "var(--koz-gold)" : "var(--koz-text-muted)",
+                      transition: "color 200ms ease",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {tr.birthDateLabel}
+                  </label>
                 </span>
-              </Label>
-              <Input
-                type="text"
-                id="fullName"
-                name="fullName"
-                maxLength={100}
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder={tr.fullNamePlaceholder}
-              />
-            </div>
-
-            {/* Hata mesajı */}
-            {error && (
-              <div className="p-3 border-2 border-red-500 bg-red-50 text-red-700 text-sm font-bold flex items-start gap-2" style={{ boxShadow: "2px 2px 0px #ef4444" }}>
-                <span>⚠</span>
-                <span>{error}</span>
+                <input
+                  type="date"
+                  id="birthDate"
+                  name="birthDate"
+                  required
+                  max={today}
+                  value={birthDate}
+                  onChange={(e) => setBirthDate(e.target.value)}
+                  onFocus={() => setFocusedField("birthDate")}
+                  onBlur={() => setFocusedField(null)}
+                  className="koz-form-input"
+                />
               </div>
-            )}
 
-            {/* Butonlar */}
-            <div className="flex gap-3 pt-1">
-              <Button
-                type="submit"
-                disabled={loading}
-                className="flex-1 h-11 bg-yellow-400 text-black font-black border-2 border-black uppercase tracking-wide hover:bg-yellow-300 disabled:opacity-50"
-                style={{ boxShadow: "4px 4px 0px #000" }}
-              >
-                <Sparkles className="w-4 h-4 mr-2" />
-                {tr.calculateButton}
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleClear}
-                className="h-11 px-4 font-black border-2 border-black bg-white text-black uppercase tracking-wide hover:bg-gray-100"
-                style={{ boxShadow: "4px 4px 0px #000" }}
-              >
-                <Eraser className="w-4 h-4 mr-1.5" />
-                {tr.clearButton}
-              </Button>
+              <div>
+                <span style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "8px" }}>
+                  <User style={{ width: "11px", height: "11px", color: "var(--koz-text-faint)", flexShrink: 0 }} />
+                  <label
+                    htmlFor="fullName"
+                    style={{
+                      fontSize: "9px",
+                      fontWeight: 700,
+                      letterSpacing: "0.2em",
+                      textTransform: "uppercase",
+                      color: focusedField === "fullName" ? "var(--koz-gold)" : "var(--koz-text-muted)",
+                      transition: "color 200ms ease",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {tr.fullNameLabel}
+                    <span style={{ marginLeft: "6px", fontSize: "8px", letterSpacing: "0.1em", opacity: 0.5, fontWeight: 500, textTransform: "none" }}>
+                      ({tr.optional})
+                    </span>
+                  </label>
+                </span>
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  maxLength={100}
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  onFocus={() => setFocusedField("fullName")}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder={tr.fullNamePlaceholder}
+                  className="koz-form-input"
+                />
+              </div>
+
+              {error && (
+                <div style={{
+                  padding: "12px 14px",
+                  background: "rgba(239,68,68,0.06)",
+                  border: "1px solid rgba(239,68,68,0.25)",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                }}>
+                  <span style={{ color: "#EF4444", fontSize: "12px", flexShrink: 0, marginTop: "1px" }}>⚠</span>
+                  <span style={{ color: "#F87171", fontSize: "13px", fontWeight: 500, lineHeight: 1.5 }}>{error}</span>
+                </div>
+              )}
+
+              <div style={{ display: "flex", gap: "10px", paddingTop: "4px" }}>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="koz-submit-btn"
+                  style={{
+                    flex: 1,
+                    height: "46px",
+                    background: "var(--koz-gold)",
+                    color: "var(--koz-void)",
+                    border: "none",
+                    fontFamily: 'var(--font-dm-sans), "DM Sans", sans-serif',
+                    fontWeight: 900,
+                    fontSize: "11px",
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    cursor: loading ? "not-allowed" : "pointer",
+                    opacity: loading ? 0.5 : 1,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    transition: "background 180ms ease, box-shadow 180ms ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!loading) {
+                      (e.currentTarget as HTMLButtonElement).style.background = "#FFD966";
+                      (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 32px rgba(245,200,66,0.2)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.background = "var(--koz-gold)";
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "none";
+                  }}
+                >
+                  <Sparkles style={{ width: "13px", height: "13px" }} />
+                  {tr.calculateButton}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  style={{
+                    height: "46px",
+                    paddingLeft: "16px",
+                    paddingRight: "16px",
+                    background: "transparent",
+                    color: "var(--koz-text-muted)",
+                    border: "1px solid var(--koz-border)",
+                    fontFamily: 'var(--font-dm-sans), "DM Sans", sans-serif',
+                    fontWeight: 700,
+                    fontSize: "11px",
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    transition: "border-color 180ms ease, color 180ms ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--koz-border-bright)";
+                    (e.currentTarget as HTMLButtonElement).style.color = "var(--koz-text)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--koz-border)";
+                    (e.currentTarget as HTMLButtonElement).style.color = "var(--koz-text-muted)";
+                  }}
+                >
+                  <X style={{ width: "12px", height: "12px" }} />
+                  {tr.clearButton}
+                </button>
+              </div>
+
+              <p style={{
+                fontSize: "10px",
+                color: "var(--koz-text-faint)",
+                textAlign: "right",
+                margin: 0,
+                letterSpacing: "0.04em",
+                lineHeight: 1.6,
+              }}>
+                ◦ {tr.numerologyPrinciplesNote}
+              </p>
             </div>
-
-            <p className="text-gray-500 text-xs text-right leading-relaxed font-medium">
-              ℹ {tr.numerologyPrinciplesNote}
-            </p>
           </form>
         </div>
       </div>
-    </>
+    </span>
   );
 }

@@ -32,20 +32,51 @@ export default async function SonucPage({ searchParams }: PageProps) {
 
   if (!birthDate) {
     return (
-      <div className="max-w-lg mx-auto text-center py-16">
-        <div className="border-2 border-red-500 bg-red-50 p-8" style={{ boxShadow: "4px 4px 0px #000" }}>
-          <h1 className="text-xl font-black text-red-700 mb-3 uppercase tracking-wide">
+      <div style={{ maxWidth: "480px", margin: "0 auto", textAlign: "center", padding: "64px 24px" }}>
+        <div style={{
+          background: "rgba(239,68,68,0.06)",
+          border: "1px solid rgba(239,68,68,0.25)",
+          padding: "32px",
+        }}>
+          <p style={{
+            fontSize: "9px",
+            fontWeight: 700,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: "#EF4444",
+            margin: "0 0 8px",
+            fontFamily: "var(--font-inter), sans-serif",
+          }}>
             {tr.calculationErrorTitle}
-          </h1>
-          <p className="text-red-600 mb-6 text-sm font-medium">
+          </p>
+          <p style={{
+            fontFamily: '"Cormorant Garamond", Georgia, serif',
+            fontSize: "1rem",
+            fontStyle: "italic",
+            color: "var(--koz-text-muted)",
+            margin: "0 0 24px",
+            lineHeight: 1.6,
+          }}>
             {tr.calculationError}
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 bg-[#FFCB00] border-2 border-black font-black px-5 py-2.5 text-black text-sm uppercase tracking-wide neo-hover"
-            style={{ boxShadow: "3px 3px 0px #000" }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              background: "var(--koz-gold)",
+              color: "var(--koz-void)",
+              fontWeight: 900,
+              fontSize: "10px",
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
+              padding: "10px 20px",
+              textDecoration: "none",
+              fontFamily: "var(--font-inter), sans-serif",
+            }}
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft style={{ width: "12px", height: "12px" }} />
             {tr.backToCalculator}
           </Link>
         </div>
@@ -56,34 +87,73 @@ export default async function SonucPage({ searchParams }: PageProps) {
   const calculations = calculateAll(birthDate, fullName);
 
   return (
-    <div className="max-w-5xl mx-auto">
-      {/* Back button */}
-      <div className="mb-7">
+    <div style={{ maxWidth: "800px", margin: "0 auto", padding: "0 0 64px" }}>
+      <div style={{ marginBottom: "32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm font-bold text-black border-2 border-black bg-white px-3 py-1.5 uppercase tracking-wide hover:bg-[#FFCB00] transition-colors neo-hover"
-          style={{ boxShadow: "2px 2px 0px #000" }}
-        >
-          <ArrowLeft className="w-4 h-4" />
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            color: "var(--koz-text-muted)",
+            fontWeight: 700,
+            fontSize: "10px",
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            textDecoration: "none",
+            padding: "8px 14px",
+            border: "1px solid var(--koz-border)",
+            background: "transparent",
+            transition: "border-color 180ms ease, color 180ms ease",
+            fontFamily: "var(--font-inter), sans-serif",
+          }}
+          >
+          <ArrowLeft style={{ width: "11px", height: "11px" }} />
           {tr.backToCalculator}
         </Link>
-      </div>
 
-      {/* Page title */}
-      <div className="text-center mb-9">
-        <h1 className="font-display text-3xl md:text-4xl font-black tracking-tight text-black italic">
-          {tr.numerologyReadingTitle}
-        </h1>
         {fullName && (
-          <p className="text-gray-500 mt-2 text-sm font-medium">
-            <span className="font-black text-black">{fullName}</span>
-            <span className="mx-2 text-gray-300">·</span>
+          <p style={{
+            fontFamily: '"Cormorant Garamond", Georgia, serif',
+            fontSize: "0.875rem",
+            fontStyle: "italic",
+            color: "var(--koz-text-faint)",
+            margin: 0,
+          }}>
+            {fullName}
+            <span style={{ margin: "0 8px", opacity: 0.4 }}>·</span>
             {birthDate}
           </p>
         )}
       </div>
 
-      <div className="space-y-6">
+      <div style={{ marginBottom: "36px" }}>
+        <p style={{
+          fontSize: "9px",
+          fontWeight: 700,
+          letterSpacing: "0.24em",
+          textTransform: "uppercase",
+          color: "var(--koz-gold)",
+          margin: "0 0 8px",
+          fontFamily: "var(--font-inter), sans-serif",
+        }}>
+          Kozmograf Numeroloji
+        </p>
+        <h1 style={{
+          fontFamily: '"Cormorant Garamond", Georgia, serif',
+          fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+          fontWeight: 600,
+          fontStyle: "italic",
+          color: "var(--koz-text)",
+          margin: 0,
+          letterSpacing: "-0.01em",
+          lineHeight: 1.1,
+        }}>
+          {tr.numerologyReadingTitle}
+        </h1>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         <ResultCard calculations={calculations} fullName={fullName} />
 
         <AIStreamingReading
@@ -92,28 +162,85 @@ export default async function SonucPage({ searchParams }: PageProps) {
           calculations={calculations}
         />
 
-        {/* Quick Actions */}
-        <div className="border-2 border-black bg-white p-5" style={{ boxShadow: "5px 5px 0px #000" }}>
-          <p className="text-[10px] font-black text-gray-400 mb-4 uppercase tracking-[0.2em]">
+        <div style={{
+          background: "var(--koz-card)",
+          border: "1px solid var(--koz-border)",
+          padding: "20px 24px",
+          position: "relative",
+          overflow: "hidden",
+        }}>
+          <div style={{
+            position: "absolute",
+            top: 0, left: 0, right: 0,
+            height: "1px",
+            background: "linear-gradient(90deg, transparent, var(--koz-border-bright) 50%, transparent)",
+          }} />
+
+          <p style={{
+            fontSize: "9px",
+            fontWeight: 700,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: "var(--koz-text-faint)",
+            margin: "0 0 16px",
+            fontFamily: "var(--font-inter), sans-serif",
+          }}>
             {tr.quickActions}
           </p>
-          <div className="grid sm:grid-cols-3 gap-3">
+
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "8px",
+          }}>
             <Link
               href="/uyumluluk"
-              className="flex items-center justify-center gap-2 p-3 border-2 border-black bg-pink-50 font-bold text-black text-sm uppercase tracking-wide hover:bg-pink-200 neo-hover"
-              style={{ boxShadow: "3px 3px 0px #000" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                padding: "12px",
+                border: "1px solid var(--koz-border)",
+                background: "rgba(245,200,66,0.04)",
+                color: "var(--koz-text-muted)",
+                fontWeight: 700,
+                fontSize: "9px",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                transition: "border-color 180ms ease, color 180ms ease, background 180ms ease",
+                fontFamily: "var(--font-inter), sans-serif",
+              }}
             >
-              <Heart className="w-4 h-4" />
+              <Heart style={{ width: "11px", height: "11px", color: "var(--koz-gold)" }} />
               {tr.checkCompatibility}
             </Link>
+
             <Link
               href="/"
-              className="flex items-center justify-center gap-2 p-3 border-2 border-black bg-violet-50 font-bold text-black text-sm uppercase tracking-wide hover:bg-violet-200 neo-hover"
-              style={{ boxShadow: "3px 3px 0px #000" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                padding: "12px",
+                border: "1px solid var(--koz-border)",
+                background: "rgba(124,58,237,0.04)",
+                color: "var(--koz-text-muted)",
+                fontWeight: 700,
+                fontSize: "9px",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                transition: "border-color 180ms ease, color 180ms ease, background 180ms ease",
+                fontFamily: "var(--font-inter), sans-serif",
+              }}
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw style={{ width: "11px", height: "11px", color: "var(--koz-violet-bright)" }} />
               {tr.newCalculation}
             </Link>
+
             <ShareButton label={tr.shareResult} />
           </div>
         </div>

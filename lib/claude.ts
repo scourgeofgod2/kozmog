@@ -16,7 +16,7 @@ export interface ChatMessage {
 // ─── Configuration ────────────────────────────────────────────────────────
 
 const INWORLD_API_KEY = process.env.INWORLD_API_KEY ?? "";
-const INWORLD_MODEL = "gemini-3.1-flash-lite-preview";
+const INWORLD_MODEL = "deepinfra/deepseek-v4-flash";
 const INWORLD_BASE_URL = "https://api.inworld.ai/v1/chat/completions";
 const INWORLD_TIMEOUT = 60000;
 
@@ -66,6 +66,7 @@ export async function callInworld(
         temperature: 0.7,
         max_tokens: 4096,
         stream: false,
+        chat_template_kwargs: { enable_thinking: false },
       }),
       signal: controller.signal,
     });
@@ -121,6 +122,7 @@ export async function callInworldStream(
       temperature: 0.7,
       max_tokens: 4096,
       stream: true,
+      chat_template_kwargs: { enable_thinking: false },
     }),
   });
 
@@ -136,6 +138,38 @@ export async function callInworldStream(
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
 
+  let lineBuffer = "";
+  let thinkBuffer = "";
+  let insideThink = false;
+
+  function filterThinkTags(raw: string): string {
+    let result = "";
+    let text = thinkBuffer + raw;
+    thinkBuffer = "";
+
+    while (text.length > 0) {
+      if (insideThink) {
+        const closeIdx = text.indexOf("</think>");
+        if (closeIdx === -1) {
+          thinkBuffer = text;
+          break;
+        }
+        text = text.slice(closeIdx + 8);
+        insideThink = false;
+      } else {
+        const openIdx = text.indexOf("<think>");
+        if (openIdx === -1) {
+          result += text;
+          break;
+        }
+        result += text.slice(0, openIdx);
+        text = text.slice(openIdx + 7);
+        insideThink = true;
+      }
+    }
+    return result;
+  }
+
   return new ReadableStream<string>({
     async pull(controller) {
       while (true) {
@@ -147,7 +181,9 @@ export async function callInworldStream(
         }
 
         const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split("\n");
+        const combined = lineBuffer + chunk;
+        const lines = combined.split("\n");
+        lineBuffer = lines.pop() ?? "";
 
         for (const line of lines) {
           const trimmed = line.trim();
@@ -161,12 +197,16 @@ export async function callInworldStream(
 
           try {
             const parsed = JSON.parse(data);
-            const content: string = parsed?.choices?.[0]?.delta?.content ?? "";
-            if (content) {
-              controller.enqueue(content);
+            const delta = parsed?.choices?.[0]?.delta ?? {};
+            const raw: string = delta.content ?? "";
+            if (raw) {
+              const content = filterThinkTags(raw);
+              if (content) {
+                controller.enqueue(content);
+              }
             }
           } catch {
-            // skip malformed SSE lines
+            // incomplete line — will be retried in next chunk via lineBuffer
           }
         }
       }

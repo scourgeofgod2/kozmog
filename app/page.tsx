@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Route, Heart, Briefcase, Gem, Star, BookOpen, ArrowRight } from "lucide-react";
+import { Heart, Briefcase, Gem, Star, ArrowRight, Route, Sparkles } from "lucide-react";
 import NumerologyForm from "@/components/forms/NumerologyForm";
 import { tr } from "@/content/tr";
 
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: tr.seoTitle,
   description: tr.seoDescription,
   keywords: tr.seoKeywords,
-  alternates: { canonical: "/" },
+  alternates: { canonical: "https://kozmograf.com" },
 };
 
 const featureCards = [
@@ -16,48 +16,62 @@ const featureCards = [
     icon: <Route className="w-4 h-4" />,
     title: tr.quickLifePath,
     description: tr.discoverPurpose,
-    bg: "bg-blue-400",
-    accent: "#3B82F6",
+    accent: "#7C3AED",
   },
   {
     href: "/uyumluluk",
     icon: <Heart className="w-4 h-4" />,
     title: tr.loveCompatibility,
     description: tr.checkPartnerMatch,
-    bg: "bg-pink-400",
-    accent: "#EC4899",
+    accent: "#DB2777",
   },
   {
-    href: "/kariyer",
+    href: "/kariyer-numerolojisi",
     icon: <Briefcase className="w-4 h-4" />,
     title: tr.careerGuide,
     description: tr.findIdealCareer,
-    bg: "bg-violet-500",
-    accent: "#8B5CF6",
+    accent: "#F5C842",
   },
   {
-    href: "/gucler",
+    href: "/gucler-ve-yetenekler",
     icon: <Gem className="w-4 h-4" />,
     title: tr.strengthsTalents,
     description: tr.discoverHiddenTalents,
-    bg: "bg-orange-400",
-    accent: "#F97316",
-  },
-  {
-    href: "/yorumlar",
-    icon: <BookOpen className="w-4 h-4" />,
-    title: tr.detailedReadings,
-    description: tr.deepPersonalityInsights,
-    bg: "bg-emerald-400",
-    accent: "#10B981",
+    accent: "#059669",
   },
 ];
 
 const numberTypes = [
-  { icon: <Route className="w-4 h-4" />, bg: "bg-blue-400", desc: tr.lifePathDescription },
-  { icon: <Star className="w-4 h-4" />, bg: "bg-violet-500", desc: tr.destinyNumberDescription },
-  { icon: <Heart className="w-4 h-4" />, bg: "bg-pink-400", desc: tr.soulUrgeDescription },
-  { icon: <Gem className="w-4 h-4" />, bg: "bg-[#FFCB00]", desc: tr.masterNumbersDescription },
+  {
+    icon: <Route className="w-3.5 h-3.5" />,
+    label: "Yaşam Yolu",
+    desc: tr.lifePathDescription,
+    accent: "#7C3AED",
+  },
+  {
+    icon: <Star className="w-3.5 h-3.5" />,
+    label: "Kader Sayısı",
+    desc: tr.destinyNumberDescription,
+    accent: "#F5C842",
+  },
+  {
+    icon: <Heart className="w-3.5 h-3.5" />,
+    label: "Ruh Arzusu",
+    desc: tr.soulUrgeDescription,
+    accent: "#DB2777",
+  },
+  {
+    icon: <Gem className="w-3.5 h-3.5" />,
+    label: "Usta Sayılar",
+    desc: tr.masterNumbersDescription,
+    accent: "#059669",
+  },
+];
+
+const cosmicStats = [
+  { val: "100%", label: "Ücretsiz" },
+  { val: "6+", label: "Sayı Türü" },
+  { val: "AI", label: "Destekli" },
 ];
 
 const jsonLd = {
@@ -66,271 +80,982 @@ const jsonLd = {
     {
       "@type": "Organization",
       name: "Kozmograf Numeroloji",
+      url: "https://kozmograf.com",
       description: tr.siteDescription,
+      sameAs: ["https://kozmograf.com"],
     },
     {
       "@type": "WebSite",
       name: "Kozmograf Numeroloji",
+      url: "https://kozmograf.com",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: "https://kozmograf.com/?q={search_term_string}",
+        "query-input": "required name=search_term_string",
+      },
     },
     {
       "@type": "WebApplication",
       name: "Ücretsiz Numeroloji Hesaplayıcı",
+      url: "https://kozmograf.com",
       applicationCategory: "LifestyleApplication",
       operatingSystem: "Web Browser",
       offers: { "@type": "Offer", price: "0", priceCurrency: "TRY" },
+    },
+    {
+      "@type": "Article",
+      headline: "Numeroloji Nedir? Doğum Tarihi ile Ücretsiz Numeroloji Analizi Yap",
+      description:
+        "Numeroloji, sayıların mistik anlamlarını ve yaşamınızdaki etkilerini inceleyen kadim bir bilimdir. Doğum tarihi numeroloji hesaplama ile yaşam yolu sayınızı anında ücretsiz öğrenin.",
+      url: "https://kozmograf.com",
+      author: { "@type": "Organization", name: "Kozmograf", url: "https://kozmograf.com" },
+      publisher: {
+        "@type": "Organization",
+        name: "Kozmograf Numeroloji",
+        url: "https://kozmograf.com",
+      },
+      datePublished: "2024-01-01",
+      dateModified: "2026-05-24",
+      inLanguage: "tr",
+      about: {
+        "@type": "Thing",
+        name: "Numeroloji",
+        description:
+          "Sayıların mistik anlamlarını ve yaşam üzerindeki etkilerini inceleyen kadim bilim dalı",
+      },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Numeroloji nedir?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Numeroloji, sayıların mistik anlamlarını ve evrenle olan bağlantılarını inceleyen kadim bir bilim dalıdır. Doğum tarihiniz ve isminiz gibi kişisel verileri sayılara dönüştürerek kişiliğiniz, yaşam amacınız ve potansiyeliniz hakkında derin içgörüler sunar.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Yaşam yolu sayısı nasıl hesaplanır?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yaşam yolu sayısı doğum tarihinizin tüm rakamları toplanarak hesaplanır. Örneğin 15.03.1990 için: 1+5+0+3+1+9+9+0=28, ardından 2+8=10, son olarak 1+0=1. Yaşam yolu sayınız 1'dir. 11, 22 ve 33 usta sayılar olduğundan bu sayılara ulaşıldığında indirgeme yapılmaz.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Numeroloji analizi ücretsiz mi?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Evet, Kozmograf Numeroloji üzerindeki tüm analizler tamamen ücretsizdir. Doğum tarihinizi ve adınızı girerek yaşam yolu sayısı, kader sayısı, ruh arzusu sayısı ve usta sayı analizlerini anında ve ücretsiz alabilirsiniz.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Kader sayısı ve yaşam yolu sayısı aynı mı?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Hayır, bunlar farklı sayılardır. Yaşam yolu sayısı doğum tarihinizden hesaplanır ve hayatta izlemeniz gereken yolu gösterir. Kader sayısı ise adınızın harflerinden elde edilir ve potansiyelinizi ile kişiliğinizi yansıtır.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Usta sayılar (master numbers) nedir?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Usta sayılar 11, 22 ve 33'tür. Bu sayılar, diğer sayıların taşıdığı enerjinin iki katını barındırır ve daha yüksek bir ruhsal potansiyele işaret eder. Hesaplama sırasında bu sayılara ulaşıldığında tek basamağa indirgeme yapılmaz.",
+          },
+        },
+      ],
     },
   ],
 };
 
 export default function HomePage() {
   return (
-    <>
+    <div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Hero */}
-      <div className="text-center mb-12 fade-in-up">
+      {/* ──────────────────────────────────────────────────────────
+          CHAPTER 1 — HERO (deep void, radial glow from top)
+      ────────────────────────────────────────────────────────── */}
+      <section
+        className="relative overflow-hidden pb-20 pt-4"
+        style={{
+          background: "linear-gradient(180deg, rgba(124,58,237,0.08) 0%, transparent 60%)",
+        }}
+      >
+        {/* Decorative orbit rings */}
         <div
-          className="inline-flex items-center gap-2 bg-[#FFCB00] border-2 border-black px-4 py-1.5 mb-5"
-          style={{ boxShadow: "3px 3px 0px #000" }}
+          className="pointer-events-none absolute top-[-120px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] opacity-[0.07]"
+          aria-hidden="true"
         >
-          <span className="text-black font-black text-[11px] uppercase tracking-[0.2em]">
-            ✦ Ücretsiz Numeroloji Analizi
-          </span>
+          <div
+            className="absolute inset-0 rounded-full orbit-spin"
+            style={{ border: "1px solid #F5C842" }}
+          />
+          <div
+            className="absolute inset-[50px] rounded-full orbit-spin-reverse"
+            style={{ border: "1px solid #7C3AED" }}
+          />
+          <div
+            className="absolute inset-[110px] rounded-full orbit-spin-slow"
+            style={{ border: "1px solid #C4B5FD" }}
+          />
         </div>
 
-        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-black mb-5 leading-[1.05]">
-          <span className="italic text-[#6D28D9]">{tr.siteTagline.split(" ").slice(0, 2).join(" ")}</span>
-          {" "}
-          <span className="not-italic">{tr.siteTagline.split(" ").slice(2).join(" ")}</span>
-        </h1>
+        {/* Floating star particles */}
+        {[
+          { top: "18%", left: "8%", delay: "0s", size: 3 },
+          { top: "32%", left: "91%", delay: "1.2s", size: 2 },
+          { top: "55%", left: "5%", delay: "0.6s", size: 2 },
+          { top: "12%", left: "78%", delay: "1.8s", size: 3 },
+          { top: "72%", left: "88%", delay: "0.9s", size: 2 },
+        ].map((star, i) => (
+          <div
+            key={i}
+            className="pointer-events-none absolute star-float"
+            style={{
+              top: star.top,
+              left: star.left,
+              animationDelay: star.delay,
+            }}
+            aria-hidden="true"
+          >
+            <div
+              style={{
+                width: star.size + "px",
+                height: star.size + "px",
+                borderRadius: "50%",
+                background: "#F5C842",
+                boxShadow: `0 0 ${star.size * 3}px rgba(245,200,66,0.6)`,
+              }}
+            />
+          </div>
+        ))}
 
-        <p className="text-gray-600 max-w-xl mx-auto text-base md:text-lg leading-relaxed font-medium">
-          {tr.siteDescription}
-        </p>
-
-        {/* Stat row */}
-        <div className="flex items-center justify-center gap-6 mt-7 flex-wrap">
-          {[
-            { val: "100%", label: "Ücretsiz" },
-            { val: "6+", label: "Numeroloji Sayısı" },
-            { val: "AI", label: "Destekli Yorum" },
-          ].map((stat) => (
-            <div key={stat.label} className="flex items-center gap-2">
+        <div className="text-center fade-up relative z-10">
+          {/* Eyebrow badge */}
+          <div className="inline-flex items-center gap-2 mb-8 fade-up-d1">
+            <div
+              className="px-4 py-1.5 inline-flex items-center gap-2"
+              style={{
+                border: "1px solid rgba(245,200,66,0.25)",
+                background: "rgba(245,200,66,0.05)",
+              }}
+            >
+              <span style={{ color: "#F5C842", fontSize: "9px" }}>✦</span>
               <span
-                className="text-sm font-black text-black bg-[#FFCB00] border-2 border-black px-2.5 py-0.5"
-                style={{ boxShadow: "2px 2px 0px #000" }}
+                style={{
+                  color: "#F5C842",
+                  fontSize: "9px",
+                  fontWeight: 700,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                }}
               >
-                {stat.val}
+                Ücretsiz Numeroloji Analizi
               </span>
-              <span className="text-sm text-gray-500 font-medium">{stat.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 2 column layout */}
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Left: Form + SEO Article */}
-        <main id="numerology-form" className="w-full lg:w-2/3 space-y-8">
-          <NumerologyForm />
-
-          {/* SEO Article */}
-          <div className="border-2 border-black bg-white overflow-hidden" style={{ boxShadow: "7px 7px 0px #000" }}>
-            <div className="bg-[#0a0a0a] text-white p-6 border-b-2 border-black">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#FFCB00] border-2 border-[#FFCB00] flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Star className="w-6 h-6 text-black" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-black tracking-tight uppercase mb-1 font-display italic">
-                    {tr.seoArticleTitle}
-                  </h2>
-                  <div
-                    className="text-white/50 text-sm leading-relaxed font-medium"
-                    dangerouslySetInnerHTML={{ __html: tr.seoArticleIntro }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6 md:p-8 space-y-8">
-              {/* Numeroloji Nedir */}
-              <article>
-                <h3 className="text-base font-black text-black mb-3 flex items-center gap-2 uppercase tracking-tight">
-                  <span className="w-7 h-7 bg-[#FFCB00] border-2 border-black flex items-center justify-center flex-shrink-0">
-                    <Star className="w-3.5 h-3.5 text-black" />
-                  </span>
-                  {tr.whatIsNumerology}
-                </h3>
-                <div
-                  className="bg-yellow-50 p-4 border-l-4 border-[#FFCB00] border border-black/10 prose max-w-none text-sm"
-                  dangerouslySetInnerHTML={{ __html: tr.whatIsNumerologyContent }}
-                />
-              </article>
-
-              <div className="border-t-2 border-black/10" />
-
-              {/* Yaşam Yolu */}
-              <article>
-                <h3 className="text-base font-black text-black mb-3 flex items-center gap-2 uppercase tracking-tight">
-                  <span className="w-7 h-7 bg-blue-400 border-2 border-black flex items-center justify-center flex-shrink-0">
-                    <Route className="w-3.5 h-3.5 text-black" />
-                  </span>
-                  {tr.lifePathNumberGuide}
-                </h3>
-                <div
-                  className="bg-blue-50 p-4 border-l-4 border-blue-400 border border-black/10 prose max-w-none text-sm"
-                  dangerouslySetInnerHTML={{ __html: tr.lifePathNumberGuideContent }}
-                />
-              </article>
-
-              <div className="border-t-2 border-black/10" />
-
-              {/* Usta Sayılar */}
-              <article>
-                <h3 className="text-base font-black text-black mb-3 flex items-center gap-2 uppercase tracking-tight">
-                  <span className="w-7 h-7 bg-pink-400 border-2 border-black flex items-center justify-center flex-shrink-0">
-                    <Star className="w-3.5 h-3.5 text-black" />
-                  </span>
-                  {tr.masterNumbersSection}
-                </h3>
-                <div
-                  className="bg-pink-50 p-4 border-l-4 border-pink-400 border border-black/10 prose max-w-none text-sm"
-                  dangerouslySetInnerHTML={{ __html: tr.masterNumbersContent }}
-                />
-              </article>
-
-              <div className="border-t-2 border-black/10" />
-
-              {/* Uyumluluk */}
-              <article>
-                <h3 className="text-base font-black text-black mb-3 flex items-center gap-2 uppercase tracking-tight">
-                  <span className="w-7 h-7 bg-emerald-400 border-2 border-black flex items-center justify-center flex-shrink-0">
-                    <Heart className="w-3.5 h-3.5 text-black" />
-                  </span>
-                  {tr.numerologyCompatibilityGuide}
-                </h3>
-                <div
-                  className="bg-emerald-50 p-4 border-l-4 border-emerald-400 border border-black/10 prose max-w-none text-sm"
-                  dangerouslySetInnerHTML={{ __html: tr.numerologyCompatibilityContent }}
-                />
-              </article>
-
-              <div className="border-t-2 border-black/10" />
-
-              {/* 2 columns */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <article>
-                  <h3 className="text-sm font-black text-black mb-2 uppercase tracking-tight">{tr.birthdayNumerology}</h3>
-                  <div
-                    className="bg-sky-50 p-4 border-l-4 border-sky-400 border border-black/10 prose max-w-none text-sm"
-                    dangerouslySetInnerHTML={{ __html: tr.birthdayNumerologyContent }}
-                  />
-                </article>
-                <article>
-                  <h3 className="text-sm font-black text-black mb-2 uppercase tracking-tight">{tr.nameNumerology}</h3>
-                  <div
-                    className="bg-teal-50 p-4 border-l-4 border-teal-400 border border-black/10 prose max-w-none text-sm"
-                    dangerouslySetInnerHTML={{ __html: tr.nameNumerologyContent }}
-                  />
-                </article>
-              </div>
-
-              <div className="border-t-2 border-black/10" />
-
-              {/* Nasıl Hesaplanır */}
-              <article>
-                <h3 className="text-base font-black text-black mb-3 uppercase tracking-tight">{tr.howToCalculate}</h3>
-                <div
-                  className="bg-orange-50 p-4 border-l-4 border-orange-400 border border-black/10 prose max-w-none text-sm"
-                  dangerouslySetInnerHTML={{ __html: tr.howToCalculateContent }}
-                />
-              </article>
-
-              <div className="border-t-2 border-black/10" />
-
-              {/* Faydalar */}
-              <article>
-                <h3 className="text-base font-black text-black mb-3 uppercase tracking-tight">{tr.numerologyBenefits}</h3>
-                <div
-                  className="bg-violet-50 p-4 border-l-4 border-violet-400 border border-black/10 prose max-w-none text-sm"
-                  dangerouslySetInnerHTML={{ __html: tr.numerologyBenefitsContent }}
-                />
-              </article>
             </div>
           </div>
-        </main>
 
-        {/* Right: Sidebar */}
-        <aside className="w-full lg:w-1/3 space-y-5">
-          {/* Numeroloji Araçları */}
-          <div className="border-2 border-black bg-white overflow-hidden" style={{ boxShadow: "6px 6px 0px #000" }}>
-            <div className="bg-emerald-500 text-black p-4 border-b-2 border-black">
-              <h2 className="text-sm font-black uppercase tracking-[0.12em] text-white">{tr.numerologyTools}</h2>
-              <p className="text-white/70 text-xs mt-0.5 font-medium">{tr.exploreFeatures}</p>
-            </div>
-            <div className="p-3 space-y-2">
-              {featureCards.map((card) => (
-                <a
-                  key={card.href}
-                  href={card.href}
-                  className="flex items-center gap-3 p-3 border-2 border-black bg-white neo-hover group"
-                  style={{ boxShadow: "3px 3px 0px #000" }}
+          {/* Main headline */}
+          <h1
+            className="font-display fade-up-d2"
+            style={{
+              fontSize: "clamp(2.6rem, 7vw, 5.5rem)",
+              fontWeight: 400,
+              fontStyle: "italic",
+              lineHeight: 1.0,
+              letterSpacing: "-0.02em",
+              color: "#EAE6FF",
+              marginBottom: "0.3em",
+              textShadow: "0 0 80px rgba(124,58,237,0.3)",
+            }}
+          >
+            {tr.siteTagline.split(" ").slice(0, 2).join(" ")}
+          </h1>
+          <p
+            className="font-display fade-up-d3"
+            style={{
+              fontSize: "clamp(2.6rem, 7vw, 5.5rem)",
+              fontWeight: 600,
+              fontStyle: "normal",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              color: "#F5C842",
+              marginBottom: "1.5rem",
+              textShadow: "0 0 60px rgba(245,200,66,0.2)",
+            }}
+          >
+            {tr.siteTagline.split(" ").slice(2).join(" ")}
+          </p>
+
+          <p
+            className="fade-up-d4 mx-auto"
+            style={{
+              color: "var(--koz-text-muted)",
+              maxWidth: "520px",
+              fontSize: "1rem",
+              lineHeight: 1.8,
+              fontWeight: 400,
+              marginBottom: "2.5rem",
+            }}
+          >
+            {tr.siteDescription}
+          </p>
+
+          {/* Cosmic stats row */}
+          <div
+            className="inline-flex items-center gap-8 fade-up-d5"
+            style={{
+              padding: "12px 28px",
+              border: "1px solid var(--koz-border-bright)",
+              background: "rgba(16,16,34,0.5)",
+            }}
+          >
+            {cosmicStats.map((stat, i) => (
+              <div key={i} className="flex flex-col items-center gap-0.5">
+                <span
+                  className="font-display"
+                  style={{
+                    color: "#F5C842",
+                    fontSize: "1.4rem",
+                    fontWeight: 600,
+                    lineHeight: 1,
+                  }}
                 >
-                  <div className={`w-8 h-8 ${card.bg} border-2 border-black flex items-center justify-center flex-shrink-0`}>
-                    {card.icon}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-black text-black uppercase tracking-tight truncate">{card.title}</p>
-                    <p className="text-xs text-gray-500 font-medium truncate mt-0.5">{card.description}</p>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-black/40 group-hover:text-black flex-shrink-0 transition-colors" />
-                </a>
+                  {stat.val}
+                </span>
+                <span
+                  style={{
+                    color: "var(--koz-text-muted)",
+                    fontSize: "9px",
+                    fontWeight: 600,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────
+          CHAPTER 2 — FORM + SIDEBAR (dark surface)
+      ────────────────────────────────────────────────────────── */}
+      <section
+        id="numerology-form"
+        style={{
+          background: "var(--koz-deep)",
+          borderTop: "1px solid var(--koz-border)",
+          borderBottom: "1px solid var(--koz-border)",
+        }}
+      >
+        <div className="container mx-auto px-4 max-w-7xl py-16">
+          <div className="flex flex-col lg:flex-row gap-10">
+
+            {/* LEFT: Form */}
+            <main className="w-full lg:w-[58%]">
+              <div className="mb-6">
+                <span
+                  style={{
+                    fontSize: "9px",
+                    fontWeight: 700,
+                    letterSpacing: "0.22em",
+                    textTransform: "uppercase",
+                    color: "var(--koz-gold)",
+                  }}
+                >
+                  ✦ Analizi Başlat
+                </span>
+                <h2
+                  className="font-display mt-2"
+                  style={{
+                    fontSize: "1.8rem",
+                    fontWeight: 500,
+                    fontStyle: "italic",
+                    color: "#EAE6FF",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  Numeroloji Haritanı Keşfet
+                </h2>
+              </div>
+              <NumerologyForm />
+            </main>
+
+            {/* RIGHT: Sidebar */}
+            <aside className="w-full lg:w-[42%] space-y-5">
+
+              {/* Araçlar kartı */}
+              <div
+                style={{
+                  background: "var(--koz-card)",
+                  border: "1px solid var(--koz-border)",
+                }}
+              >
+                <div
+                  className="px-5 py-4"
+                  style={{ borderBottom: "1px solid var(--koz-border)" }}
+                >
+                  <span
+                    style={{
+                      fontSize: "9px",
+                      fontWeight: 700,
+                      letterSpacing: "0.22em",
+                      textTransform: "uppercase",
+                      color: "var(--koz-gold)",
+                    }}
+                  >
+                    {tr.numerologyTools}
+                  </span>
+                  <p
+                    style={{
+                      color: "var(--koz-text-muted)",
+                      fontSize: "12px",
+                      marginTop: "2px",
+                    }}
+                  >
+                    {tr.exploreFeatures}
+                  </p>
+                </div>
+                <div className="p-3 space-y-1.5">
+                  {featureCards.map((card) => (
+                    <a
+                      key={card.href}
+                      href={card.href}
+                      className="koz-card-hover flex items-center gap-3 p-3 group"
+                      style={{
+                        border: "1px solid var(--koz-border)",
+                        background: "var(--koz-surface)",
+                      }}
+                    >
+                      <div
+                        className="w-7 h-7 flex items-center justify-center flex-shrink-0"
+                        style={{
+                          background: card.accent + "18",
+                          border: `1px solid ${card.accent}40`,
+                          color: card.accent,
+                        }}
+                      >
+                        {card.icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 700,
+                            color: "var(--koz-text)",
+                            letterSpacing: "0.04em",
+                            textTransform: "uppercase",
+                          }}
+                          className="truncate"
+                        >
+                          {card.title}
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "11px",
+                            color: "var(--koz-text-muted)",
+                            marginTop: "1px",
+                          }}
+                          className="truncate"
+                        >
+                          {card.description}
+                        </p>
+                      </div>
+                      <ArrowRight
+                        className="w-3.5 h-3.5 flex-shrink-0 transition-transform group-hover:translate-x-1"
+                        style={{ color: "var(--koz-text-faint)" }}
+                      />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Numeroloji Temelleri */}
+              <div
+                style={{
+                  background: "var(--koz-card)",
+                  border: "1px solid var(--koz-border)",
+                }}
+              >
+                <div
+                  className="px-5 py-4"
+                  style={{ borderBottom: "1px solid var(--koz-border)" }}
+                >
+                  <span
+                    style={{
+                      fontSize: "9px",
+                      fontWeight: 700,
+                      letterSpacing: "0.22em",
+                      textTransform: "uppercase",
+                      color: "var(--koz-gold)",
+                    }}
+                  >
+                    {tr.numerologyBasics}
+                  </span>
+                  <p
+                    style={{
+                      color: "var(--koz-text-muted)",
+                      fontSize: "12px",
+                      marginTop: "2px",
+                    }}
+                  >
+                    {tr.numerologyBasicsSubtitle}
+                  </p>
+                </div>
+                <div className="p-4 space-y-4">
+                  {numberTypes.map((item, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div
+                        className="w-7 h-7 flex items-center justify-center flex-shrink-0 mt-0.5"
+                        style={{
+                          background: item.accent + "18",
+                          border: `1px solid ${item.accent}40`,
+                          color: item.accent,
+                        }}
+                      >
+                        {item.icon}
+                      </div>
+                      <div>
+                        <p
+                          style={{
+                            fontSize: "10px",
+                            fontWeight: 700,
+                            letterSpacing: "0.14em",
+                            textTransform: "uppercase",
+                            color: "var(--koz-text)",
+                            marginBottom: "2px",
+                          }}
+                        >
+                          {item.label}
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "12px",
+                            color: "var(--koz-text-muted)",
+                            lineHeight: 1.6,
+                          }}
+                        >
+                          {item.desc}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA */}
+                <div
+                  className="p-4"
+                  style={{ borderTop: "1px solid var(--koz-border)" }}
+                >
+                  <p
+                    style={{
+                      fontSize: "12px",
+                      color: "var(--koz-text-muted)",
+                      marginBottom: "12px",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Tüm sayılarınızı tek seferde hesaplayın — ücretsiz ve sınırsız.
+                  </p>
+                  <a href="#numerology-form" className="koz-btn-primary w-full">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    Şimdi Hesapla
+                  </a>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────
+          CHAPTER 2.5 — AI-EXTRACTABLE DEFINITION BLOCK
+      ────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          background: "var(--koz-void)",
+          borderTop: "1px solid var(--koz-border)",
+          borderBottom: "1px solid var(--koz-border)",
+        }}
+      >
+        <div className="container mx-auto px-4 max-w-4xl py-16">
+          <div className="fade-up">
+            <span
+              style={{
+                fontSize: "9px",
+                fontWeight: 700,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "var(--koz-gold)",
+              }}
+            >
+              ✦ Numeroloji Nedir?
+            </span>
+            <h2
+              className="font-display mt-3 mb-6"
+              style={{
+                fontSize: "clamp(1.6rem, 3.5vw, 2.4rem)",
+                fontWeight: 400,
+                fontStyle: "italic",
+                color: "#EAE6FF",
+                lineHeight: 1.2,
+              }}
+            >
+              Doğum Tarihinizle Ücretsiz Numeroloji Analizi Yapın
+            </h2>
+
+            <p
+              style={{
+                color: "var(--koz-text-muted)",
+                fontSize: "1rem",
+                lineHeight: 1.85,
+                marginBottom: "1.25rem",
+                maxWidth: "720px",
+              }}
+            >
+              <strong style={{ color: "#EAE6FF" }}>Numeroloji</strong>, sayıların evrenle ve insan yaşamıyla olan mistik bağlantısını inceleyen kadim bir bilim dalıdır. Doğum tarihiniz ve isminiz sayılara dönüştürülerek kişiliğiniz, yaşam amacınız ve gizli potansiyeliniz ortaya çıkarılır.
+            </p>
+
+            <p
+              style={{
+                color: "var(--koz-text-muted)",
+                fontSize: "1rem",
+                lineHeight: 1.85,
+                marginBottom: "1.25rem",
+                maxWidth: "720px",
+              }}
+            >
+              <strong style={{ color: "#EAE6FF" }}>Doğum tarihi numeroloji hesaplama</strong> yönteminde, doğum tarihinizdeki tüm rakamlar tek basamağa indirgenene kadar toplanır. Elde edilen sayı, yaşam yolu sayınızdır ve hayatta size rehberlik eden temel enerjiyi temsil eder. 11, 22 ve 33 usta sayılar bu kuralın istisnasıdır; bunlar indirgenmez.
+            </p>
+
+            <p
+              style={{
+                color: "var(--koz-text-muted)",
+                fontSize: "1rem",
+                lineHeight: 1.85,
+                maxWidth: "720px",
+              }}
+            >
+              Kozmograf'ta <strong style={{ color: "#EAE6FF" }}>numeroloji analizi</strong> tamamen ücretsizdir. Doğum tarihinizi ve adınızı girerek yaşam yolu sayısı, kader sayısı ve ruh arzusu sayısı analizlerinizi anında, kayıt gerektirmeden alabilirsiniz.
+            </p>
+
+            <div
+              className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4"
+            >
+              {[
+                { label: "Yaşam Yolu Sayısı", desc: "Doğum tarihinden", accent: "#7C3AED" },
+                { label: "Kader Sayısı", desc: "İsim harflerinden", accent: "#F5C842" },
+                { label: "Ruh Arzusu", desc: "Sesli harflerden", accent: "#DB2777" },
+                { label: "Usta Sayılar", desc: "11, 22 ve 33", accent: "#10B981" },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  style={{
+                    background: "var(--koz-surface)",
+                    border: `1px solid ${item.accent}30`,
+                    padding: "14px 16px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "6px",
+                      height: "6px",
+                      borderRadius: "50%",
+                      background: item.accent,
+                      marginBottom: "10px",
+                    }}
+                  />
+                  <p
+                    style={{
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      color: "#EAE6FF",
+                      marginBottom: "3px",
+                    }}
+                  >
+                    {item.label}
+                  </p>
+                  <p
+                    style={{
+                      fontSize: "11px",
+                      color: "var(--koz-text-faint)",
+                    }}
+                  >
+                    {item.desc}
+                  </p>
+                </div>
               ))}
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Numeroloji Temelleri */}
-          <div className="border-2 border-black bg-white overflow-hidden" style={{ boxShadow: "6px 6px 0px #000" }}>
-            <div className="bg-[#6D28D9] text-white p-4 border-b-2 border-black">
-              <h2 className="text-sm font-black uppercase tracking-[0.12em]">{tr.numerologyBasics}</h2>
-              <p className="text-violet-300 text-xs mt-0.5 font-medium">{tr.numerologyBasicsSubtitle}</p>
-            </div>
-            <div className="p-4">
-              <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3">
-                {tr.numberTypes}
-              </p>
-              <ul className="space-y-3">
-                {numberTypes.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2.5">
-                    <div className={`w-7 h-7 ${item.bg} border-2 border-black flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                      {item.icon}
-                    </div>
-                    <span className="text-sm text-black leading-snug font-medium">{item.desc}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {/* ──────────────────────────────────────────────────────────
+          CHAPTER 3 — SEO ARTICLE (void, editorial)
+      ────────────────────────────────────────────────────────── */}
+      <section style={{ background: "var(--koz-void)" }}>
+        <div className="container mx-auto px-4 max-w-7xl py-20">
 
-            {/* CTA band */}
-            <div className="border-t-2 border-black bg-[#0a0a0a] p-4">
-              <p className="text-white/50 text-xs font-medium mb-3 leading-relaxed">
-                Tüm sayılarınızı tek seferde hesaplayın — ücretsiz ve sınırsız.
-              </p>
-              <a
-                href="#numerology-form"
-                className="flex items-center justify-center gap-2 w-full bg-[#FFCB00] border-2 border-[#FFCB00] text-black font-black text-xs uppercase tracking-widest py-2.5 hover:bg-yellow-300 transition-colors"
-                style={{ boxShadow: "3px 3px 0px rgba(255,203,0,0.3)" }}
-              >
-                ✦ Şimdi Hesapla
-              </a>
-            </div>
+          {/* Chapter header */}
+          <div className="mb-16 max-w-2xl">
+            <span
+              style={{
+                fontSize: "9px",
+                fontWeight: 700,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "var(--koz-gold)",
+              }}
+            >
+              ✦ Numeroloji Rehberi
+            </span>
+            <h2
+              className="font-display mt-3"
+              style={{
+                fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+                fontWeight: 400,
+                fontStyle: "italic",
+                color: "#EAE6FF",
+                lineHeight: 1.15,
+                letterSpacing: "-0.01em",
+              }}
+            >
+              {tr.seoArticleTitle}
+            </h2>
+            <div className="koz-rule mt-6" style={{ maxWidth: "200px" }} />
+            <div
+              className="mt-5 prose max-w-none"
+              dangerouslySetInnerHTML={{ __html: tr.seoArticleIntro }}
+            />
           </div>
-        </aside>
-      </div>
-    </>
+
+          {/* Article grid */}
+          <div className="space-y-0">
+
+            {/* Numeroloji Nedir */}
+            <article
+              className="py-10"
+              style={{ borderTop: "1px solid var(--koz-border)" }}
+            >
+              <div className="flex flex-col md:flex-row gap-8">
+                <div className="md:w-1/3">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div
+                      className="w-7 h-7 flex items-center justify-center flex-shrink-0"
+                      style={{
+                        background: "rgba(245,200,66,0.1)",
+                        border: "1px solid rgba(245,200,66,0.3)",
+                        color: "#F5C842",
+                      }}
+                    >
+                      <Star className="w-3.5 h-3.5" />
+                    </div>
+                    <h3
+                      className="font-display"
+                      style={{
+                        fontSize: "1.1rem",
+                        fontWeight: 500,
+                        fontStyle: "italic",
+                        color: "#EAE6FF",
+                      }}
+                    >
+                      {tr.whatIsNumerology}
+                    </h3>
+                  </div>
+                </div>
+                <div
+                  className="md:w-2/3 prose max-w-none"
+                  dangerouslySetInnerHTML={{ __html: tr.whatIsNumerologyContent }}
+                />
+              </div>
+            </article>
+
+            {/* Yaşam Yolu */}
+            <article
+              className="py-10"
+              style={{ borderTop: "1px solid var(--koz-border)" }}
+            >
+              <div className="flex flex-col md:flex-row gap-8">
+                <div className="md:w-1/3">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div
+                      className="w-7 h-7 flex items-center justify-center flex-shrink-0"
+                      style={{
+                        background: "rgba(124,58,237,0.15)",
+                        border: "1px solid rgba(124,58,237,0.35)",
+                        color: "#9B59F5",
+                      }}
+                    >
+                      <Route className="w-3.5 h-3.5" />
+                    </div>
+                    <h3
+                      className="font-display"
+                      style={{
+                        fontSize: "1.1rem",
+                        fontWeight: 500,
+                        fontStyle: "italic",
+                        color: "#EAE6FF",
+                      }}
+                    >
+                      {tr.lifePathNumberGuide}
+                    </h3>
+                  </div>
+                </div>
+                <div
+                  className="md:w-2/3 prose max-w-none"
+                  dangerouslySetInnerHTML={{ __html: tr.lifePathNumberGuideContent }}
+                />
+              </div>
+            </article>
+
+            {/* Usta Sayılar */}
+            <article
+              className="py-10"
+              style={{ borderTop: "1px solid var(--koz-border)" }}
+            >
+              <div className="flex flex-col md:flex-row gap-8">
+                <div className="md:w-1/3">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div
+                      className="w-7 h-7 flex items-center justify-center flex-shrink-0"
+                      style={{
+                        background: "rgba(219,39,119,0.12)",
+                        border: "1px solid rgba(219,39,119,0.3)",
+                        color: "#EC4899",
+                      }}
+                    >
+                      <Star className="w-3.5 h-3.5" />
+                    </div>
+                    <h3
+                      className="font-display"
+                      style={{
+                        fontSize: "1.1rem",
+                        fontWeight: 500,
+                        fontStyle: "italic",
+                        color: "#EAE6FF",
+                      }}
+                    >
+                      {tr.masterNumbersSection}
+                    </h3>
+                  </div>
+                </div>
+                <div
+                  className="md:w-2/3 prose max-w-none"
+                  dangerouslySetInnerHTML={{ __html: tr.masterNumbersContent }}
+                />
+              </div>
+            </article>
+
+            {/* Uyumluluk */}
+            <article
+              className="py-10"
+              style={{ borderTop: "1px solid var(--koz-border)" }}
+            >
+              <div className="flex flex-col md:flex-row gap-8">
+                <div className="md:w-1/3">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div
+                      className="w-7 h-7 flex items-center justify-center flex-shrink-0"
+                      style={{
+                        background: "rgba(5,150,105,0.12)",
+                        border: "1px solid rgba(5,150,105,0.3)",
+                        color: "#10B981",
+                      }}
+                    >
+                      <Heart className="w-3.5 h-3.5" />
+                    </div>
+                    <h3
+                      className="font-display"
+                      style={{
+                        fontSize: "1.1rem",
+                        fontWeight: 500,
+                        fontStyle: "italic",
+                        color: "#EAE6FF",
+                      }}
+                    >
+                      {tr.numerologyCompatibilityGuide}
+                    </h3>
+                  </div>
+                </div>
+                <div
+                  className="md:w-2/3 prose max-w-none"
+                  dangerouslySetInnerHTML={{ __html: tr.numerologyCompatibilityContent }}
+                />
+              </div>
+            </article>
+
+            {/* 2-col: Doğum Günü + İsim */}
+            <div
+              className="py-10 grid md:grid-cols-2 gap-8"
+              style={{ borderTop: "1px solid var(--koz-border)" }}
+            >
+              <article>
+                <h3
+                  className="font-display mb-4"
+                  style={{
+                    fontSize: "1rem",
+                    fontWeight: 500,
+                    fontStyle: "italic",
+                    color: "#EAE6FF",
+                    paddingBottom: "0.75rem",
+                    borderBottom: "1px solid var(--koz-border)",
+                  }}
+                >
+                  {tr.birthdayNumerology}
+                </h3>
+                <div
+                  className="prose max-w-none"
+                  dangerouslySetInnerHTML={{ __html: tr.birthdayNumerologyContent }}
+                />
+              </article>
+              <article>
+                <h3
+                  className="font-display mb-4"
+                  style={{
+                    fontSize: "1rem",
+                    fontWeight: 500,
+                    fontStyle: "italic",
+                    color: "#EAE6FF",
+                    paddingBottom: "0.75rem",
+                    borderBottom: "1px solid var(--koz-border)",
+                  }}
+                >
+                  {tr.nameNumerology}
+                </h3>
+                <div
+                  className="prose max-w-none"
+                  dangerouslySetInnerHTML={{ __html: tr.nameNumerologyContent }}
+                />
+              </article>
+            </div>
+
+            {/* Nasıl Hesaplanır */}
+            <article
+              className="py-10"
+              style={{ borderTop: "1px solid var(--koz-border)" }}
+            >
+              <div className="flex flex-col md:flex-row gap-8">
+                <div className="md:w-1/3">
+                  <h3
+                    className="font-display"
+                    style={{
+                      fontSize: "1.1rem",
+                      fontWeight: 500,
+                      fontStyle: "italic",
+                      color: "#EAE6FF",
+                    }}
+                  >
+                    {tr.howToCalculate}
+                  </h3>
+                </div>
+                <div
+                  className="md:w-2/3 prose max-w-none"
+                  dangerouslySetInnerHTML={{ __html: tr.howToCalculateContent }}
+                />
+              </div>
+            </article>
+
+            {/* Faydalar */}
+            <article
+              className="py-10"
+              style={{ borderTop: "1px solid var(--koz-border)" }}
+            >
+              <div className="flex flex-col md:flex-row gap-8">
+                <div className="md:w-1/3">
+                  <h3
+                    className="font-display"
+                    style={{
+                      fontSize: "1.1rem",
+                      fontWeight: 500,
+                      fontStyle: "italic",
+                      color: "#EAE6FF",
+                    }}
+                  >
+                    {tr.numerologyBenefits}
+                  </h3>
+                </div>
+                <div
+                  className="md:w-2/3 prose max-w-none"
+                  dangerouslySetInnerHTML={{ __html: tr.numerologyBenefitsContent }}
+                />
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────
+          CHAPTER 4 — CTA CLOSING (surface, violet glow)
+      ────────────────────────────────────────────────────────── */}
+      <section
+        className="relative overflow-hidden"
+        style={{
+          background: "var(--koz-surface)",
+          borderTop: "1px solid var(--koz-border)",
+        }}
+      >
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden="true"
+          style={{
+            background: "radial-gradient(ellipse 60% 80% at 50% 120%, rgba(124,58,237,0.14) 0%, transparent 70%)",
+          }}
+        />
+        <div className="container mx-auto px-4 max-w-7xl py-24 text-center relative z-10">
+          <span
+            style={{
+              fontSize: "9px",
+              fontWeight: 700,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "var(--koz-gold)",
+            }}
+          >
+            ✦ Başlamaya Hazır Mısın?
+          </span>
+          <h2
+            className="font-display mt-4 mb-4"
+            style={{
+              fontSize: "clamp(1.8rem, 4vw, 3rem)",
+              fontWeight: 400,
+              fontStyle: "italic",
+              color: "#EAE6FF",
+              lineHeight: 1.15,
+            }}
+          >
+            Sayılarında Yazılı Olanı Keşfet
+          </h2>
+          <p
+            className="mx-auto mb-10"
+            style={{
+              color: "var(--koz-text-muted)",
+              maxWidth: "420px",
+              fontSize: "0.95rem",
+              lineHeight: 1.8,
+            }}
+          >
+            Doğum tarihin ve ismin, yaşam yolun hakkında neler söylüyor?
+          </p>
+          <a href="#numerology-form" className="koz-btn-primary">
+            <Sparkles className="w-4 h-4" />
+            Ücretsiz Analiz Al
+          </a>
+        </div>
+      </section>
+    </div>
   );
 }

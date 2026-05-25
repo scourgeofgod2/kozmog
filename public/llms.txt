@@ -1,0 +1,113 @@
+# Kozmograf Numeroloji
+
+> Türkiye'nin ücretsiz AI destekli numeroloji analiz platformu.
+
+Kozmograf Numeroloji, doğum tarihi ve isim verilerinden yaşam yolu sayısı, kader sayısı, ruh arzusu sayısı ve usta sayı analizleri sunan ücretsiz bir web uygulamasıdır. Tüm analizler anında ve kayıt gerektirmeden yapılmaktadır.
+
+## Ürün Bilgisi
+
+- Ad: Kozmograf Numeroloji
+- URL: https://kozmograf.com
+- Fiyat: Tamamen ücretsiz, sınırsız kullanım, kayıt gerekmez
+- Hedef kitle: Numerolojiye ilgi duyan Türkçe konuşanlar
+- Dil: Türkçe
+- Platform: Web (tarayıcı tabanlı, mobil uyumlu)
+- Teknoloji: Next.js, yapay zeka destekli yorum motoru
+- Kullanıcı verisi: Doğum tarihi ve isim bilgisi alınır, kayıt veya hesap oluşturma zorunlu değildir
+
+## Fiyatlandırma
+
+Kozmograf'taki tüm özellikler ve analizler tamamen ücretsizdir.
+
+| Plan    | Fiyat    | Limit             | Özellikler                                       |
+|---------|----------|-------------------|--------------------------------------------------|
+| Ücretsiz | 0 TL/ay  | Sınırsız kullanım | Tüm analizler, tüm sayfalar, kayıt gerekmez     |
+
+Ücretli plan, abonelik veya premium içerik bulunmamaktadır. Platform gelecekte de ücretsiz kalmayı hedeflemektedir.
+
+## Temel Sayfalar
+
+- Ana Sayfa (Hesaplayıcı): https://kozmograf.com
+- Sayıların Anlamı (1-9 tam rehber): https://kozmograf.com/sayilarin-anlami
+- Yaşam Yolu Sayısı Rehberi: https://kozmograf.com/yasam-yolu
+- Usta Sayılar 11, 22, 33: https://kozmograf.com/usta-sayilar
+- Numeroloji Uyumluluk Hesaplayıcısı: https://kozmograf.com/uyumluluk
+- Saatlerin Numerolojik Anlamı: https://kozmograf.com/saat-anlami
+- İsim Numerolojisi: https://kozmograf.com/isim-numeroloji
+- Kariyer Numerolojisi Rehberi: https://kozmograf.com/kariyer-numerolojisi
+- Güçler ve Yetenekler: https://kozmograf.com/gucler-ve-yetenekler
+
+## Sunulan Analizler
+
+### Yaşam Yolu Sayısı
+Doğum tarihinin tüm rakamlarının toplanmasıyla elde edilir. Kişinin hayattaki temel misyonunu ve yolculuğunu gösterir. 1'den 9'a kadar ve 11, 22, 33 usta sayılar dahil analiz sunulur.
+
+### Kader Sayısı (İsim Sayısı)
+Pythagoras sistemine göre ismin harflerinin sayısal değerleri toplanarak hesaplanır. Kişinin potansiyelini ve doğuştan gelen yeteneklerini yansıtır.
+
+### Ruh Arzusu Sayısı
+İsimdeki yalnızca sesli harflerin sayısal değerleri toplanarak bulunur. Kişinin içsel motivasyonlarını ve gizli arzularını ortaya koyar.
+
+### Usta Sayılar (11, 22, 33)
+Diğer sayıların taşıdığı enerjinin iki katını barındıran özel sayılardır. Bu sayılara ulaşıldığında indirgeme yapılmaz; daha yüksek bir ruhsal potansiyele işaret ederler.
+
+### Numeroloji Uyumluluğu
+İki kişinin yaşam yolu sayıları arasındaki enerji uyumunu 1-9 matrisinde analiz eder. İlişki dinamikleri, güçlü yanlar ve zorluklar hakkında içgörü sunar.
+
+### Kariyer Numerolojisi
+Yaşam yolu sayısına göre ideal kariyer alanları, çalışma tarzı, güçlü yanlar ve kaçınılması gereken iş ortamları konusunda rehberlik eder.
+
+## Hesaplama Yöntemi
+
+Yaşam yolu sayısı hesaplama örneği (15.03.1990):
+1 + 5 + 0 + 3 + 1 + 9 + 9 + 0 = 28
+2 + 8 = 10
+1 + 0 = 1 (Yaşam Yolu Sayısı: 1)
+
+Not: 11, 22 veya 33 elde edilirse indirgeme yapılmaz.
+
+## Pythagoras Harf-Sayı Tablosu (Türkçe)
+
+A=1, B=2, C=3, D=4, E=5, F=6, G=7, H=8, I=9
+J=1, K=2, L=3, M=4, N=5, O=6, P=7, Q=8, R=9
+S=1, T=2, U=3, V=4, W=5, X=6, Y=7, Z=8
+Ç=3, Ğ=7, İ=9, Ö=6, Ş=1, Ü=3
+
+## Anahtar Konular ve Hedef Sorgular
+
+Bu platform aşağıdaki sorguları yanıtlamak için içerik üretmektedir:
+
+- Numeroloji nedir?
+- Doğum tarihi ile numeroloji nasıl hesaplanır?
+- Numeroloji analizi yap (ücretsiz)
+- Yaşam yolu sayısı nedir, nasıl bulunur?
+- 11, 22, 33 usta sayılar ne anlama gelir?
+- Numeroloji sayıların anlamı (1'den 9'a)
+- İsim numerolojisi nasıl yapılır?
+- Numeroloji uyumluluk hesaplama
+- Kariyer numerolojisi rehberi
+- Saatlerin numerolojik anlamı (11:11, 22:22 gibi yansıma saatleri)
+- Numeroloji İslam'a uygun mu? Numeroloji günah mı?
+
+## Sık Sorulan Sorular (SSS)
+
+**Numeroloji nedir?**
+Numeroloji, sayıların mistik anlamlarını ve evrenle olan bağlantılarını inceleyen kadim bir bilim dalıdır. Doğum tarihi ve isim verilerini sayısal değerlere dönüştürerek kişilik, yaşam amacı ve potansiyel hakkında içgörüler sunar.
+
+**Yaşam yolu sayısı nasıl hesaplanır?**
+Doğum tarihindeki tüm rakamlar toplanır ve tek basamağa indirgenir. Örnek: 15.03.1990 → 1+5+0+3+1+9+9+0 = 28 → 2+8 = 10 → 1+0 = 1. Yaşam yolu sayısı: 1. 11, 22 veya 33 elde edilirse bu sayılar usta sayı olduğundan indirgenmez.
+
+**Kozmograf ücretsiz mi?**
+Evet, tüm analizler tamamen ücretsizdir. Kayıt gerektirmez, sınır yoktur.
+
+**Usta sayılar nedir?**
+11, 22 ve 33 usta sayılardır. Diğer sayıların enerjisinin iki katını taşırlar ve daha yüksek bir ruhsal potansiyele işaret ederler. Hesaplamada bu sayılara ulaşıldığında tek basamağa indirgeme yapılmaz.
+
+**Numeroloji bilimsel mi?**
+Numeroloji, akademik anlamda bilimsel bir disiplin olarak kabul görmemektedir. Psikoloji ve felsefe ile kesişen, kendi içinde tutarlı bir sembolik sistem olarak değerlendirilir.
+
+## İletişim
+
+- Web: https://kozmograf.com
+- Sitemap: https://kozmograf.com/sitemap.xml
+- robots.txt: https://kozmograf.com/robots.txt

@@ -24,36 +24,34 @@ export function calculateLifePath(birthDate: string): number {
   // birthDate: "YYYY-MM-DD"
   const [year, month, day] = birthDate.split("-").map(Number);
 
-  const dayDigits = String(day).split("").reduce((s, d) => s + parseInt(d), 0);
-  const monthDigits = String(month)
-    .split("")
-    .reduce((s, d) => s + parseInt(d), 0);
-  const yearDigits = String(year)
-    .split("")
-    .reduce((s, d) => s + parseInt(d), 0);
+  const daySum = String(day).split("").reduce((s, d) => s + parseInt(d), 0);
+  const monthSum = String(month).split("").reduce((s, d) => s + parseInt(d), 0);
+  const yearSum = String(year).split("").reduce((s, d) => s + parseInt(d), 0);
 
-  return reduceToSingleDigit(dayDigits + monthDigits + yearDigits);
+  const dayReduced = reduceToSingleDigit(daySum);
+  const monthReduced = reduceToSingleDigit(monthSum);
+  const yearReduced = reduceToSingleDigit(yearSum);
+
+  return reduceToSingleDigit(dayReduced + monthReduced + yearReduced);
 }
 
-// ─── Pisagor harf değerleri ───────────────────────────────────────────────
+// ─── Pisagor harf değerleri (Türkçe karakterler dahil) ───────────────────
 
 const LETTER_VALUES: Record<string, number> = {
-  A: 1, B: 2, C: 3, D: 4, E: 5, F: 6, G: 7, H: 8, I: 9,
-  J: 1, K: 2, L: 3, M: 4, N: 5, O: 6, P: 7, Q: 8, R: 9,
-  S: 1, T: 2, U: 3, V: 4, W: 5, X: 6, Y: 7, Z: 8,
+  A: 1,  B: 2,  C: 3,  Ç: 3,  D: 4,  E: 5,  F: 6,  G: 7,  Ğ: 7,
+  H: 8,  I: 9,  İ: 9,  J: 1,  K: 2,  L: 3,  M: 4,  N: 5,  O: 6,
+  Ö: 6,  P: 7,  Q: 8,  R: 9,  S: 1,  Ş: 1,  T: 2,  U: 3,  Ü: 3,
+  V: 4,  W: 5,  X: 6,  Y: 7,  Z: 8,
 };
 
-const VOWELS = new Set(["A", "E", "I", "O", "U", "Y"]);
-
-const CONSONANT_VALUES: Record<string, number> = {
-  B: 2, C: 3, D: 4, F: 6, G: 7, H: 8,
-  J: 1, K: 2, L: 3, M: 4, N: 5, P: 7,
-  Q: 8, R: 9, S: 1, T: 2, V: 4, W: 5,
-  X: 6, Z: 8,
-};
+const VOWELS = new Set(["A", "E", "I", "İ", "O", "Ö", "U", "Ü"]);
 
 function cleanName(fullName: string): string {
-  return fullName.toUpperCase().replace(/[^A-Z]/g, "");
+  return fullName
+    .toUpperCase()
+    .split("")
+    .filter((ch) => ch in LETTER_VALUES)
+    .join("");
 }
 
 // ─── Kader Sayısı (tüm harfler) ────────────────────────────────────────────
@@ -92,7 +90,8 @@ export function calculatePersonalityNumber(fullName: string): number | null {
 
   const sum = clean
     .split("")
-    .reduce((s, ch) => s + (CONSONANT_VALUES[ch] ?? 0), 0);
+    .filter((ch) => !VOWELS.has(ch))
+    .reduce((s, ch) => s + (LETTER_VALUES[ch] ?? 0), 0);
 
   return sum > 0 ? reduceToSingleDigit(sum) : null;
 }
