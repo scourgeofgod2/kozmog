@@ -4,6 +4,7 @@ import { clientIp } from "@/lib/rateLimit";
 import { validateOrderInput, formatDateTR } from "@/lib/order";
 import { getPackage, type ReportSection } from "@/lib/content/packages";
 import { renderReportPdf } from "@/lib/pdf/ReportPdf";
+import { sectionVisuals } from "@/lib/pdf/visuals";
 import { sendMail, emailLayout, escapeHtml } from "@/lib/mail";
 import { CONTACT_EMAIL } from "@/lib/site";
 
@@ -58,7 +59,11 @@ export async function POST(req: NextRequest) {
       subtitle,
       code,
       sample: body.sample === true,
-      sections: sections.map((x) => ({ label: pkg.sections.length > 1 ? SECTION_TITLES[x.s] : undefined, markdown: x.md })),
+      sections: sections.map((x) => ({
+        label: pkg.sections.length > 1 ? SECTION_TITLES[x.s] : undefined,
+        markdown: x.md,
+        ...sectionVisuals(x.s, order),
+      })),
     });
   } catch (err) {
     console.error("pdf render error", err);

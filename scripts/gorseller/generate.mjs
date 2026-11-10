@@ -248,7 +248,7 @@ const pages = {
   },
   "kisisel-yil-2027": {
     alt: "2027 kişisel yıl döngüsü: 1'den 9'a dokuz dilimli kozmik çark, merkezde 2027",
-    draw: () => {
+    draw: (hl = 2, sub = "evrensel yıl 11") => {
       const cx = 600,
         cy = 400,
         R = 310,
@@ -261,7 +261,7 @@ const pages = {
           [x1, y1] = pt(cx, cy, R, a1),
           [x2, y2] = pt(cx, cy, r0, a1),
           [x3, y3] = pt(cx, cy, r0, a0);
-        const hi = i === 1;
+        const hi = i === hl - 1;
         seg += `<path d="M${x0} ${y0} A${R} ${R} 0 0 1 ${x1} ${y1} L${x2} ${y2} A${r0} ${r0} 0 0 0 ${x3} ${y3} Z" fill="${hi ? C.violet : C.surface}" stroke="${hi ? C.violetSoft : C.line}" stroke-width="1.5" opacity="${hi ? 0.95 : 0.9}"/>`;
         const [tx, ty] = pt(cx, cy, (R + r0) / 2, (a0 + a1) / 2);
         seg += text(tx, ty + 18, String(i + 1), { size: 52, color: hi ? C.text : C.gold });
@@ -269,18 +269,18 @@ const pages = {
       return `${bg(PW, PH, 2027)}${rings(cx, cy, [R + 30], C.gold, 0.3)}${seg}
         <circle cx="${cx}" cy="${cy}" r="${r0 - 14}" fill="url(#goldglow)" opacity="0.6"/>
         ${text(cx, cy + 30, "2027", { size: 100, color: C.goldSoft })}
-        ${label(cx, cy + 75, "evrensel yıl 11", C.violetSoft)}`;
+        ${label(cx, cy + 75, sub, C.violetSoft)}`;
     },
   },
   "ask-uyumu-numeroloji": {
     alt: "Numeroloji aşk uyumu: kesişen iki altın ve mor yörünge, ortada kalp",
-    draw: () =>
+    draw: (withNumbers = true) =>
       `${bg(PW, PH, 33, C.rose)}
       ${rings(480, 400, [230, 190], C.gold, 0.6, "2 6")}
       ${rings(720, 400, [230, 190], C.violetSoft, 0.6, "2 6")}
       <circle cx="480" cy="400" r="14" fill="${C.gold}"/><circle cx="720" cy="400" r="14" fill="${C.violetSoft}"/>
       ${text(600, 440, "♥", { size: 120, color: C.rose, family: "Inter" })}
-      ${text(400, 420, "7", { size: 90, color: C.gold, opacity: 0.9 })}${text(800, 420, "2", { size: 90, color: C.violetSoft, opacity: 0.9 })}`,
+      ${withNumbers ? text(400, 420, "7", { size: 90, color: C.gold, opacity: 0.9 }) + text(800, 420, "2", { size: 90, color: C.violetSoft, opacity: 0.9 }) : ""}`,
   },
   "ayna-saatler-11-11": {
     alt: "Ayna saatler: yıldızlı gece göğünde saat kadranı, 11:11 gösteriyor",
@@ -463,6 +463,15 @@ ANGELS.forEach(([slug, title], i) =>
 for (const [slug, p] of Object.entries(pages))
   jobs.push({ key: `sayfa-${slug}`, file: `${slug}.webp`, w: PW, h: PH, alt: p.alt, svg: svg(PW, PH, p.draw()) });
 
+// Yalnızca PDF raporlar için kişiye özel varyantlar (JPEG, manifest'e girmez)
+const pdfOnly = [
+  ...[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => ({
+    name: `pdf-yil-${n}`,
+    svg: svg(PW, PH, pages["kisisel-yil-2027"].draw(n, `kişisel yıl ${n}`)),
+  })),
+  { name: "pdf-ask", svg: svg(PW, PH, pages["ask-uyumu-numeroloji"].draw(false)) },
+];
+
 const html = (s) => `<!doctype html><html><head><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Inter:wght@600&display=block" rel="stylesheet">
 <style>html,body{margin:0;background:${C.ink}}svg{display:block}</style></head><body>${s}</body></html>`;
@@ -477,8 +486,22 @@ for (const j of jobs) {
   const png = await page.screenshot({ type: "png" });
   const webp = await sharp(png).webp({ quality: 84, effort: 6 }).toBuffer();
   writeFileSync(join(OUT, j.file), webp);
+  // PDF raporlar için JPEG kopyası (react-pdf WebP desteklemez)
+  if (j.key.startsWith("sayi-") || ["sayfa-ana-sayfa-numeroloji-haritasi", "sayfa-kisisel-yil-2027", "sayfa-ask-uyumu-numeroloji"].includes(j.key)) {
+    mkdirSync(join(OUT, "pdf"), { recursive: true });
+    await sharp(png).resize({ width: j.key.startsWith("sayi-") ? 360 : 1000 }).jpeg({ quality: 82, mozjpeg: true }).toFile(join(OUT, "pdf", `${j.key}.jpg`));
+  }
   manifest[j.key] = { src: `/gorseller/${j.file}`, alt: j.alt, width: j.w, height: j.h };
   process.stdout.write(`${j.file} ${(webp.length / 1024).toFixed(0)}KB\n`);
+}
+for (const j of pdfOnly) {
+  await page.setViewportSize({ width: PW, height: PH });
+  await page.setContent(html(j.svg), { waitUntil: "networkidle" });
+  await page.evaluate(() => document.fonts.ready);
+  const png = await page.screenshot({ type: "png" });
+  mkdirSync(join(OUT, "pdf"), { recursive: true });
+  await sharp(png).resize({ width: 1000 }).jpeg({ quality: 82, mozjpeg: true }).toFile(join(OUT, "pdf", `${j.name}.jpg`));
+  process.stdout.write(`pdf/${j.name}.jpg\n`);
 }
 await browser.close();
 

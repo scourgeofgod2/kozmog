@@ -1,6 +1,8 @@
 // Google Tag Manager + Consent Mode v2 yardımcıları (yalnızca tarayıcı).
 
 export const GTM_ID = "GTM-5GVN63CH";
+/** GA4 doğrudan gtag ile yüklenir; GTM içine ayrıca GA4 etiketi EKLENMEMELİ (çift sayım). */
+export const GA4_ID = "G-1S33KE05BF";
 export const CONSENT_KEY = "kz-cerez-onayi"; // "granted" | "denied"
 export const CONSENT_EVENT = "kz:cerez-tercihleri"; // banner'ı yeniden açar
 
@@ -31,6 +33,9 @@ export function track(event: string, params: Record<string, string | number | bo
   if (typeof window === "undefined") return;
   const w = window as DataLayerWindow;
   w.dataLayer = w.dataLayer || [];
+  // GA4 (gtag) olayı
+  gtag("event", event, params);
+  // GTM "Custom Event" tetikleyicileri için
   w.dataLayer.push({ event, ...params });
 }
 

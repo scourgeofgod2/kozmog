@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CONSENT_EVENT, GTM_ID, gtag, isExcludedPath, readConsent, saveConsent } from "@/lib/analytics";
+import { CONSENT_EVENT, GA4_ID, GTM_ID, gtag, isExcludedPath, readConsent, saveConsent } from "@/lib/analytics";
 
 let gtmLoaded = false;
 
@@ -19,6 +19,15 @@ function loadGtm() {
     ad_personalization: stored ?? "denied",
     wait_for_update: 500,
   });
+  // GA4 (gtag.js)
+  gtag("js", new Date());
+  gtag("config", GA4_ID);
+  const ga = document.createElement("script");
+  ga.async = true;
+  ga.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`;
+  document.head.appendChild(ga);
+
+  // Google Tag Manager (diğer etiketler için)
   const w = window as Window & { dataLayer?: unknown[] };
   w.dataLayer = w.dataLayer || [];
   w.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
