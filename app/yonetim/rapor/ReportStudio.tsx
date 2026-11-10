@@ -5,6 +5,7 @@ import { decodeOrder, formatDateTR, formatTL, type Order } from "@/lib/order";
 import { getPackage, type ReportSection } from "@/lib/content/packages";
 import { markdownToHtml } from "@/lib/markdown";
 import { buttonStyles } from "@/components/ds";
+import ManualOrder from "./ManualOrder";
 
 const SECTION_TITLES: Record<ReportSection, string> = {
   harita: "Kozmik Harita",
@@ -29,6 +30,8 @@ const subscribe = (cb: () => void) => {
 
 export default function ReportStudio() {
   const hash = useSyncExternalStore(subscribe, () => window.location.hash, () => "");
+  // Sunucuda false, tarayıcıda true: hash'in gerçekten boş olduğunu ayırt etmek için
+  const mounted = useSyncExternalStore(subscribe, () => true, () => false);
   const order = hash ? readHashOrder() : null;
 
   const [token, setToken] = useState("");
@@ -47,7 +50,8 @@ export default function ReportStudio() {
     }
   }, []);
 
-  if (!hash) return <p className="py-20 text-center text-muted">Yükleniyor…</p>;
+  if (!mounted) return <p className="py-20 text-center text-muted">Yükleniyor…</p>;
+  if (!hash) return <ManualOrder />;
   if (!order) {
     return (
       <div className="mx-auto max-w-lg py-20 text-center">
