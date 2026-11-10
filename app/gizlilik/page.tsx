@@ -36,7 +36,23 @@ export default function GizlilikPage() {
             bildirimi ve rapor e-posta ile iletilir.
           </li>
         </ul>
-        <p>Üyelik sistemi, çerez tabanlı reklam veya analitik takibi şu anda kullanılmamaktadır.</p>
+        <p>Üyelik sistemi bulunmamaktadır.</p>
+
+        <h2 id="cerezler">Çerezler ve analitik</h2>
+        <p>
+          Siteyi nasıl kullandığını anlamak ve geliştirmek için, <strong>yalnızca onay verirsen</strong> Google Tag
+          Manager ve Google Analytics aracılığıyla analitik çerezler kullanılır. Onay vermezsen bu çerezler
+          yerleştirilmez. Toplanan veriler (ziyaret edilen sayfalar, cihaz ve tarayıcı bilgisi, yaklaşık konum) Google
+          LLC (ABD) sunucularında işlenir.
+        </p>
+        <ul>
+          <li>Doğum tarihi ve isim içeren sonuç sayfaları ile yönetim sayfalarında analitik hiç çalışmaz.</li>
+          <li>Hesaplama ve sipariş adımları için kişisel veri içermeyen olaylar (ör. paket türü, tutar) ölçülür.</li>
+          <li>
+            Tercihini istediğin zaman sayfanın altındaki <strong>Çerez tercihleri</strong> bağlantısından
+            değiştirebilirsin.
+          </li>
+        </ul>
 
         <h2>Verileri ne için kullanıyoruz?</h2>
         <ul>

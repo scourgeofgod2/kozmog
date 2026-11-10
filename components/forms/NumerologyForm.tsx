@@ -2,7 +2,7 @@
 
 import DateInput from "@/components/forms/DateInput";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { track } from "@/lib/analytics";
 import { buttonStyles } from "@/components/ds";
 
 const inputCls =
@@ -15,7 +15,6 @@ export default function NumerologyForm({
   submitLabel?: string;
   showName?: boolean;
 }) {
-  const router = useRouter();
   const [birthDate, setBirthDate] = useState("");
   const [fullName, setFullName] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +32,10 @@ export default function NumerologyForm({
     setPending(true);
     const params = new URLSearchParams({ d: birthDate });
     if (fullName.trim()) params.set("n", fullName.trim());
-    router.push(`/sonuc?${params.toString()}`);
+    track("hesaplama", { isim_var: !!fullName.trim() });
+    // Tam sayfa geçişi: sonuç adresi isim/tarih içerir; Analytics'in sayfa
+    // değişikliği takibi bu adresi yakalamasın diye GTM'li sayfadan çıkılır.
+    window.location.assign(`/sonuc?${params.toString()}`);
   }
 
   return (

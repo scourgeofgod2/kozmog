@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import DateInput from "@/components/forms/DateInput";
 import { buttonStyles } from "@/components/ds";
+import { track } from "@/lib/analytics";
 import type { Package } from "@/lib/content/packages";
 
 const inputCls =
@@ -74,6 +75,7 @@ export default function OrderForm({ pkg }: { pkg: Package }) {
         return;
       }
       setPayment(data as Payment);
+      track("siparis_olustur", { paket: pkg.slug, value: pkg.price, currency: "TRY" });
       requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "smooth" }));
     } catch {
       setError("Bağlantı hatası. Tekrar dene.");

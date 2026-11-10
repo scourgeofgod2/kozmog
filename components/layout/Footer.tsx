@@ -2,6 +2,7 @@ import Link from "next/link";
 import { guideGroups, legalNav } from "@/lib/nav";
 import { Wordmark } from "./Header";
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/site";
+import { ConsentLink } from "@/components/analytics/Analytics";
 
 export default function Footer() {
   return (
@@ -56,6 +57,9 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <ConsentLink />
+            </li>
           </ul>
         </div>
       </div>
