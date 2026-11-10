@@ -1,6 +1,19 @@
 // Paylaşım görseli (Open Graph) çizimi: /api/og ve app/opengraph-image ortak kullanır.
 import { ImageResponse } from "next/og";
 import { getProfile } from "@/lib/content/profiles";
+import { K_PATH, ORBIT } from "@/lib/brand.generated";
+
+function Mark({ size, color }: { size: number; color: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100">
+      <path d={K_PATH} fill={color} />
+      <g transform={`rotate(${ORBIT.rotate} 50 50)`}>
+        <ellipse cx="50" cy="50" rx={ORBIT.rx} ry={ORBIT.ry} fill="none" stroke={color} strokeWidth={ORBIT.stroke} />
+        <circle cx={50 + ORBIT.rx} cy="50" r={ORBIT.dot} fill={color} />
+      </g>
+    </svg>
+  );
+}
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
@@ -32,7 +45,7 @@ export function renderOg({
       >
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 30, color: "#e9c46a", letterSpacing: 2 }}>
-            <svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 2 L13.6 10.4 L22 12 L13.6 13.6 L12 22 L10.4 13.6 L2 12 L10.4 10.4 Z" fill="#e9c46a" /></svg>
+            <Mark size={44} color="#e9c46a" />
             KOZMOGRAF
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -59,7 +72,7 @@ export function renderOg({
             fontWeight: 700,
           }}
         >
-          {big ?? lp ?? <svg width="200" height="200" viewBox="0 0 24 24"><path d="M12 2 L13.6 10.4 L22 12 L13.6 13.6 L12 22 L10.4 13.6 L2 12 L10.4 10.4 Z" fill="#1a1405" /></svg>}
+          {big ?? lp ?? <Mark size={300} color="#1a1405" />}
         </div>
       </div>,
     { ...OG_SIZE, headers: { "Cache-Control": "public, max-age=86400, immutable" } }

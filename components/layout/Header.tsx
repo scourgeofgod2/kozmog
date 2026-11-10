@@ -5,13 +5,12 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { primaryNav, guideGroups } from "@/lib/nav";
 import { cn } from "@/lib/utils";
+import LogoMark from "@/components/brand/LogoMark";
 
 export function Wordmark({ className }: { className?: string }) {
   return (
     <span className={cn("flex items-center gap-2", className)}>
-      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" className="text-gold">
-        <path d="M12 2 L13.6 10.4 L22 12 L13.6 13.6 L12 22 L10.4 13.6 L2 12 L10.4 10.4 Z" fill="currentColor" />
-      </svg>
+      <LogoMark size={34} className="text-gold" />
       <span className="font-display text-[22px] font-semibold tracking-[0.02em] text-text">Kozmograf</span>
     </span>
   );

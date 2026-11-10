@@ -1,7 +1,8 @@
 // Ücretli rapor PDF'i (sunucuda @react-pdf/renderer ile üretilir).
 
 import path from "node:path";
-import { Document, Font, Page, Path, StyleSheet, Svg, Text, View, renderToBuffer } from "@react-pdf/renderer";
+import { Circle, Document, Ellipse, Font, G, Page, Path, StyleSheet, Svg, Text, View, renderToBuffer } from "@react-pdf/renderer";
+import { K_PATH, ORBIT } from "@/lib/brand.generated";
 
 const FONT_DIR = path.join(process.cwd(), "public", "fonts");
 
@@ -49,6 +50,18 @@ function Star({ size, color = C.gold }: { size: number; color?: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24">
       <Path d={STAR} fill={color} />
+    </Svg>
+  );
+}
+
+function LogoMark({ size }: { size: number }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 100 100">
+      <Path d={K_PATH} fill={C.gold} />
+      <G transform={`rotate(${ORBIT.rotate} 50 50)`}>
+        <Ellipse cx={50} cy={50} rx={ORBIT.rx} ry={ORBIT.ry} fill="none" stroke={C.gold} strokeWidth={ORBIT.stroke} />
+        <Circle cx={50 + ORBIT.rx} cy={50} r={ORBIT.dot} fill={C.gold} />
+      </G>
     </Svg>
   );
 }
@@ -101,8 +114,8 @@ function ReportDoc({ title, subtitle, code, sections }: ReportPdfInput) {
         <Page key={si} size="A4" style={s.page}>
           {si === 0 && (
             <View>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-                <Star size={10} />
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                <LogoMark size={26} />
                 <Text style={s.brand}>KOZMOGRAF</Text>
               </View>
               <Text style={s.coverTitle}>{title}</Text>

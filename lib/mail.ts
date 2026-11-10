@@ -64,7 +64,7 @@ export function emailLayout({ preheader, title, bodyHtml }: { preheader: string;
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#07070d;">
 <tr><td align="center" style="padding:32px 16px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#0e0d18;border:1px solid #2a2840;border-radius:20px;">
-<tr><td style="padding:28px 28px 8px;font-family:Georgia,'Times New Roman',serif;font-size:22px;color:#e9c46a;">&#10022; Kozmograf</td></tr>
+<tr><td style="padding:28px 28px 8px;font-family:Georgia,'Times New Roman',serif;font-size:22px;color:#ece8f5;"><img src="https://kozmograf.com/brand/kozmograf-isaret-96.png" width="32" height="32" alt="" style="vertical-align:middle;border:0;border-radius:6px;margin-right:8px;">Kozmograf</td></tr>
 <tr><td style="padding:8px 28px 28px;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#ece8f5;">
 <h1 style="margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;font-weight:600;font-size:26px;line-height:1.2;color:#ece8f5;">${esc(title)}</h1>
 ${bodyHtml}

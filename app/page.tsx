@@ -58,6 +58,7 @@ const jsonLd = {
       "@type": "Organization",
       name: "Kozmograf Numeroloji",
       url: "https://kozmograf.com",
+      logo: "https://kozmograf.com/brand/instagram-profil-koyu.png",
       description: tr.siteDescription,
     },
     { "@type": "WebSite", name: "Kozmograf Numeroloji", url: "https://kozmograf.com", inLanguage: "tr" },
