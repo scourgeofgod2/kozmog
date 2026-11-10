@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8">
-<title>Kozmograf · 11.11.2026</title>
+<title>Kozmograf · 11.11.2026 (v2)</title>
 <style>
 @font-face{font-family:"Cormorant";font-weight:600;src:url("__ROOT__/public/fonts/CormorantGaramond-600.ttf")}
 @font-face{font-family:"Cormorant";font-weight:500;font-style:italic;src:url("__ROOT__/public/fonts/CormorantGaramond-500-italic.ttf")}
@@ -21,6 +21,8 @@ html,body{width:1080px;height:1920px;background:#07070d;overflow:hidden}
 .col{display:flex;flex-direction:column;align-items:center}
 .lbl{font-weight:600;letter-spacing:.35em;font-size:30px;color:#a6a2bc;margin-top:16px;padding-left:.35em;text-transform:uppercase}
 .bar{height:7px;width:100%;background:#e9c46a;border-radius:4px;margin-top:14px;transform-origin:center;transform:scaleX(0)}
+.dn{font-size:190px;position:relative}
+.dplus{font-size:130px;color:#8a86a3;width:0;overflow:hidden;text-align:center;height:190px;line-height:190px;opacity:0}
 .glow{position:absolute;inset:0;opacity:0}
 #glowG{background:radial-gradient(circle 760px at 540px 650px,rgba(233,196,106,.26),rgba(233,196,106,0) 70%)}
 #glowV{background:radial-gradient(circle 760px at 540px 650px,rgba(123,92,255,.34),rgba(123,92,255,0) 70%)}
@@ -66,24 +68,28 @@ html,body{width:1080px;height:1920px;background:#07070d;overflow:hidden}
       <div class="abs" style="top:900px;display:flex;justify-content:center;gap:16px"><span class="pill" id="cP1">Sezgi</span><span class="pill" id="cP2">İlham</span><span class="pill" id="cP3">Uyanış</span></div>
     </section>
 
-    <!-- D · gün / ay / yıl -->
+    <!-- D · gün / ay / yıl → 11 + 11 + 1 = 23 -->
     <section class="scene" id="sD">
-      <div class="abs" style="top:540px;display:flex;justify-content:center;align-items:flex-start;gap:60px">
-        <div class="col" id="dDay"><div class="serif" id="dDayN" style="font-size:190px">11</div><div class="lbl">Gün</div><div class="bar" id="dDayBar"></div></div>
-        <div class="col" id="dMon"><div class="serif" id="dMonN" style="font-size:190px">11</div><div class="lbl">Ay</div><div class="bar" id="dMonBar"></div></div>
-        <div class="col" id="dYr"><div class="serif" style="font-size:190px;color:#8a86a3">2026</div><div class="lbl">Yıl</div></div>
+      <div class="abs" id="dRow" style="top:380px;display:flex;justify-content:center;align-items:flex-start">
+        <div class="col" id="dDay"><div class="serif dn" id="dDayN">11</div><div class="lbl" id="dDayL">Gün</div><div class="bar" id="dDayBar"></div></div>
+        <div class="serif dplus" id="dP1">+</div>
+        <div class="col" id="dMon"><div class="serif dn" id="dMonN">11</div><div class="lbl" id="dMonL">Ay</div><div class="bar" id="dMonBar"></div></div>
+        <div class="serif dplus" id="dP2">+</div>
+        <div class="col" id="dYr" style="width:380px">
+          <div style="position:relative;height:190px;width:100%">
+            <div class="serif dn" id="dYr26" style="position:absolute;left:0;right:0;text-align:center;color:#8a86a3">2026</div>
+            <div class="serif dn" id="dYr1" style="position:absolute;left:0;right:0;text-align:center;color:#f4d98b;opacity:0">1</div>
+          </div>
+          <div class="lbl" id="dYrL">Yıl</div><div class="bar" id="dYrBar"></div>
+        </div>
       </div>
+      <div class="abs" id="dCalc" style="top:690px;font-weight:600;font-size:44px;color:#e9c46a;letter-spacing:.06em">2 + 0 + 2 + 6 = 10 → 1</div>
+      <div class="abs serif" id="dRes" style="top:690px;font-size:230px;color:#f4d98b;text-shadow:0 0 70px rgba(233,196,106,.4)">= 23</div>
     </section>
 
-    <!-- E · toplama -->
-    <section class="scene" id="sE">
-      <div class="abs" id="eRow" style="top:420px;display:flex;justify-content:center;align-items:center;gap:10px"></div>
-      <div class="abs serif" id="eRes" style="top:640px;font-size:320px;color:#f4d98b;text-shadow:0 0 70px rgba(233,196,106,.4)">= 14</div>
-    </section>
-
-    <!-- F · 1 + 4 -->
+    <!-- F · 2 + 3 -->
     <section class="scene" id="sF">
-      <div class="abs serif" id="fTxt" style="top:540px;font-size:230px;color:#f4d98b">1 + 4</div>
+      <div class="abs serif" id="fTxt" style="top:540px;font-size:230px;color:#f4d98b">2 + 3</div>
     </section>
 
     <!-- G · 5 -->
@@ -110,13 +116,20 @@ html,body{width:1080px;height:1920px;background:#07070d;overflow:hidden}
       <svg class="layer" viewBox="0 0 1080 1920" id="iSvg"></svg>
     </section>
 
-    <!-- J · CTA -->
+    <!-- J · CTA: arkadaşına gönder -->
     <section class="scene" id="sJ">
-      <img id="jMark" src="__ROOT__/public/brand/kozmograf-isaret-altin.svg" style="position:absolute;left:430px;top:290px;width:220px;height:220px" alt="">
-      <div class="abs serif" id="jQ" style="top:540px;font-size:118px;color:#ece8f5">Senin sayın kaç?</div>
-      <div class="abs" id="jUrl" style="top:710px"><span style="display:inline-block;background:#e9c46a;color:#07070d;font-weight:600;font-size:54px;padding:22px 50px;border-radius:999px">kozmograf.com</span></div>
-      <div class="abs" id="jIg" style="top:880px;font-weight:600;font-size:44px;color:#a6a2bc;letter-spacing:.04em">@kozmografcom</div>
-      <div class="abs" id="jDis" style="top:1010px;font-size:26px;color:#8a86a3;padding:0 130px;line-height:1.4">Numeroloji yorumları eğlence ve kişisel keşif amaçlıdır.</div>
+      <img id="jMark" src="__ROOT__/public/brand/kozmograf-isaret-altin.svg" style="position:absolute;left:465px;top:280px;width:150px;height:150px" alt="">
+      <div class="abs serif" id="jQ" style="top:450px;font-size:112px;color:#ece8f5">Senin sayın kaç?</div>
+      <div class="abs" id="jShare" style="top:600px">
+        <span style="display:inline-flex;align-items:center;gap:22px;border:3px solid #e9c46a;border-radius:999px;padding:28px 58px 28px 46px;background:rgba(14,13,24,.88);box-shadow:0 0 60px rgba(233,196,106,.28)">
+          <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#f4d98b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3 2.8 10.4l7.4 3 3 7.4z"/><path d="M22 3 10.2 13.4"/></svg>
+          <span style="font-weight:600;font-size:58px;color:#f4d98b">Arkadaşına gönder</span>
+        </span>
+      </div>
+      <svg id="jPlane" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="#f4d98b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:250px;top:628px;opacity:0"><path d="M22 3 2.8 10.4l7.4 3 3 7.4z"/><path d="M22 3 10.2 13.4"/></svg>
+      <div class="abs" id="jUrl" style="top:815px"><span style="display:inline-block;background:#e9c46a;color:#07070d;font-weight:600;font-size:52px;padding:20px 48px;border-radius:999px">kozmograf.com</span></div>
+      <div class="abs" id="jIg" style="top:935px;font-weight:600;font-size:42px;color:#a6a2bc;letter-spacing:.04em">@kozmografcom</div>
+      <div class="abs" id="jDis" style="top:1025px;font-size:26px;color:#8a86a3;padding:0 130px;line-height:1.4">Numeroloji yorumları eğlence ve kişisel keşif amaçlıdır.</div>
     </section>
   </div>
 
@@ -127,14 +140,18 @@ html,body{width:1080px;height:1920px;background:#07070d;overflow:hidden}
 <script>
 const SPEC = __SPEC__;
 const DUR = SPEC.duration;
+const S = SPEC.segments;
+const L = (i) => S[i].end - S[i].start;
+const at = (i, f) => S[i].start + f * L(i);
 const NS = "http://www.w3.org/2000/svg";
 const E = (id) => document.getElementById(id);
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const prog = (t, a, b) => clamp((t - a) / (b - a));
 const easeOut = (x) => 1 - Math.pow(1 - x, 3);
 const easeIO = (x) => (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-const ia = (t, a, d = .6) => easeOut(prog(t, a, a + d)); // giriş animasyonu
+const ia = (t, a, d = .6) => easeOut(prog(t, a, a + d));
 const win = (t, a, b, f = .35) => Math.min(prog(t, a, a + f), 1 - prog(t, b - f, b));
+const lerp = (a, b, k) => a + (b - a) * k;
 function put(el, o) {
   const { o: op = 1, s = 1, x = 0, y = 0, r = 0 } = o || {};
   el.style.opacity = op;
@@ -148,12 +165,10 @@ function el(tag, attrs, parent) {
 }
 function rings(gid, cx, cy, radii, color, op) {
   const g = E(gid);
-  radii.forEach((r, i) => {
-    el("circle", { cx, cy, r, fill: "none", stroke: color, "stroke-width": i === 0 ? 2.5 : 1.5, opacity: op * (1 - i * .16), ...(i % 2 ? { "stroke-dasharray": "3 14" } : {}) }, g);
-  });
+  radii.forEach((r, i) => el("circle", { cx, cy, r, fill: "none", stroke: color, "stroke-width": i === 0 ? 2.5 : 1.5, opacity: op * (1 - i * .16), ...(i % 2 ? { "stroke-dasharray": "3 14" } : {}) }, g));
 }
 
-// ─── Başlangıç kurulumu ───────────────────────────────────────────────────
+// ─── Kurulum ──────────────────────────────────────────────────────────────
 let seed = 11;
 const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 const STARS = [];
@@ -169,28 +184,6 @@ for (let i = 0; i < 130; i++) {
 rings("aR", 540, 640, [330, 400, 470], "#e9c46a", .4);
 rings("cR", 540, 650, [320, 390, 460], "#a594ff", .45);
 
-// E · rakam satırı
-const DIGITS = "11112026".split("");
-const eRow = E("eRow");
-const eItems = [];
-DIGITS.forEach((d, i) => {
-  if (i > 0) {
-    const p = document.createElement("div");
-    p.className = "serif";
-    p.style.cssText = "font-size:64px;color:#8a86a3;opacity:0";
-    p.textContent = "+";
-    eRow.appendChild(p);
-    eItems.push({ p, i });
-  }
-  const n = document.createElement("div");
-  n.className = "serif";
-  n.style.cssText = "font-size:120px;color:#ece8f5;opacity:0";
-  n.textContent = d;
-  eRow.appendChild(n);
-  eItems.push({ n, i });
-});
-
-// G · beş köşeli yıldız {5/2}
 const pts = [0, 1, 2, 3, 4].map((i) => [540 + 340 * Math.cos(-Math.PI / 2 + (2 * Math.PI * i) / 5), 670 + 340 * Math.sin(-Math.PI / 2 + (2 * Math.PI * i) / 5)]);
 const order = [0, 2, 4, 1, 3, 0];
 const gStar = E("gStar");
@@ -198,7 +191,6 @@ gStar.setAttribute("d", order.map((k, j) => (j ? "L" : "M") + pts[k][0].toFixed(
 const GLEN = 5 * Math.hypot(pts[2][0] - pts[0][0], pts[2][1] - pts[0][1]);
 gStar.style.strokeDasharray = GLEN;
 
-// H · basamaklar
 const hSvg = E("hSvg");
 const STEP = [];
 for (let i = 0; i < 4; i++) {
@@ -210,7 +202,6 @@ for (let i = 0; i < 4; i++) {
 const hDot = el("circle", { r: 22, fill: "#f4d98b" }, hSvg);
 const hRing = el("circle", { r: 40, fill: "none", stroke: "#e9c46a", "stroke-width": 3 }, hSvg);
 
-// I · saat
 const iSvg = E("iSvg");
 const CX = 540, CY = 700, CR = 250;
 el("circle", { cx: CX, cy: CY, r: CR + 14, fill: "#0e0d18", stroke: "#e9c46a", "stroke-width": 3 }, iSvg);
@@ -230,7 +221,7 @@ const S1 = [CX + CR * Math.sin(a11), CY - CR * Math.cos(a11)];
 const S2 = [CX + CR * Math.sin(a66), CY - CR * Math.cos(a66)];
 
 // Altyazılar
-const CAPS = SPEC.segments.map((s, i) => {
+const CAPS = S.map((s) => {
   const words = s.show.split(" ");
   const div = document.createElement("div");
   div.className = "cap";
@@ -258,7 +249,19 @@ CAPS.forEach((c, i) => {
   c.state = "";
 });
 
-// ─── Sahneler ─────────────────────────────────────────────────────────────
+// ─── Sahne pencereleri (cümle zamanlarına bağlı) ──────────────────────────
+const W = {
+  A: [0, S[1].start - .05],
+  B: [S[1].start - .3, S[2].start + .05],
+  C: [S[2].start - .3, S[3].start + .05],
+  D: [S[3].start - .3, S[6].start - .05],
+  F: [S[6].start - .2, S[6].end + .2],
+  G: [S[6].end - .2, S[8].start + .15],
+  H: [S[8].start - .1, S[9].start + .1],
+  I: [S[9].start - .1, S[10].start + .1],
+  J: [S[10].start - .1, DUR + 5],
+};
+
 function drawA(t) {
   put(E("aEy"), { o: ia(t, .1, .5), y: (1 - ia(t, .1, .5)) * -12 });
   const k = ia(t, .2, .9);
@@ -267,96 +270,124 @@ function drawA(t) {
   E("aR").style.transform = `rotate(${t * 6}deg)`;
 }
 function drawB(t) {
-  put(E("bEy"), { o: ia(t, 3.2, .4) });
-  const k1 = ia(t, 3.35, .5), k2 = ia(t, 3.95, .5);
+  const b0 = W.B[0];
+  put(E("bEy"), { o: ia(t, b0 + .1, .4) });
+  const k1 = ia(t, b0 + .25, .5), k2 = ia(t, b0 + .85, .5);
   put(E("bC1"), { o: k1, s: .7 + .3 * k1 }); put(E("bN1"), { o: k1, s: .8 + .2 * k1 });
   put(E("bC2"), { o: k2, s: .7 + .3 * k2 }); put(E("bN2"), { o: k2, s: .8 + .2 * k2 });
-  const ks = ia(t, 4.7, .5);
+  const ks = ia(t, b0 + 1.7, .5);
   put(E("bStar"), { o: ks * (.65 + .35 * Math.sin(t * 6)), s: .5 + .5 * ks, r: t * 40 });
 }
 function drawC(t) {
-  const k = ia(t, 6.0, .8);
+  const k = ia(t, S[2].start - .2, .8);
   put(E("cBig"), { o: k, s: .85 + .15 * k });
-  [["cP1", 6.65], ["cP2", 7.5], ["cP3", 8.3]].forEach(([id, a]) => { const q = ia(t, a, .45); put(E(id), { o: q, y: (1 - q) * 20 }); });
+  [[.28], [.52], [.76]].forEach(([f], i) => { const q = ia(t, at(2, f), .45); put(E("cP" + (i + 1)), { o: q, y: (1 - q) * 20 }); });
   E("cR").style.transform = `rotate(${-t * 5}deg)`;
 }
 function drawD(t) {
-  const d1 = ia(t, 10.45, .35), d2 = ia(t, 11.1, .35);
-  E("dDayN").style.color = d1 > .05 ? "#f4d98b" : "#ece8f5";
-  E("dMonN").style.color = d2 > .05 ? "#f4d98b" : "#ece8f5";
+  // gün / ay vurgusu
+  const d1 = ia(t, at(3, .1), .35), d2 = ia(t, at(3, .52), .35);
+  // yıl: 2+0+2+6 → 1
+  const y1 = ia(t, at(4, .1), .4);
+  const m = easeIO(prog(t, at(4, .68), at(4, .68) + .6));
+  // toplama
+  const p = ia(t, S[5].start - .05, .5);
+  const bump = (a) => Math.sin(Math.PI * prog(t, a, a + .45));
+  const bd = bump(at(5, .08)), bm = bump(at(5, .36)), by = bump(at(5, .62));
+
+  const goldDay = d1 > .05, goldMon = d2 > .05;
+  E("dDayN").style.color = goldDay ? "#f4d98b" : "#ece8f5";
+  E("dMonN").style.color = goldMon ? "#f4d98b" : "#ece8f5";
   E("dDayBar").style.transform = `scaleX(${d1})`;
   E("dMonBar").style.transform = `scaleX(${d2})`;
-  put(E("dDay"), { s: 1 + .06 * d1 * (1 - d2) });
-  put(E("dMon"), { s: 1 + .06 * d2 });
-}
-function drawE(t) {
-  eItems.forEach((it) => {
-    if (it.n) { const q = ia(t, 12.4 + it.i * .27, .3); put(it.n, { o: q, y: (1 - q) * 22, s: .8 + .2 * q }); }
-    else { const q = ia(t, 12.4 + it.i * .27 - .13, .25); it.p.style.opacity = q; }
-  });
-  const q = ia(t, 14.9, .55);
-  put(E("eRes"), { o: q * (1 - prog(t, 16.0, 16.3)), s: .8 + .2 * q });
+  E("dYrBar").style.transform = `scaleX(${y1})`;
+  E("dYr26").style.color = y1 > .05 ? "#e9c46a" : "#8a86a3";
+  E("dYr26").style.opacity = 1 - m;
+  E("dYr1").style.opacity = m;
+  E("dYr1").style.transform = `scale(${.7 + .3 * m})`;
+  E("dYr").style.width = lerp(380, 130, m) + "px";
+  E("dRow").style.gap = lerp(34, 8, p) + "px"; // artılar gelmeden sayılar yapışmasın
+  const fade = 1 - p;
+  ["dDayL", "dMonL", "dYrL"].forEach((id) => (E(id).style.opacity = fade));
+  ["dDayBar", "dMonBar", "dYrBar"].forEach((id) => (E(id).style.opacity = fade));
+  ["dP1", "dP2"].forEach((id) => { E(id).style.width = lerp(0, 96, p) + "px"; E(id).style.opacity = p; });
+  E("dDay").style.transform = `scale(${1 + .06 * d1 * (1 - p) + .1 * bd})`;
+  E("dMon").style.transform = `scale(${1 + .06 * d2 * (1 - p) + .1 * bm})`;
+  E("dYr").style.transform = `scale(${1 + .1 * by})`;
+  put(E("dCalc"), { o: y1 * (1 - prog(t, S[5].start - .2, S[5].start + .1)), y: (1 - y1) * 14 });
+  const q = ia(t, at(5, .78), .5);
+  put(E("dRes"), { o: q, s: .8 + .2 * q });
 }
 function drawF(t) {
-  const q = ia(t, 16.28, .35);
-  put(E("fTxt"), { o: q * (1 - prog(t, 16.8, 17.0)), s: .85 + .15 * q + .1 * prog(t, 16.6, 17.0) });
+  const q = ia(t, S[6].start - .1, .35);
+  put(E("fTxt"), { o: q * (1 - prog(t, S[6].end - .05, S[6].end + .15)), s: .85 + .15 * q + .1 * prog(t, S[6].end - .3, S[6].end + .15) });
 }
 function drawG(t) {
-  const q = ia(t, 17.0, .55);
+  const g0 = W.G[0];
+  const q = ia(t, g0 + .1, .55);
   put(E("gBig"), { o: q, s: .8 + .2 * q });
-  gStar.style.strokeDashoffset = GLEN * (1 - easeIO(prog(t, 16.95, 18.3)));
-  [["gP1", 17.7], ["gP2", 18.2]].forEach(([id, a]) => { const p = ia(t, a, .4); put(E(id), { o: p, y: (1 - p) * 20 }); });
+  gStar.style.strokeDashoffset = GLEN * (1 - easeIO(prog(t, g0 + .05, g0 + 1.45)));
+  [[.3], [.64]].forEach(([f], i) => { const p = ia(t, at(7, f), .4); put(E("gP" + (i + 1)), { o: p, y: (1 - p) * 20 }); });
 }
 function drawH(t) {
-  const q = ia(t, 19.3, .6);
-  const pulse = prog(t, 24.6, 26.4);
-  put(E("hCard"), { o: q, s: .9 + .1 * q + .02 * Math.sin(prog(t, 24.6, 26.4) * Math.PI * 3) * pulse });
+  const h0 = S[8].start;
+  const q = ia(t, h0 + .15, .6);
+  const pulse = prog(t, h0 + 5.45, h0 + 7.25);
+  put(E("hCard"), { o: q, s: .9 + .1 * q + .02 * Math.sin(pulse * Math.PI * 3) * pulse });
   E("hCard").style.boxShadow = `0 0 ${80 + 90 * pulse}px rgba(233,196,106,${.25 + .35 * pulse})`;
-  put(E("hLbl"), { o: ia(t, 21.0, .5) });
-  E("hLbl").textContent = t > 24.8 ? "Güçlü gün" : "Ertelediğin adım";
-  STEP.forEach((s, i) => { const p = ia(t, 21.0 + i * .45, .4); s.r.style.opacity = p; s.r.style.transform = `scaleY(${p})`; });
-  const J = [22.7, 23.4, 24.1, 24.8];
+  put(E("hLbl"), { o: ia(t, h0 + 1.85, .5) });
+  E("hLbl").textContent = t > h0 + 5.65 ? "Güçlü gün" : "Ertelediğin adım";
+  STEP.forEach((s, i) => { const p = ia(t, h0 + 1.85 + i * .45, .4); s.r.style.opacity = p; s.r.style.transform = `scaleY(${p})`; });
+  const J = [h0 + 3.55, h0 + 4.25, h0 + 4.95, h0 + 5.65];
   let idx = 0;
   while (idx < 3 && t >= J[idx + 1]) idx++;
   const from = STEP[idx], to = STEP[Math.min(3, idx + 1)];
   const u = idx < 3 ? easeIO(prog(t, J[idx + 1] - .45, J[idx + 1])) : 0;
   const cur = u > 0 && idx < 3 ? [from.cx + (to.cx - from.cx) * u, from.top - 22 + (to.top - from.top) * u - 70 * Math.sin(Math.PI * u)] : [from.cx, from.top - 22];
-  const dp = ia(t, 22.5, .3);
+  const dp = ia(t, h0 + 3.35, .3);
   hDot.setAttribute("cx", cur[0]); hDot.setAttribute("cy", cur[1]); hDot.style.opacity = dp;
   hRing.setAttribute("cx", cur[0]); hRing.setAttribute("cy", cur[1]);
   hRing.setAttribute("r", 30 + 120 * pulse); hRing.style.opacity = pulse > 0 ? (1 - pulse) * .9 : 0;
 }
 function drawI(t) {
-  put(E("iDig"), { o: ia(t, 27.2, .5), s: .9 + .1 * ia(t, 27.2, .5) });
-  const sw = easeIO(prog(t, 27.4, 28.5));
+  const i0 = S[9].start;
+  put(E("iDig"), { o: ia(t, i0, .5), s: .9 + .1 * ia(t, i0, .5) });
+  const sw = easeIO(prog(t, i0 + .2, i0 + 1.3));
   hourH.style.transform = `rotate(${335.5 * sw}deg)`;
-  minH.style.transform = `rotate(${(66 + 360 * (1 - sw)) % 360 * 1}deg)`;
-  const k1 = ia(t, 28.4, .5), k2 = ia(t, 29.0, .5);
+  minH.style.transform = `rotate(${(66 + 360 * (1 - sw)) % 360}deg)`;
+  const k1 = ia(t, i0 + 1.2, .5), k2 = ia(t, i0 + 1.8, .5);
   [[sp1, S1, k1, 0], [sp2, S2, k2, 1.3]].forEach(([n, p, k, ph]) => {
     n.setAttribute("transform", `translate(${p[0]} ${p[1]}) scale(${(.4 + .6 * k) * (.9 + .12 * Math.sin(t * 6 + ph))}) rotate(${t * 30})`);
     n.style.opacity = k;
   });
 }
 function drawJ(t) {
-  const m = ia(t, 30.75, .6);
+  const m = ia(t, S[10].start, .6);
   put(E("jMark"), { o: m, s: (.8 + .2 * m) * (1 + .03 * Math.sin(t * 2)) });
-  put(E("jQ"), { o: ia(t, 31.0, .5), y: (1 - ia(t, 31.0, .5)) * 24 });
-  put(E("jUrl"), { o: ia(t, 32.2, .5), s: .9 + .1 * ia(t, 32.2, .5) });
-  put(E("jIg"), { o: ia(t, 33.0, .5) });
-  put(E("jDis"), { o: ia(t, 35.1, .5) });
+  put(E("jQ"), { o: ia(t, S[10].start + .05, .5), y: (1 - ia(t, S[10].start + .05, .5)) * 24 });
+  // Arkadaşına gönder
+  const sh = ia(t, S[11].start + .05, .5);
+  const throb = 1 + .025 * Math.sin(Math.max(0, t - S[11].start) * 5);
+  put(E("jShare"), { o: sh, s: (.88 + .12 * sh) * throb });
+  // uçan kağıt uçak: düğmeden sağ üste süzülür
+  const f0 = at(11, .42), fp = prog(t, f0, f0 + 1.0);
+  const fe = easeIO(fp);
+  put(E("jPlane"), { o: fp > 0 && fp < 1 ? Math.sin(Math.PI * Math.min(1, fp * 1.15)) : 0, s: .8 + .4 * fe, x: 90 + 560 * fe, y: -10 - 40 * fe, r: -8 * fe });
+  put(E("jUrl"), { o: ia(t, S[12].start, .5), s: .9 + .1 * ia(t, S[12].start, .5) });
+  put(E("jIg"), { o: ia(t, at(12, .5), .5) });
+  put(E("jDis"), { o: ia(t, S[12].end + .35, .5) });
 }
 
 const SCENES = [
-  { id: "sA", a: 0, b: 3.2, f: .35, g: 1, d: drawA },
-  { id: "sB", a: 3.1, b: 6.0, f: .35, v: 1, d: drawB },
-  { id: "sC", a: 5.9, b: 10.2, f: .35, v: 1, d: drawC },
-  { id: "sD", a: 10.1, b: 12.2, f: .3, g: 1, d: drawD },
-  { id: "sE", a: 12.1, b: 16.4, f: .3, g: 1, d: drawE },
-  { id: "sF", a: 16.2, b: 17.1, f: .15, g: 1, d: drawF },
-  { id: "sG", a: 16.9, b: 19.4, f: .3, g: 1, d: drawG },
-  { id: "sH", a: 19.2, b: 27.3, f: .4, g: 1, d: drawH },
-  { id: "sI", a: 27.1, b: 30.8, f: .4, v: 1, d: drawI },
-  { id: "sJ", a: 30.6, b: DUR + 5, f: .4, g: 1, d: drawJ },
+  { id: "sA", a: W.A[0], b: W.A[1], f: .35, g: 1, d: drawA },
+  { id: "sB", a: W.B[0], b: W.B[1], f: .35, v: 1, d: drawB },
+  { id: "sC", a: W.C[0], b: W.C[1], f: .35, v: 1, d: drawC },
+  { id: "sD", a: W.D[0], b: W.D[1], f: .35, g: 1, d: drawD },
+  { id: "sF", a: W.F[0], b: W.F[1], f: .15, g: 1, d: drawF },
+  { id: "sG", a: W.G[0], b: W.G[1], f: .3, g: 1, d: drawG },
+  { id: "sH", a: W.H[0], b: W.H[1], f: .4, g: 1, d: drawH },
+  { id: "sI", a: W.I[0], b: W.I[1], f: .4, v: 1, d: drawI },
+  { id: "sJ", a: W.J[0], b: W.J[1], f: .4, g: 1, d: drawJ },
 ];
 SCENES.forEach((s) => (s.el = E(s.id)));
 

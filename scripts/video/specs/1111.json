@@ -1,22 +1,89 @@
 {
   "template": "templates/1111.html",
   "fps": 30,
-  "duration": 36.6,
+  "duration": 49.1,
   "audio": {
-    "voice": "Aslı (sg-tr-asli), Quality model, 34,9 sn",
-    "note": "Süreler SpeechGenAI cümle zamanlamalarıdır (segments_basis: pauses). Ses dosyası ses sağlayıcısının linkinden indirilir."
+    "voice": "Aslı (sg-tr-asli), Quality model, 47,6 sn",
+    "note": "v2: yıl 2026→1, 11+11+1=23→5, arkadaşa gönder CTA'sı. Süreler SpeechGenAI cümle zamanlamalarıdır (segments_basis: pauses)."
   },
   "segments": [
-    { "text": "Yarın tarih on bir, on bir.", "show": "Yarın tarih 11.11.", "start": 0.33, "end": 2.87 },
-    { "text": "Numerolojide iki usta sayı yan yana.", "show": "Numerolojide iki usta sayı yan yana.", "start": 3.29, "end": 5.73 },
-    { "text": "On bir; sezginin, ilhamın ve uyanışın sayısı.", "show": "11; sezginin, ilhamın ve uyanışın sayısı.", "start": 5.97, "end": 9.89 },
-    { "text": "Hem gün on bir, hem ay on bir.", "show": "Hem gün 11, hem ay 11.", "start": 10.32, "end": 11.79 },
-    { "text": "Tarihin bütün rakamlarını topla: on dört.", "show": "Tarihin bütün rakamlarını topla: 14.", "start": 12.21, "end": 15.78 },
-    { "text": "On dört de beşe iner.", "show": "14 de 5'e iner.", "start": 16.28, "end": 16.77 },
-    { "text": "Beş, değişim ve özgürlük demek.", "show": "5, değişim ve özgürlük demek.", "start": 17.39, "end": 18.66 },
-    { "text": "Numerolojiye göre yarın, ertelediğin bir adımı atmak için güçlü bir gün.", "show": "Numerolojiye göre yarın, ertelediğin bir adımı atmak için güçlü bir gün.", "start": 19.15, "end": 26.41 },
-    { "text": "Dileğini tutmadan önce, ne istediğini netleştir.", "show": "Dileğini tutmadan önce, ne istediğini netleştir.", "start": 27.25, "end": 30.16 },
-    { "text": "Senin sayın kaç?", "show": "Senin sayın kaç?", "start": 30.86, "end": 31.89 },
-    { "text": "Profildeki linkten on saniyede öğren.", "show": "Profildeki linkten 10 saniyede öğren.", "start": 32.22, "end": 34.63 }
+    {
+      "text": "Yarın tarih on bir, on bir.",
+      "show": "Yarın tarih 11.11.",
+      "start": 0.28,
+      "end": 2.86
+    },
+    {
+      "text": "Numerolojide iki usta sayı yan yana.",
+      "show": "Numerolojide iki usta sayı yan yana.",
+      "start": 3.61,
+      "end": 6.42
+    },
+    {
+      "text": "On bir; sezginin, ilhamın ve uyanışın sayısı.",
+      "show": "11; sezginin, ilhamın ve uyanışın sayısı.",
+      "start": 7.5,
+      "end": 9.99
+    },
+    {
+      "text": "Hem gün on bir, hem ay on bir.",
+      "show": "Hem gün 11, hem ay 11.",
+      "start": 10.22,
+      "end": 13.71
+    },
+    {
+      "text": "Yılı da tek basamağa indir: iki bin yirmi altı, bir eder.",
+      "show": "Yılı da tek basamağa indir: 2026, 1 eder.",
+      "start": 14.1,
+      "end": 17.73
+    },
+    {
+      "text": "On bir, artı on bir, artı bir, yirmi üç.",
+      "show": "11 + 11 + 1 = 23.",
+      "start": 18.21,
+      "end": 21.36
+    },
+    {
+      "text": "Yirmi üç de beşe iner.",
+      "show": "23 de 5'e iner.",
+      "start": 21.67,
+      "end": 23.46
+    },
+    {
+      "text": "Beş, değişim ve özgürlük demek.",
+      "show": "5, değişim ve özgürlük demek.",
+      "start": 23.81,
+      "end": 26.69
+    },
+    {
+      "text": "Numerolojiye göre yarın, ertelediğin bir adımı atmak için güçlü bir gün.",
+      "show": "Numerolojiye göre yarın, ertelediğin bir adımı atmak için güçlü bir gün.",
+      "start": 27.59,
+      "end": 34.68
+    },
+    {
+      "text": "Dileğini tutmadan önce, ne istediğini netleştir.",
+      "show": "Dileğini tutmadan önce, ne istediğini netleştir.",
+      "start": 34.97,
+      "end": 37.61
+    },
+    {
+      "text": "Senin sayın kaç?",
+      "show": "Senin sayın kaç?",
+      "start": 37.94,
+      "end": 39.37
+    },
+    {
+      "text": "Bu videoyu bir arkadaşına gönder, o da öğrensin.",
+      "show": "Bu videoyu bir arkadaşına gönder, o da öğrensin.",
+      "start": 40.27,
+      "end": 44.33
+    },
+    {
+      "text": "Profildeki linkten, on saniyede öğrenin.",
+      "show": "Profildeki linkten, 10 saniyede öğrenin.",
+      "start": 44.96,
+      "end": 47.32
+    }
   ]
 }
