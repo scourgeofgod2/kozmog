@@ -242,14 +242,6 @@ CAPS.forEach((c, i) => {
   const nextA = next ? next.s.start - .12 : DUR;
   c.a = c.s.start - .12;
   c.b = Math.min(Math.max(c.s.end, c.s.start + 1.15) + .15, nextA);
-  const hEnd = Math.min(Math.max(c.s.end, c.s.start + .32 * c.words.length), (next ? next.s.start : DUR) - .05);
-  const blocks = (c.s.blocks && c.s.blocks.length ? c.s.blocks : [[c.s.start, hEnd, 0, c.words.length]]).map(([a, b, wf, wt]) => ({ a, b, wf, wt }));
-  c.wordInfo = [];
-  blocks.forEach((bl) => {
-    const sub = c.lens.slice(bl.wf, bl.wt), tot = sub.reduce((x, y) => x + y, 0);
-    let acc = 0;
-    sub.forEach((l, k) => { c.wordInfo[bl.wf + k] = { bl, f0: acc / tot, f1: (acc + l) / tot }; acc += l; });
-  });
   c.state = "";
 });
 
@@ -420,8 +412,8 @@ window.RENDER = function (t) {
     c.div.style.opacity = v;
     c.div.style.transform = `translateY(${(1 - v) * 14}px)`;
     c.spans.forEach((sp, i) => {
-      const wi = c.wordInfo[i], bp = clamp((t - wi.bl.a) / (wi.bl.b - wi.bl.a));
-      sp.className = "w " + (t < wi.bl.a ? "" : bp >= wi.f1 ? "p" : bp >= wi.f0 ? "c" : "");
+      const [w0, w1] = c.s.wt[i];
+      sp.className = "w " + (t < w0 ? "" : t >= w1 ? "p" : "c");
     });
   });
 };
