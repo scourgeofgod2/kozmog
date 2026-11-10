@@ -126,7 +126,7 @@ html,body{width:1080px;height:1920px;background:#07070d;overflow:hidden}
           <span style="font-weight:600;font-size:58px;color:#f4d98b">Arkadaşına gönder</span>
         </span>
       </div>
-      <svg id="jPlane" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="#f4d98b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:250px;top:628px;opacity:0"><path d="M22 3 2.8 10.4l7.4 3 3 7.4z"/><path d="M22 3 10.2 13.4"/></svg>
+      <svg id="jPlane" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="#f4d98b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:830px;top:628px;opacity:0"><path d="M22 3 2.8 10.4l7.4 3 3 7.4z"/><path d="M22 3 10.2 13.4"/></svg>
       <div class="abs" id="jUrl" style="top:815px"><span style="display:inline-block;background:#e9c46a;color:#07070d;font-weight:600;font-size:52px;padding:20px 48px;border-radius:999px">kozmograf.com</span></div>
       <div class="abs" id="jIg" style="top:935px;font-weight:600;font-size:42px;color:#a6a2bc;letter-spacing:.04em">@kozmografcom</div>
       <div class="abs" id="jDis" style="top:1025px;font-size:26px;color:#8a86a3;padding:0 130px;line-height:1.4">Numeroloji yorumları eğlence ve kişisel keşif amaçlıdır.</div>
@@ -141,6 +141,7 @@ html,body{width:1080px;height:1920px;background:#07070d;overflow:hidden}
 const SPEC = __SPEC__;
 const DUR = SPEC.duration;
 const S = SPEC.segments;
+const A = SPEC.anchors;
 const L = (i) => S[i].end - S[i].start;
 const at = (i, f) => S[i].start + f * L(i);
 const NS = "http://www.w3.org/2000/svg";
@@ -220,7 +221,7 @@ const a11 = (330 * Math.PI) / 180, a66 = (66 * Math.PI) / 180;
 const S1 = [CX + CR * Math.sin(a11), CY - CR * Math.cos(a11)];
 const S2 = [CX + CR * Math.sin(a66), CY - CR * Math.cos(a66)];
 
-// Altyazılar
+// Altyazılar: kelimeler, sesteki gerçek konuşma bloklarına göre vurgulanır
 const CAPS = S.map((s) => {
   const words = s.show.split(" ");
   const div = document.createElement("div");
@@ -234,18 +235,21 @@ const CAPS = S.map((s) => {
     return sp;
   });
   E("cap").appendChild(div);
-  const lens = words.map((w) => w.length + 1);
-  const total = lens.reduce((a, b) => a + b, 0);
-  let acc = 0;
-  const bounds = lens.map((l) => { const a = acc; acc += l; return [a / total, acc / total]; });
-  return { div, spans, bounds, s, words: words.length };
+  return { div, spans, words, s, lens: words.map((w) => w.length + 1) };
 });
 CAPS.forEach((c, i) => {
   const next = CAPS[i + 1];
   const nextA = next ? next.s.start - .12 : DUR;
   c.a = c.s.start - .12;
   c.b = Math.min(Math.max(c.s.end, c.s.start + 1.15) + .15, nextA);
-  c.hEnd = Math.min(Math.max(c.s.end, c.s.start + .32 * c.words), (next ? next.s.start : DUR) - .05);
+  const hEnd = Math.min(Math.max(c.s.end, c.s.start + .32 * c.words.length), (next ? next.s.start : DUR) - .05);
+  const blocks = (c.s.blocks && c.s.blocks.length ? c.s.blocks : [[c.s.start, hEnd, 0, c.words.length]]).map(([a, b, wf, wt]) => ({ a, b, wf, wt }));
+  c.wordInfo = [];
+  blocks.forEach((bl) => {
+    const sub = c.lens.slice(bl.wf, bl.wt), tot = sub.reduce((x, y) => x + y, 0);
+    let acc = 0;
+    sub.forEach((l, k) => { c.wordInfo[bl.wf + k] = { bl, f0: acc / tot, f1: (acc + l) / tot }; acc += l; });
+  });
   c.state = "";
 });
 
@@ -286,14 +290,14 @@ function drawC(t) {
 }
 function drawD(t) {
   // gün / ay vurgusu
-  const d1 = ia(t, at(3, .1), .35), d2 = ia(t, at(3, .52), .35);
+  const d1 = ia(t, at(3, .1), .35), d2 = ia(t, A.monthHi, .35);
   // yıl: 2+0+2+6 → 1
   const y1 = ia(t, at(4, .1), .4);
-  const m = easeIO(prog(t, at(4, .68), at(4, .68) + .6));
+  const m = easeIO(prog(t, A.yearMorph, A.yearMorph + .6));
   // toplama
   const p = ia(t, S[5].start - .05, .5);
   const bump = (a) => Math.sin(Math.PI * prog(t, a, a + .45));
-  const bd = bump(at(5, .08)), bm = bump(at(5, .36)), by = bump(at(5, .62));
+  const bd = bump(A.pulseDay), bm = bump(A.pulseMon), by = bump(A.pulseYear);
 
   const goldDay = d1 > .05, goldMon = d2 > .05;
   E("dDayN").style.color = goldDay ? "#f4d98b" : "#ece8f5";
@@ -315,7 +319,7 @@ function drawD(t) {
   E("dMon").style.transform = `scale(${1 + .06 * d2 * (1 - p) + .1 * bm})`;
   E("dYr").style.transform = `scale(${1 + .1 * by})`;
   put(E("dCalc"), { o: y1 * (1 - prog(t, S[5].start - .2, S[5].start + .1)), y: (1 - y1) * 14 });
-  const q = ia(t, at(5, .78), .5);
+  const q = ia(t, A.res23, .5);
   put(E("dRes"), { o: q, s: .8 + .2 * q });
 }
 function drawF(t) {
@@ -327,24 +331,23 @@ function drawG(t) {
   const q = ia(t, g0 + .1, .55);
   put(E("gBig"), { o: q, s: .8 + .2 * q });
   gStar.style.strokeDashoffset = GLEN * (1 - easeIO(prog(t, g0 + .05, g0 + 1.45)));
-  [[.3], [.64]].forEach(([f], i) => { const p = ia(t, at(7, f), .4); put(E("gP" + (i + 1)), { o: p, y: (1 - p) * 20 }); });
+  [A.pillDegisim, A.pillOzgurluk].forEach((ta, i) => { const p = ia(t, ta, .4); put(E("gP" + (i + 1)), { o: p, y: (1 - p) * 20 }); });
 }
 function drawH(t) {
-  const h0 = S[8].start;
-  const q = ia(t, h0 + .15, .6);
-  const pulse = prog(t, h0 + 5.45, h0 + 7.25);
+  const q = ia(t, A.hCard, .6);
+  const pulse = prog(t, A.hPulse[0], A.hPulse[1]);
   put(E("hCard"), { o: q, s: .9 + .1 * q + .02 * Math.sin(pulse * Math.PI * 3) * pulse });
   E("hCard").style.boxShadow = `0 0 ${80 + 90 * pulse}px rgba(233,196,106,${.25 + .35 * pulse})`;
-  put(E("hLbl"), { o: ia(t, h0 + 1.85, .5) });
-  E("hLbl").textContent = t > h0 + 5.65 ? "Güçlü gün" : "Ertelediğin adım";
-  STEP.forEach((s, i) => { const p = ia(t, h0 + 1.85 + i * .45, .4); s.r.style.opacity = p; s.r.style.transform = `scaleY(${p})`; });
-  const J = [h0 + 3.55, h0 + 4.25, h0 + 4.95, h0 + 5.65];
+  put(E("hLbl"), { o: ia(t, A.hSteps, .5) });
+  E("hLbl").textContent = t > A.hJumps[3] ? "Güçlü gün" : "Ertelediğin adım";
+  STEP.forEach((s, i) => { const p = ia(t, A.hSteps + i * .4, .4); s.r.style.opacity = p; s.r.style.transform = `scaleY(${p})`; });
+  const J = A.hJumps;
   let idx = 0;
   while (idx < 3 && t >= J[idx + 1]) idx++;
   const from = STEP[idx], to = STEP[Math.min(3, idx + 1)];
   const u = idx < 3 ? easeIO(prog(t, J[idx + 1] - .45, J[idx + 1])) : 0;
   const cur = u > 0 && idx < 3 ? [from.cx + (to.cx - from.cx) * u, from.top - 22 + (to.top - from.top) * u - 70 * Math.sin(Math.PI * u)] : [from.cx, from.top - 22];
-  const dp = ia(t, h0 + 3.35, .3);
+  const dp = ia(t, A.hDot - .2, .3);
   hDot.setAttribute("cx", cur[0]); hDot.setAttribute("cy", cur[1]); hDot.style.opacity = dp;
   hRing.setAttribute("cx", cur[0]); hRing.setAttribute("cy", cur[1]);
   hRing.setAttribute("r", 30 + 120 * pulse); hRing.style.opacity = pulse > 0 ? (1 - pulse) * .9 : 0;
@@ -370,9 +373,9 @@ function drawJ(t) {
   const throb = 1 + .025 * Math.sin(Math.max(0, t - S[11].start) * 5);
   put(E("jShare"), { o: sh, s: (.88 + .12 * sh) * throb });
   // uçan kağıt uçak: düğmeden sağ üste süzülür
-  const f0 = at(11, .42), fp = prog(t, f0, f0 + 1.0);
+  const f0 = A.planeFly, fp = prog(t, f0, f0 + 1.0);
   const fe = easeIO(fp);
-  put(E("jPlane"), { o: fp > 0 && fp < 1 ? Math.sin(Math.PI * Math.min(1, fp * 1.15)) : 0, s: .8 + .4 * fe, x: 90 + 560 * fe, y: -10 - 40 * fe, r: -8 * fe });
+  put(E("jPlane"), { o: fp > 0 && fp < 1 ? Math.sin(Math.PI * Math.min(1, fp * 1.15)) : 0, s: .8 + .5 * fe, x: 20 + 140 * fe, y: -10 - 100 * fe, r: -10 * fe });
   put(E("jUrl"), { o: ia(t, S[12].start, .5), s: .9 + .1 * ia(t, S[12].start, .5) });
   put(E("jIg"), { o: ia(t, at(12, .5), .5) });
   put(E("jDis"), { o: ia(t, S[12].end + .35, .5) });
@@ -416,10 +419,9 @@ window.RENDER = function (t) {
     c.state = "on";
     c.div.style.opacity = v;
     c.div.style.transform = `translateY(${(1 - v) * 14}px)`;
-    const p = clamp((t - c.s.start) / (c.hEnd - c.s.start));
     c.spans.forEach((sp, i) => {
-      const [a, b] = c.bounds[i];
-      sp.className = "w " + (p >= b ? "p" : p >= a ? "c" : "");
+      const wi = c.wordInfo[i], bp = clamp((t - wi.bl.a) / (wi.bl.b - wi.bl.a));
+      sp.className = "w " + (t < wi.bl.a ? "" : bp >= wi.f1 ? "p" : bp >= wi.f0 ? "c" : "");
     });
   });
 };

@@ -105,7 +105,7 @@ const ff = [
   ...(audio ? ["-i", audio] : []),
   "-t", String(DUR),
   "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-profile:v", "high", "-pix_fmt", "yuv420p", "-r", String(FPS),
-  ...(audio ? ["-af", "loudnorm=I=-14:TP=-1.5:LRA=11,apad", "-c:a", "aac", "-b:a", "192k", "-ar", "48000"] : []),
+  ...(audio ? ["-af", "loudnorm=I=-14:TP=-1.5:LRA=11,apad", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2"] : []),
   "-movflags", "+faststart", path.resolve(outPath),
 ];
 const r = spawnSync("ffmpeg", ff, { stdio: "inherit" });
