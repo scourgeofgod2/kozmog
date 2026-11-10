@@ -4,6 +4,7 @@ import { encodeOrder, formatDateTR, formatPhoneTR, formatTL, newOrderCode, valid
 import { clientIp, hit } from "@/lib/rateLimit";
 import { SITE_URL } from "@/lib/site";
 import { button, emailLayout, escapeHtml, kv, sendMail } from "@/lib/mail";
+import { insertOrder, safely } from "@/lib/db";
 
 export const runtime = "nodejs";
 
@@ -77,6 +78,9 @@ ${button(studioLink, "Rapor stüdyosunu aç")}`,
     console.error(`[siparis] ${order.code} yönetici e-postası gönderilemedi: ${admin.error}`);
     return json(502, { error: "Siparişin şu anda alınamadı. Lütfen birkaç dakika sonra tekrar dene." });
   }
+
+  // Veritabanı kaydı (hata siparişi düşürmez; e-posta asıl kayıttır)
+  safely(() => insertOrder(order, pkg.price), `insert ${order.code}`);
 
   // 2) Müşteri onayı — gönderilemezse sipariş yine geçerli, ekranda bilgiler var
   const customer = await sendMail({

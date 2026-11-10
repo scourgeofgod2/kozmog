@@ -9,3 +9,4 @@ Dockerfile
 .dockerignore
 *.test.ts
 *.test.tsx
+data

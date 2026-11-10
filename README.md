@@ -21,6 +21,7 @@ npm run gorseller    # illüstrasyonları yeniden üret (global playwright gerek
 | `ADMIN_EMAIL` | Satış için | Sipariş bildirimlerinin geleceği adres |
 | `RESEND_API_KEY` | Satış için | Resend API anahtarı (`re_…`) |
 | `MAIL_FROM` | Satış için | Gönderen, doğrulanmış alan adından: `Kozmograf <rapor@kozmograf.com>` |
+| `DATABASE_PATH` | Hayır | SQLite dosyası (Docker'da `/app/data/kozmograf.db`, Dockerfile ayarlar) |
 | `READING_DAILY_CAP` | Hayır | Günlük toplam ücretsiz yorum üst sınırı (varsayılan 3000) |
 
 ## Sipariş ve rapor akışı
@@ -33,6 +34,16 @@ npm run gorseller    # illüstrasyonları yeniden üret (global playwright gerek
 4. "PDF'i önizle" ile kontrol et → "Müşteriye e-postayla gönder": PDF sunucuda üretilir, Resend ile ek olarak gider.
 
 Sipariş verisi veritabanında tutulmaz; stüdyo linkinin `#` sonrası kısmında taşınır (sunucu kayıtlarına düşmez).
+
+## Sipariş veritabanı (SQLite)
+
+- Node 22'nin yerleşik `node:sqlite` modülü; ek paket yok. Tablo ilk istekte otomatik oluşur.
+- **Coolify:** Uygulama → Persistent Storage → Volume ekle, Destination Path: `/app/data`. Eklemezsen veriler her
+  redeploy'da silinir.
+- Yönetim: `kozmograf.com/yonetim` → `ADMIN_TOKEN` → sipariş listesi, durum (Bekliyor/Ödendi/Gönderildi/İptal),
+  stüdyo. Rapor e-postayla gönderilince durum otomatik "Gönderildi" olur.
+- Veritabanı hatası siparişi düşürmez (e-posta asıl kayıttır); hata `[db]` önekiyle loglanır.
+- Yedek: Coolify'da volume yedeği ya da konteynerde `/app/data/kozmograf.db` dosyasını kopyala.
 
 ## Resend kurulumu
 

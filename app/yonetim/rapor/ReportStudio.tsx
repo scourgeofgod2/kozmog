@@ -5,7 +5,7 @@ import { decodeOrder, formatDateTR, formatTL, type Order } from "@/lib/order";
 import { getPackage, type ReportSection } from "@/lib/content/packages";
 import { markdownToHtml } from "@/lib/markdown";
 import { buttonStyles } from "@/components/ds";
-import ManualOrder from "./ManualOrder";
+import AdminHome from "./AdminHome";
 
 const SECTION_TITLES: Record<ReportSection, string> = {
   harita: "Kozmik Harita",
@@ -51,7 +51,7 @@ export default function ReportStudio() {
   }, []);
 
   if (!mounted) return <p className="py-20 text-center text-muted">Yükleniyor…</p>;
-  if (!hash) return <ManualOrder />;
+  if (!hash) return <AdminHome />;
   if (!order) {
     return (
       <div className="mx-auto max-w-lg py-20 text-center">
@@ -146,6 +146,9 @@ export default function ReportStudio() {
       {/* ── Yönetim paneli (yazdırmada gizli) ── */}
       <div className="no-print flex flex-col gap-4">
         <div className="rounded-[var(--radius-card)] border border-line bg-surface p-5">
+          <a href="/yonetim/rapor" className="mb-2 inline-flex min-h-[36px] items-center text-[13px] text-muted hover:text-gold">
+            ← Siparişler
+          </a>
           <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-gold">Rapor stüdyosu</p>
           <h1 className="mt-1 font-display text-3xl font-semibold">
             {order.code} · {pkg.name}

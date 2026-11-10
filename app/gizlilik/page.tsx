@@ -32,8 +32,9 @@ export default function GizlilikPage() {
           </li>
           <li>
             <strong>Sipariş verileri (ücretli raporlar):</strong> Ad soyad, doğum tarihi, varsa partnerinin adı ve doğum
-            tarihi ile raporun gönderileceği e-posta adresi. Sipariş bilgileri bir veritabanında saklanmaz; sipariş
-            bildirimi ve rapor e-posta ile iletilir.
+            tarihi ile raporun gönderileceği e-posta adresi. Bu bilgiler siparişin takibi ve raporun teslimi için
+            kendi sunucumuzdaki sipariş veritabanında saklanır; sipariş bildirimi ve rapor e-posta ile iletilir.
+            Talep etmen halinde silinir.
           </li>
         </ul>
         <p>Üyelik sistemi bulunmamaktadır.</p>

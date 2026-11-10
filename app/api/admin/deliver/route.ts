@@ -7,6 +7,7 @@ import { renderReportPdf } from "@/lib/pdf/ReportPdf";
 import { sectionVisuals } from "@/lib/pdf/visuals";
 import { sendMail, emailLayout, escapeHtml } from "@/lib/mail";
 import { CONTACT_EMAIL } from "@/lib/site";
+import { safely, setOrderStatus } from "@/lib/db";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -101,6 +102,7 @@ export async function POST(req: NextRequest) {
   });
   if (!sent.ok) return json(502, { error: sent.error });
 
+  safely(() => setOrderStatus(code, "gonderildi"), `status ${code}`);
   console.log(`[teslim] ${code} ${pkg.slug}`);
   return json(200, { ok: true, to: order.contact, id: sent.id });
 }

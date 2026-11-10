@@ -4,6 +4,7 @@ import { useState } from "react";
 import DateInput from "@/components/forms/DateInput";
 import { buttonStyles } from "@/components/ds";
 import { packages, getPackage } from "@/lib/content/packages";
+import { orderToHash } from "@/lib/orderHash";
 
 const inputCls =
   "h-[52px] w-full rounded-[14px] border border-line bg-ink px-4 text-[16px] text-text placeholder:text-faint outline-none focus:border-gold";
@@ -36,18 +37,13 @@ export default function ManualOrder() {
       code: c,
       createdAt: new Date().toISOString(),
     };
-    const bytes = new TextEncoder().encode(JSON.stringify(order));
-    const b64 = btoa(String.fromCharCode(...bytes)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-    window.location.hash = `o=${b64}`;
+    window.location.hash = orderToHash(order);
   }
 
   return (
-    <div className="mx-auto max-w-xl pb-16 pt-10">
-      <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-gold">Rapor stüdyosu</p>
-      <h1 className="mt-1 font-display text-4xl font-semibold">Siparişi elle aç</h1>
-      <p className="mt-2 text-[15px] text-muted">
-        Normalde sipariş e-postasındaki &quot;Rapor stüdyosunu aç&quot; butonuyla gelirsin. E-posta gelmediyse sipariş
-        bilgilerini buraya gir.
+    <div>
+      <p className="text-[14px] text-muted">
+        Listede olmayan bir sipariş için (ör. veritabanı kurulmadan önce gelenler) bilgileri buraya gir.
       </p>
 
       <form onSubmit={open} noValidate className="mt-6 flex flex-col gap-4 rounded-[var(--radius-card)] border border-line bg-surface p-5">

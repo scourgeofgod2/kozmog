@@ -26,7 +26,8 @@ export async function sendMail(input: MailInput): Promise<{ ok: true; id: string
   if (!key || !from) return { ok: false, error: "E-posta servisi yapılandırılmamış (RESEND_API_KEY / MAIL_FROM)." };
 
   try {
-    const res = await fetch("https://api.resend.com/emails", {
+    // RESEND_API_URL yalnızca test içindir (sahte sunucu); canlıda tanımlanmaz
+    const res = await fetch(process.env.RESEND_API_URL || "https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify({
