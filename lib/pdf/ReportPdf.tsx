@@ -104,10 +104,12 @@ export interface ReportPdfInput {
   title: string;
   subtitle: string;
   code: string;
+  /** Paketler sayfasındaki örnek raporlar için etiket */
+  sample?: boolean;
   sections: { label?: string; markdown: string }[];
 }
 
-function ReportDoc({ title, subtitle, code, sections }: ReportPdfInput) {
+function ReportDoc({ title, subtitle, code, sections, sample }: ReportPdfInput) {
   return (
     <Document title={`${title} — Kozmograf`} author="Kozmograf" creator="kozmograf.com" language="tr">
       {sections.map((sec, si) => (
@@ -120,18 +122,24 @@ function ReportDoc({ title, subtitle, code, sections }: ReportPdfInput) {
               </View>
               <Text style={s.coverTitle}>{title}</Text>
               <Text style={s.coverMeta}>{subtitle}</Text>
-              <Text style={s.coverCode}>Sipariş {code}</Text>
+              {sample ? (
+                <View style={{ marginTop: 10, alignSelf: "flex-start", backgroundColor: C.gold, borderRadius: 999, paddingVertical: 3, paddingHorizontal: 10 }}>
+                  <Text style={{ fontWeight: 600, fontSize: 8.5, letterSpacing: 1.6, color: C.ink }}>ÖRNEK RAPOR · HAYALİ KİŞİ</Text>
+                </View>
+              ) : (
+                <Text style={s.coverCode}>Sipariş {code}</Text>
+              )}
               <View style={s.rule} />
             </View>
           )}
           {sec.label && <Text style={s.sectionLabel}>{sec.label.toLocaleUpperCase("tr-TR")}</Text>}
           {parse(sec.markdown).map((b, i) =>
             b.t === "h2" ? (
-              <Text key={i} style={s.h2} minPresenceAhead={60}>
+              <Text key={i} style={s.h2} minPresenceAhead={110}>
                 {b.text.replace(/\*/g, "")}
               </Text>
             ) : b.t === "h3" ? (
-              <Text key={i} style={s.h3} minPresenceAhead={40}>
+              <Text key={i} style={s.h3} minPresenceAhead={80}>
                 {b.text.replace(/\*/g, "")}
               </Text>
             ) : b.t === "li" ? (
@@ -150,7 +158,9 @@ function ReportDoc({ title, subtitle, code, sections }: ReportPdfInput) {
             )
           )}
           <View style={s.footer} fixed>
-            <Text>kozmograf.com · Kişisel keşif amaçlıdır; tıbbi, hukuki veya finansal tavsiye değildir.</Text>
+            <Text>
+              {sample ? "Örnek rapordur · kozmograf.com/paketler" : "kozmograf.com · Kişisel keşif amaçlıdır; tıbbi, hukuki veya finansal tavsiye değildir."}
+            </Text>
             <Text render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} />
           </View>
         </Page>

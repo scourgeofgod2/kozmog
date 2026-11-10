@@ -13,7 +13,14 @@ export interface Package {
   needsPartner: boolean;
   sections: ReportSection[];
   featured?: boolean;
+  /** Paketler sayfasında gösterilen örnek rapor (hayali kişi) */
+  sample?: { pdf: string; pages: string[] };
 }
+
+const sample = (n: string) => ({
+  pdf: `/ornekler/kozmograf-ornek-${n}.pdf`,
+  pages: [1, 2].map((p) => `/ornekler/kozmograf-ornek-${n}-sayfa-${p}.webp`),
+});
 
 export const DELIVERY_PROMISE = "1 saat içinde";
 
@@ -31,6 +38,7 @@ export const packages: Package[] = [
     ],
     needsPartner: true,
     sections: ["ask"],
+    sample: sample("ask-uyum-raporu"),
   },
   {
     slug: "yil-2027",
@@ -45,6 +53,7 @@ export const packages: Package[] = [
     ],
     needsPartner: false,
     sections: ["yil"],
+    sample: sample("2027-yil-rehberi"),
   },
   {
     slug: "kozmik-harita",
@@ -61,6 +70,7 @@ export const packages: Package[] = [
     needsPartner: false,
     sections: ["harita"],
     featured: true,
+    sample: sample("kozmik-harita"),
   },
   {
     slug: "hepsi-bir-arada",

@@ -27,6 +27,13 @@ export default async function SiparisPage({ searchParams }: Props) {
         <p className="mt-3 text-[15px] text-muted">
           {pkg.tagline} PDF raporun ödeme onayından sonra {DELIVERY_PROMISE} gelir.
         </p>
+        <a
+          href={pkg.sample ? pkg.sample.pdf : "/paketler#ornekler"}
+          {...(pkg.sample ? { target: "_blank", rel: "noopener" } : {})}
+          className="mt-2 inline-flex min-h-[44px] items-center text-[14px] font-semibold text-gold underline underline-offset-4"
+        >
+          {pkg.sample ? "Örnek raporu gör" : "Örnek raporları gör"}
+        </a>
       </header>
 
       <nav aria-label="Paket seç" className="mb-6 flex flex-wrap gap-2">

@@ -57,6 +57,7 @@ export async function POST(req: NextRequest) {
       title: pkg.name,
       subtitle,
       code,
+      sample: body.sample === true,
       sections: sections.map((x) => ({ label: pkg.sections.length > 1 ? SECTION_TITLES[x.s] : undefined, markdown: x.md })),
     });
   } catch (err) {
@@ -64,11 +65,16 @@ export async function POST(req: NextRequest) {
     return json(500, { error: "PDF oluşturulamadı." });
   }
 
+  // HTTP başlıkları ASCII ister: "Yıl", "Aşk" gibi adlar başlıkta hata verir
   const filename = `Kozmograf-${pkg.name.replace(/\s+/g, "-")}-${code}.pdf`;
+  const asciiName = filename
+    .replace(/ı/g, "i").replace(/İ/g, "I").replace(/ş/g, "s").replace(/Ş/g, "S").replace(/ğ/g, "g").replace(/Ğ/g, "G")
+    .replace(/ü/g, "u").replace(/Ü/g, "U").replace(/ö/g, "o").replace(/Ö/g, "O").replace(/ç/g, "c").replace(/Ç/g, "C")
+    .replace(/[^\x20-\x7e]/g, "");
 
   if (body.mode === "preview") {
     return new Response(new Uint8Array(pdf), {
-      headers: { "Content-Type": "application/pdf", "Content-Disposition": `inline; filename="${filename}"`, "Cache-Control": "no-store" },
+      headers: { "Content-Type": "application/pdf", "Content-Disposition": `inline; filename="${asciiName}"; filename*=UTF-8''${encodeURIComponent(filename)}`, "Cache-Control": "no-store" },
     });
   }
 
@@ -86,7 +92,7 @@ export async function POST(req: NextRequest) {
 <p style="margin:0 0 12px;color:#a6a2bc;">Sipariş kodu: ${code}</p>
 <p style="margin:0;">Soruların ya da yorumun olursa bu e-postayı yanıtlaman yeterli.</p>`,
     }),
-    attachments: [{ filename, content: pdf.toString("base64") }],
+    attachments: [{ filename: asciiName, content: pdf.toString("base64") }],
   });
   if (!sent.ok) return json(502, { error: sent.error });
 

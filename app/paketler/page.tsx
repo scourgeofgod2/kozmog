@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { packages, DELIVERY_PROMISE } from "@/lib/content/packages";
 import { CONTACT_EMAIL, OG_DEFAULT } from "@/lib/site";
-import { Breadcrumbs, Card, FAQ, JsonLd, PageHero, Section, faqJsonLd } from "@/components/ds";
+import { Breadcrumbs, Card, FAQ, JsonLd, PageHero, Section, buttonStyles, faqJsonLd } from "@/components/ds";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -96,9 +97,60 @@ export default function PaketlerPage() {
             >
               Raporu al
             </Link>
+            <a
+              href={p.sample ? p.sample.pdf : "#ornekler"}
+              {...(p.sample ? { target: "_blank", rel: "noopener" } : {})}
+              className={cn(
+                "mt-2 inline-flex min-h-[44px] items-center justify-center text-[14px] font-semibold underline underline-offset-4",
+                p.featured ? "text-gold-ink" : "text-gold"
+              )}
+            >
+              {p.sample ? "Örnek raporu gör" : "Örnekleri gör"}
+            </a>
           </article>
         ))}
       </div>
+
+      <Section
+        id="ornekler"
+        eyebrow="Raporun içinden"
+        title="Örnek raporları incele"
+        lead="Aşağıdaki örnekler hayali kişiler için hazırlandı (Deniz Ay, 21.07.1994 ve Emre Kaya, 03.11.1991). Senin raporun kendi sayılarınla, aynı derinlikte hazırlanır."
+      >
+        <div className="grid gap-4 lg:grid-cols-3">
+          {packages
+            .filter((p) => p.sample)
+            .map((p) => (
+              <article key={p.slug} className="flex flex-col rounded-[var(--radius-card)] border border-line bg-surface p-4">
+                <div className="grid grid-cols-2 gap-2">
+                  {p.sample!.pages.map((src, i) => (
+                    <a key={src} href={p.sample!.pdf} target="_blank" rel="noopener" className="block overflow-hidden rounded-[12px] border border-line">
+                      <Image
+                        src={src}
+                        alt={`${p.name} örnek raporu, sayfa ${i + 1}`}
+                        width={720}
+                        height={1018}
+                        unoptimized
+                        sizes="(min-width: 1024px) 180px, 45vw"
+                        className="h-auto w-full"
+                      />
+                    </a>
+                  ))}
+                </div>
+                <h3 className="mt-4 font-display text-2xl font-semibold">{p.name}</h3>
+                <p className="mt-1 text-[14px] text-muted">3 sayfa · PDF · {p.price} TL</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <a href={p.sample!.pdf} target="_blank" rel="noopener" className={buttonStyles("secondary", "min-h-[44px] flex-1 px-4 text-[14px]")}>
+                    Örneği aç
+                  </a>
+                  <Link href={`/siparis?paket=${p.slug}`} className={buttonStyles("primary", "min-h-[44px] flex-1 px-4 text-[14px]")}>
+                    Kendi raporunu al
+                  </Link>
+                </div>
+              </article>
+            ))}
+        </div>
+      </Section>
 
       <Section eyebrow="Nasıl çalışır?" title="Üç adımda raporun elinde">
         <ol className="grid gap-3 md:grid-cols-3">
