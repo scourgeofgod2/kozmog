@@ -8,4 +8,6 @@ services:
     environment:
       - INWORLD_API_KEY=${INWORLD_API_KEY}
       - READING_DAILY_CAP=${READING_DAILY_CAP:-3000}
+      - PAYMENT_PHONE=${PAYMENT_PHONE}
+      - ADMIN_TOKEN=${ADMIN_TOKEN}
     restart: unless-stopped

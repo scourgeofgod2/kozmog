@@ -1,5 +1,5 @@
 import CompatibilityCalculator from "@/components/forms/CompatibilityCalculator";
-import { Breadcrumbs, Card, CTABand, FAQ, JsonLd, PageHero, RelatedLinks, Section, faqJsonLd } from "@/components/ds";
+import { Breadcrumbs, Card, CTABand, FAQ, JsonLd, PageHero, RelatedLinks, Section, faqJsonLd, ReportPromo } from "@/components/ds";
 
 const faq = [
   {
@@ -30,6 +30,15 @@ export default function UyumlulukPage() {
       />
 
       <CompatibilityCalculator />
+
+      <div className="mt-4">
+        <ReportPromo
+          slug="ask-uyumu"
+          title="İlişkinizin tam raporu"
+          lead="İkinizin tüm sayıları, güçlü yanlarınız, dikkat etmeniz gerekenler ve 2027'de ilişkiniz. PDF, 1 saat içinde."
+          price={129}
+        />
+      </div>
 
       <Section eyebrow="Rehber" title="Numeroloji uyumu nasıl çalışır?">
         <Card className="koz-prose max-w-3xl">

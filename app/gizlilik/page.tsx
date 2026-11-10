@@ -30,13 +30,19 @@ export default function GizlilikPage() {
             erişim kayıtlarında tutulabilir; IP adresi ayrıca kötüye kullanımı önlemek için (istek sınırlama) en fazla
             24 saat boyunca bellekte tutulur.
           </li>
+          <li>
+            <strong>Sipariş verileri (ücretli raporlar):</strong> Ad soyad, doğum tarihi, varsa partnerinin adı ve doğum
+            tarihi ile raporun gönderileceği WhatsApp numarası veya e-posta adresi. Bu bilgiler sipariş özetiyle birlikte
+            senin göndereceğin WhatsApp mesajı aracılığıyla bize ulaşır; sitede bir veritabanında saklanmaz. Ödeme
+            dekontu da WhatsApp üzerinden iletilir.
+          </li>
         </ul>
         <p>Üyelik sistemi, çerez tabanlı reklam veya analitik takibi şu anda kullanılmamaktadır.</p>
 
         <h2>Verileri ne için kullanıyoruz?</h2>
         <ul>
           <li>Numeroloji sayılarını hesaplamak ve sonucu sana göstermek,</li>
-          <li>İsteğin üzerine yapay zekâ destekli kişisel yorum üretmek,</li>
+          <li>İsteğin üzerine yapay zekâ destekli kişisel yorum ve satın aldığın raporu hazırlamak, raporu sana iletmek,</li>
           <li>Hizmetin güvenliğini sağlamak ve kötüye kullanımı engellemek.</li>
         </ul>
 
@@ -47,7 +53,11 @@ export default function GizlilikPage() {
           sağlayıcıların sunucuları yurt dışında bulunabilir. Formu göndererek yorum oluşturulmasını talep ettiğinde bu
           aktarıma açık rıza vermiş olursun. Ad soyad alanını boş bırakarak yalnızca doğum tarihiyle de yorum alabilirsin.
         </p>
-        <p>Veriler bunun dışında üçüncü kişilerle paylaşılmaz, satılmaz.</p>
+        <p>
+          Sipariş ve rapor yazışmaları WhatsApp (Meta) altyapısı üzerinden yürütülür. Veriler bunun dışında üçüncü
+          kişilerle paylaşılmaz, satılmaz. Sipariş yazışmaları ve fatura/muhasebe kayıtları yasal saklama süreleri
+          boyunca tutulur.
+        </p>
 
         <h2>Ne kadar süre saklıyoruz?</h2>
         <p>

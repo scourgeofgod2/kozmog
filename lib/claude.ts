@@ -102,7 +102,8 @@ export async function callInworld(
 
 export async function callInworldStream(
   systemPrompt: string,
-  userQuery: string
+  userQuery: string,
+  opts: { maxTokens?: number; timeoutMs?: number } = {}
 ): Promise<ReadableStream<string>> {
   validateConfig();
   const config = getInworldConfig();
@@ -120,11 +121,11 @@ export async function callInworldStream(
         { role: "user", content: userQuery },
       ],
       temperature: 0.7,
-      max_tokens: 4096,
+      max_tokens: opts.maxTokens ?? 4096,
       stream: true,
       chat_template_kwargs: { enable_thinking: false },
     }),
-    signal: AbortSignal.timeout(config.timeout),
+    signal: AbortSignal.timeout(opts.timeoutMs ?? config.timeout),
   });
 
   if (!response.ok) {

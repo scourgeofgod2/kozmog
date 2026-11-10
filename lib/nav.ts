@@ -12,6 +12,7 @@ export const primaryNav: NavItem[] = [
   { href: "/uyumluluk", label: "Aşk Uyumu" },
   { href: "/melek-sayilari", label: "Melek Sayıları" },
   { href: "/saat-anlami", label: "Saatler" },
+  { href: "/paketler", label: "Raporlar" },
 ];
 
 export const guideGroups: { title: string; items: NavItem[] }[] = [
@@ -23,6 +24,7 @@ export const guideGroups: { title: string; items: NavItem[] }[] = [
       { href: "/uyumluluk", label: "Aşk Uyumu", desc: "İki doğum tarihi, bir skor" },
       { href: "/isim-numeroloji", label: "İsim Numerolojisi", desc: "Kader sayını isminden bul" },
       { href: "/karmik-borc", label: "Karmik Borç", desc: "13, 14, 16, 19 var mı?" },
+      { href: "/paketler", label: "Kişisel Raporlar", desc: "PDF, 1 saat içinde" },
     ],
   },
   {

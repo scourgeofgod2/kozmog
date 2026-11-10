@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { personalYears } from "@/lib/content/personalYear";
 import QuickNumber from "@/components/forms/QuickNumber";
-import { Breadcrumbs, Card, CTABand, FAQ, JsonLd, PageHero, RelatedLinks, Section, faqJsonLd } from "@/components/ds";
+import { Breadcrumbs, Card, CTABand, FAQ, JsonLd, PageHero, RelatedLinks, Section, faqJsonLd, ReportPromo } from "@/components/ds";
 
 const YEAR = 2027;
 
@@ -123,6 +123,13 @@ export default function KisiselYilPage() {
           ))}
         </div>
       </Section>
+
+      <ReportPromo
+        slug="yil-2027"
+        title={`${YEAR} yılını ay ay oku`}
+        lead="12 ayın her biri için kişisel ay sayın ve yorumu; aşk, iş ve para için öne çıkan dönemler. PDF, 1 saat içinde."
+        price={179}
+      />
 
       <Section eyebrow="Sık sorulanlar" title="Kişisel yıl hakkında">
         <FAQ items={faq} />

@@ -154,3 +154,18 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ── Yazdırma / PDF (rapor stüdyosu) ── */
+@media print {
+  @page { margin: 14mm; }
+  html, body {
+    background: var(--color-ink) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body > header, body > footer, #mobil-menu, .no-print, a[href="#icerik"] { display: none !important; }
+  .koz-report { border: 0 !important; padding: 0 !important; }
+  .koz-report h2, .koz-report h3 { break-after: avoid; }
+  .koz-report p, .koz-report li { break-inside: avoid; }
+  .koz-report-section + .koz-report-section { break-before: page; }
+}

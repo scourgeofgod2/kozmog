@@ -337,6 +337,35 @@ export function Breadcrumbs({ items }: { items: { href?: string; label: string }
   );
 }
 
+/** Ücretli rapora yönlendiren kart */
+export function ReportPromo({
+  slug = "kozmik-harita",
+  title = "Sayılarının tam haritası",
+  lead = "Kişilik, kariyer, aşk ve 2027 tek bir kişisel PDF raporda. 1 saat içinde telefonunda.",
+  price = 279,
+}: {
+  slug?: string;
+  title?: string;
+  lead?: string;
+  price?: number;
+}) {
+  return (
+    <aside className="rounded-[var(--radius-card)] border border-gold/60 bg-surface p-5 sm:p-6">
+      <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-gold">Kişisel rapor</p>
+      <p className="mt-2 font-display text-3xl font-semibold leading-tight">{title}</p>
+      <p className="mt-2 text-[15px] text-muted">{lead}</p>
+      <div className="mt-5 flex flex-wrap items-center gap-3">
+        <Link href={`/siparis?paket=${slug}`} className={buttonStyles("primary")}>
+          Raporu al · {price} TL
+        </Link>
+        <Link href="/paketler" className="inline-flex min-h-[44px] items-center text-[14px] font-semibold text-gold">
+          Tüm raporlar →
+        </Link>
+      </div>
+    </aside>
+  );
+}
+
 // ─── Görseller ────────────────────────────────────────────────────────────
 
 /** Üretilmiş illüstrasyon (public/gorseller). Alt metin manifestten gelir. */

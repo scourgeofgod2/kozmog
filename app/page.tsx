@@ -19,6 +19,7 @@ import Image from "next/image";
 import { images, type ImageKey } from "@/lib/content/images.generated";
 import { ALL_NUMBERS, getProfile, numberHref } from "@/lib/content/profiles";
 import { tr } from "@/content/tr";
+import { packages } from "@/lib/content/packages";
 
 export const metadata: Metadata = {
   title: { absolute: tr.seoTitle },
@@ -227,6 +228,25 @@ export default function HomePage() {
           <Link href="/sayilarin-anlami" className={buttonStyles("secondary")}>
             Tüm sayıların anlamı →
           </Link>
+        </div>
+      </Section>
+
+      <Section eyebrow="Kişisel raporlar" title="Daha derine inmek ister misin?" lead="Seçtiğin konuya odaklanan ayrıntılı PDF raporun, ödeme onayından sonra 1 saat içinde telefonunda.">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {packages.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/siparis?paket=${p.slug}`}
+              className={
+                "flex min-h-[150px] flex-col justify-between rounded-[var(--radius-card)] p-4 transition-colors sm:p-5 " +
+                (p.featured ? "bg-gold text-gold-ink" : "border border-line bg-surface hover:border-gold/70")
+              }
+            >
+              <span className="text-[15px] font-semibold leading-snug sm:text-[17px]">{p.name}</span>
+              <span className={"text-[13px] " + (p.featured ? "" : "text-muted")}>{p.tagline}</span>
+              <span className="font-display text-3xl font-semibold">{p.price} TL</span>
+            </Link>
+          ))}
         </div>
       </Section>
 

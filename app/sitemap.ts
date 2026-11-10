@@ -37,6 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("/gucler-ve-yetenekler", 0.75, "monthly", ["sayfa-gucler-ve-yetenekler"]),
     ...ALL_NUMBERS.map((n) => page(`/sayilarin-anlami/${n}`, 0.8, "monthly", [`sayi-${n}` as ImageKey])),
     ...angelNumbers.map((a) => page(`/melek-sayilari/${a.slug}`, 0.75, "monthly", [`melek-${a.slug}` as ImageKey])),
+    page("/paketler", 0.85, "weekly"),
     page("/iletisim", 0.3, "yearly"),
     page("/gizlilik", 0.2, "yearly"),
     page("/kullanim-sartlari", 0.2, "yearly"),

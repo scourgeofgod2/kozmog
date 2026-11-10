@@ -38,3 +38,9 @@ export function clientIp(headers: Headers): string {
   if (xff) return xff.split(",")[0].trim();
   return headers.get("x-real-ip") ?? "unknown";
 }
+
+/** Sayacı artırmadan sınırın aşılıp aşılmadığına bakar. */
+export function isLimited(key: string, limit: number): boolean {
+  const b = buckets.get(key);
+  return !!b && b.resetAt > Date.now() && b.count >= limit;
+}

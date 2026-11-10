@@ -6,7 +6,7 @@ import { getProfile } from "@/lib/content/profiles";
 import ResultCard from "@/components/results/ResultCard";
 import AIStreamingReading from "@/components/results/AIStreamingReading";
 import ShareButton from "@/components/ui/ShareButton";
-import { ButtonLink, Card, Eyebrow, RelatedLinks, buttonStyles } from "@/components/ds";
+import { ButtonLink, Card, Eyebrow, RelatedLinks, ReportPromo, buttonStyles } from "@/components/ds";
 
 interface PageProps {
   searchParams: Promise<{ d?: string; n?: string }>;
@@ -101,6 +101,8 @@ export default async function SonucPage({ searchParams }: PageProps) {
         </div>
 
         <AIStreamingReading birthDate={birthDate} fullName={fullName} />
+
+        <ReportPromo />
 
         <section className="pt-6">
           <h2 className="mb-4 font-display text-2xl font-semibold">Devam et</h2>
