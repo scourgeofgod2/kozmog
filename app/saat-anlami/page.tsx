@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
+import { OG_DEFAULT } from "@/lib/site";
 import { mirrorHours, faqItems } from "@/lib/content/mirrorHours";
 import { Breadcrumbs, Card, CTABand, FAQ, JsonLd, PageHero, RelatedLinks, Section, faqJsonLd } from "@/components/ds";
 
 export const metadata: Metadata = {
-  title: "Saatlerin Anlamı — 11:11, 22:22, 00:00 Çift Saatlerin Numerolojik Mesajları",
+  title: "Saatlerin Anlamı: 11:11, 22:22 ve Ayna Saatler",
   description:
     "11:11 anlamı nedir? 22:22, 00:00, 01:01 ve tüm çift saatlerin numerolojik ve spiritüel mesajlarını öğrenin. Ayna saatler rehberi: tekrarlayan saatler ve evrenin mesajları.",
   keywords:
     "11:11 anlamı, saat 11:11 ne demek, çift saatler anlamı, 22:22 anlamı, 00:00 anlamı, saatlerin anlamı numeroloji, ayna saatler, tekrarlayan saatler anlamı, 01:01 anlamı, 03:03 anlamı",
   alternates: { canonical: "https://kozmograf.com/saat-anlami" },
   openGraph: {
+    images: OG_DEFAULT,
     title: "11:11 Anlamı, Çift Saatler ve Ayna Saatler | Kozmograf",
     description: "11:11, 22:22, 00:00 ve tüm çift saatlerin numerolojik mesajları. Ücretsiz rehber.",
     url: "https://kozmograf.com/saat-anlami",

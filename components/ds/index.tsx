@@ -293,8 +293,19 @@ export function RelatedLinks({ links }: { links: { href: string; label: string; 
 }
 
 export function Breadcrumbs({ items }: { items: { href?: string; label: string }[] }) {
+  const ld = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.label,
+      ...(it.href ? { item: `https://kozmograf.com${it.href === "/" ? "" : it.href}` } : {}),
+    })),
+  };
   return (
     <nav aria-label="Konum" className="pt-6 text-[13px] text-faint">
+      <JsonLd data={ld} />
       <ol className="flex flex-wrap items-center gap-1.5">
         {items.map((it, i) => (
           <li key={i} className="flex items-center gap-1.5">

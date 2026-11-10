@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_DEFAULT } from "@/lib/site";
 import Link from "next/link";
 import { lifePathNumbers } from "@/lib/content/lifePath";
 import { numberHref } from "@/lib/content/profiles";
@@ -6,12 +7,13 @@ import QuickNumber from "@/components/forms/QuickNumber";
 import { Breadcrumbs, Card, CTABand, FAQ, JsonLd, PageHero, Section, faqJsonLd } from "@/components/ds";
 
 export const metadata: Metadata = {
-  title: "Yaşam Yolu Sayısı — Numeroloji Hesaplama ve Anlam Rehberi",
+  title: "Yaşam Yolu Sayısı Hesaplama ve Anlamları",
   description:
     "Yaşam yolu sayınızı öğrenin ve anlamını keşfedin. 1'den 9'a, usta sayılar 11, 22, 33 dahil tüm yaşam yolu sayılarının detaylı açıklamaları.",
   keywords: "yaşam yolu sayısı, yaşam yolu sayısı hesaplama, yaşam yolu numeroloji, numeroloji 1 2 3 4 5 6 7 8 9",
   alternates: { canonical: "https://kozmograf.com/yasam-yolu" },
   openGraph: {
+    images: OG_DEFAULT,
     title: "Yaşam Yolu Sayısı — Numeroloji Rehberi | Kozmograf",
     description: "Doğum tarihinizden hesaplanan yaşam yolu sayınızın derin anlamını keşfedin.",
     url: "https://kozmograf.com/yasam-yolu",

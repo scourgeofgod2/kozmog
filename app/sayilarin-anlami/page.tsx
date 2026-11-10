@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_DEFAULT } from "@/lib/site";
 import Link from "next/link";
 import { numbers, faqItems } from "@/lib/content/numbers";
 import { masterNumbers } from "@/lib/content/master";
@@ -7,13 +8,14 @@ import QuickNumber from "@/components/forms/QuickNumber";
 import { Breadcrumbs, Card, CTABand, FAQ, JsonLd, PageHero, Pill, Section, faqJsonLd } from "@/components/ds";
 
 export const metadata: Metadata = {
-  title: "Numerolojide Sayıların Anlamı — 1'den 9'a Tam Rehber",
+  title: "Numerolojide Sayıların Anlamı: 1'den 9'a Rehber",
   description:
     "Numerolojide 1, 2, 3, 4, 5, 6, 7, 8 ve 9 sayılarının anlamı, kişilik özellikleri, güçlü yanlar ve zorluklar. Usta sayılar 11, 22, 33 dahil. Sayınız hakkında her şey.",
   keywords:
     "numeroloji sayıların anlamı, numeroloji 1 sayısı, numeroloji 2 sayısı, numeroloji 3 sayısı, numeroloji 7 sayısı anlamı, numeroloji sayıları, numerolojide sayıların anlamları",
   alternates: { canonical: "https://kozmograf.com/sayilarin-anlami" },
   openGraph: {
+    images: OG_DEFAULT,
     title: "Numerolojide Sayıların Anlamı 1-9 | Kozmograf",
     description: "1'den 9'a tüm sayıların numerolojik anlamı, kişilik profili, güçler ve zorluklar.",
     url: "https://kozmograf.com/sayilarin-anlami",

@@ -16,13 +16,13 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const a = getAngel((await params).sayi);
   if (!a) return {};
-  const title = `${a.slug} Melek Sayısı Anlamı — ${a.title}`;
+  const title = `${a.slug} Anlamı: ${a.title}`;
   const description = `${a.slug} sayısını sürekli görüyorsan ne anlama gelir? ${a.essence}. ${a.slug} melek sayısının aşk, iş ve hayat için mesajı.`;
   return {
     title,
     description,
     alternates: { canonical: `https://kozmograf.com/melek-sayilari/${a.slug}` },
-    openGraph: { title: `${title} | Kozmograf`, description, url: `https://kozmograf.com/melek-sayilari/${a.slug}` },
+    openGraph: { images: [{ url: `/api/og?m=${a.slug}`, width: 1200, height: 630 }], title: `${title} | Kozmograf`, description, url: `https://kozmograf.com/melek-sayilari/${a.slug}` },
   };
 }
 

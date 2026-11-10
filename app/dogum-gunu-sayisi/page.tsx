@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
+import { OG_DEFAULT } from "@/lib/site";
 import Link from "next/link";
 import { birthDayNotes, birthDayRoot } from "@/lib/content/birthDay";
 import { getProfile, numberHref } from "@/lib/content/profiles";
 import { Breadcrumbs, CTABand, FAQ, JsonLd, PageHero, RelatedLinks, Section, faqJsonLd } from "@/components/ds";
 
 export const metadata: Metadata = {
-  title: "Doğum Günü Sayısı — Ayın Kaçında Doğdun? 1'den 31'e Anlamları",
+  title: "Doğum Günü Sayısı: 1'den 31'e Anlamları",
   description:
     "Numerolojide doğum günü sayısı: ayın 1'inden 31'ine kadar her doğum gününün anlamı, yetenekleri ve kişilik tonu. Usta günler 11, 22 ve karmik günler 13, 14, 16, 19.",
   keywords:
     "doğum günü sayısı, doğum günü numeroloji, ayın kaçında doğdun, numeroloji doğum günü anlamı, 11 doğumlu, 22 doğumlu, doğum günü kişilik",
   alternates: { canonical: "https://kozmograf.com/dogum-gunu-sayisi" },
   openGraph: {
+    images: OG_DEFAULT,
     title: "Doğum Günü Sayısı — 1'den 31'e Anlamları | Kozmograf",
     description: "Ayın kaçında doğduğun, kişiliğin hakkında ne söylüyor?",
     url: "https://kozmograf.com/dogum-gunu-sayisi",

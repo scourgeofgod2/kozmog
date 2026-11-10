@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
+import { OG_DEFAULT } from "@/lib/site";
 import Link from "next/link";
 import { angelNumbers } from "@/lib/content/angel";
 import { Breadcrumbs, CTABand, FAQ, JsonLd, PageHero, RelatedLinks, Section, faqJsonLd } from "@/components/ds";
 
 export const metadata: Metadata = {
-  title: "Melek Sayıları ve Anlamları — 111, 222, 333, 444, 555 Ne Demek?",
+  title: "Melek Sayıları ve Anlamları: 111, 222, 444",
   description:
     "Melek sayıları rehberi: 000, 111, 222, 333, 444, 555, 666, 777, 888, 999, 1010, 1212 sayılarının numerolojik anlamı. Aşk, iş ve hayat için mesajları.",
   keywords:
     "melek sayıları, melek sayıları anlamları, 111 anlamı, 222 anlamı, 333 anlamı, 444 anlamı, 555 anlamı, 777 anlamı, 1212 anlamı, tekrar eden sayılar",
   alternates: { canonical: "https://kozmograf.com/melek-sayilari" },
   openGraph: {
+    images: OG_DEFAULT,
     title: "Melek Sayıları — 111, 222, 444 Sürekli Görüyorsan | Kozmograf",
     description: "Tekrar eden sayıların numerolojik anlamı: aşk, iş ve hayat için mesajları.",
     url: "https://kozmograf.com/melek-sayilari",

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_DEFAULT } from "@/lib/site";
 import Link from "next/link";
 import { strengthProfiles } from "@/lib/content/strengths";
 import { numberHref } from "@/lib/content/profiles";
@@ -6,13 +7,14 @@ import QuickNumber from "@/components/forms/QuickNumber";
 import { Breadcrumbs, Card, CTABand, PageHero, Section } from "@/components/ds";
 
 export const metadata: Metadata = {
-  title: "Numeroloji ile Güçlü Yanlar ve Gizli Yetenekler — Doğum Tarihinden Kişilik Analizi",
+  title: "Numeroloji ile Güçlü Yanlar ve Yetenekler",
   description:
     "Numeroloji ile güçlü yanlarınızı ve gizli yeteneklerinizi keşfedin. Doğum tarihinizden hesaplanan yaşam yolu sayınız doğal becerilerinizi ve gelişim alanlarınızı ortaya koyar. Ücretsiz analiz.",
   keywords:
     "numeroloji güçlü yanlar, gizli yetenekler numeroloji, numeroloji kişilik analizi, yaşam yolu yetenekler, doğum tarihi kişilik özellikleri, numeroloji karakter analizi",
   alternates: { canonical: "https://kozmograf.com/gucler-ve-yetenekler" },
   openGraph: {
+    images: OG_DEFAULT,
     title: "Numeroloji ile Güçlü Yanlar ve Gizli Yetenekler | Kozmograf",
     description: "Doğum tarihinize göre gizli yeteneklerinizi ve doğal güçlerinizi keşfedin.",
     url: "https://kozmograf.com/gucler-ve-yetenekler",

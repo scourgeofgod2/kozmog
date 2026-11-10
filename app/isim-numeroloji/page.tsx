@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_DEFAULT } from "@/lib/site";
 import Link from "next/link";
 import { destinyProfiles, letterRows, faqItems } from "@/lib/content/destiny";
 import { numberHref } from "@/lib/content/profiles";
@@ -6,13 +7,14 @@ import NameCalculator from "@/components/forms/NameCalculator";
 import { Breadcrumbs, Card, CTABand, FAQ, JsonLd, PageHero, Section, faqJsonLd } from "@/components/ds";
 
 export const metadata: Metadata = {
-  title: "İsim Numerolojisi Hesaplama — İsmin Sayısal Anlamı ve Kader Sayısı",
+  title: "İsim Numerolojisi Hesaplama ve Kader Sayısı",
   description:
     "İsim numerolojisi ile adınızın taşıdığı enerjiyi ve kader sayınızı hemen hesaplayın. Pisagor sistemiyle her harfin sayısal değeri, ruh ve kişilik sayısı. Türkçe harf desteği.",
   keywords:
     "isim numeroloji, isim numerolojisi hesaplama, isim sayısı hesaplama, kader sayısı, Pythagoras numeroloji, harflerin sayısal değeri, isim analizi numeroloji",
   alternates: { canonical: "https://kozmograf.com/isim-numeroloji" },
   openGraph: {
+    images: OG_DEFAULT,
     title: "İsim Numerolojisi — Adının Gizli Enerjisini Keşfet | Kozmograf",
     description: "İsmin sayısal değeri kişiliğin ve kaderinin şifrelerini taşır. Pisagor sistemiyle isim analizi yap.",
     url: "https://kozmograf.com/isim-numeroloji",

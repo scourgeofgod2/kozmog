@@ -6,11 +6,12 @@ import { Breadcrumbs, Card, CTABand, FAQ, JsonLd, PageHero, RelatedLinks, Sectio
 const YEAR = 2027;
 
 export const metadata: Metadata = {
-  title: `${YEAR} Kişisel Yıl Sayısı Hesaplama — ${YEAR} Senin İçin Nasıl Geçecek?`,
+  title: `${YEAR} Kişisel Yıl Sayısı Hesaplama ve Yorumu`,
   description: `${YEAR} numerolojisi: doğum tarihinle kişisel yıl sayını hesapla. Aşk, kariyer ve para için ${YEAR} yılının teması, fırsatları ve dikkat etmen gerekenler. ${YEAR} evrensel yıl sayısı 11.`,
   keywords: `${YEAR} numeroloji, ${YEAR} kişisel yıl sayısı, kişisel yıl hesaplama, ${YEAR} numeroloji yorumu, ${YEAR} nasıl geçecek, ${YEAR} evrensel yıl, kişisel yıl 1, kişisel yıl 9`,
   alternates: { canonical: "https://kozmograf.com/kisisel-yil" },
   openGraph: {
+    images: [{ url: "/api/og?yil=1", width: 1200, height: 630 }],
     title: `${YEAR} Kişisel Yıl Sayın — ${YEAR} Seni Ne Bekliyor? | Kozmograf`,
     description: `Doğum tarihini gir, ${YEAR} kişisel yıl sayını ve yılın temasını öğren.`,
     url: "https://kozmograf.com/kisisel-yil",

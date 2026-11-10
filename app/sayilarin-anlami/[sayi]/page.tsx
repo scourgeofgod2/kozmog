@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const n = parse((await params).sayi);
   const p = n ? getProfile(n) : undefined;
   if (!n || !p) return {};
-  const title = `Numerolojide ${n} Sayısının Anlamı — ${p.title}`;
+  const title = `Numerolojide ${n} Sayısının Anlamı: ${p.title}`;
   const description = `${n} sayısı numerolojide ne anlama gelir? ${p.keyword}. Yaşam yolu ${n} kişilik özellikleri, güçlü yanlar, zorluklar, aşk uyumu ve kariyer.`;
   return {
     title,
@@ -115,14 +115,6 @@ export default async function NumberPage({ params }: Props) {
         inLanguage: "tr",
         url: `https://kozmograf.com/sayilarin-anlami/${n}`,
         author: { "@type": "Organization", name: "Kozmograf" },
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Ana sayfa", item: "https://kozmograf.com" },
-          { "@type": "ListItem", position: 2, name: "Sayıların anlamı", item: "https://kozmograf.com/sayilarin-anlami" },
-          { "@type": "ListItem", position: 3, name: `${n} sayısı` },
-        ],
       },
       faqJsonLd(faq),
     ],

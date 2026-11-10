@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_DEFAULT } from "@/lib/site";
 import Link from "next/link";
 import { masterNumbers, faqItems } from "@/lib/content/master";
 import { numberHref } from "@/lib/content/profiles";
@@ -6,13 +7,14 @@ import QuickNumber from "@/components/forms/QuickNumber";
 import { Breadcrumbs, Card, CTABand, FAQ, JsonLd, PageHero, Pill, Section, faqJsonLd } from "@/components/ds";
 
 export const metadata: Metadata = {
-  title: "Usta Sayılar 11, 22, 33 — Numerolojide Master Numbers Rehberi",
+  title: "Usta Sayılar 11, 22, 33 ve Anlamları",
   description:
     "Numerolojide usta sayılar (master numbers) 11, 22 ve 33'ün anlamını öğrenin. Yaşam yolu sayınız usta sayı mı? Misyonunuzu, güçlerinizi ve zorluklarınızı keşfedin.",
   keywords:
     "usta sayılar, master numbers numeroloji, numeroloji 11 sayısı, numeroloji 22 sayısı, numeroloji 33 sayısı, yaşam yolu 11, yaşam yolu 22, yaşam yolu 33, 11 sayısının anlamı",
   alternates: { canonical: "https://kozmograf.com/usta-sayilar" },
   openGraph: {
+    images: OG_DEFAULT,
     title: "Usta Sayılar 11, 22, 33 — Master Numbers Rehberi | Kozmograf",
     description: "11, 22 ve 33 usta sayılarının derin anlamı, misyonu ve zorlukları.",
     url: "https://kozmograf.com/usta-sayilar",

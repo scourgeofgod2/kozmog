@@ -9,7 +9,7 @@ export const tr = {
   siteDomain: "kozmograf.com",
 
   // ===== SEO Meta =====
-  seoTitle: "Ücretsiz Numeroloji Analizi — Doğum Tarihi ile Yaşam Yolu Sayısı | Kozmograf",
+  seoTitle: "Numeroloji Hesaplama: Ücretsiz Yaşam Yolu Analizi | Kozmograf",
   seoDescription:
     "Doğum tarihi numeroloji hesaplama ile yaşam yolu sayınızı, kader sayınızı ve kişisel numeroloji analizinizi anında ücretsiz öğrenin. AI destekli Türkçe numeroloji analizi yap.",
   seoKeywords:

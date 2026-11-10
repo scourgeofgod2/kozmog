@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_DEFAULT } from "@/lib/site";
 import Link from "next/link";
 import { careerGuides } from "@/lib/content/careers";
 import { numberHref } from "@/lib/content/profiles";
@@ -6,13 +7,14 @@ import QuickNumber from "@/components/forms/QuickNumber";
 import { Breadcrumbs, Card, CTABand, PageHero, Pill, Section } from "@/components/ds";
 
 export const metadata: Metadata = {
-  title: "Kariyer Numerolojisi — Doğum Tarihine Göre Meslek ve İş Hayatı Analizi",
+  title: "Kariyer Numerolojisi: Sayına Göre Meslek",
   description:
     "Kariyer numerolojisi ile doğum tarihinizden hesaplanan yaşam yolu sayınıza göre en uygun meslek alanlarını öğrenin. 1'den 9'a tüm sayılar için ücretsiz kariyer analizi.",
   keywords:
     "kariyer numeroloji, numeroloji meslek seçimi, doğum tarihine göre kariyer, yaşam yolu sayısı kariyer, numeroloji iş hayatı, numeroloji kariyer rehberi, numeroloji hangi meslek",
   alternates: { canonical: "https://kozmograf.com/kariyer-numerolojisi" },
   openGraph: {
+    images: OG_DEFAULT,
     title: "Kariyer Numerolojisi — Doğum Tarihine Göre Meslek Analizi | Kozmograf",
     description: "Yaşam yolu sayınızın iş hayatınıza yansımaları ve ideal meslek önerileri. Ücretsiz.",
     url: "https://kozmograf.com/kariyer-numerolojisi",

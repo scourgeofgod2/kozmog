@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://kozmograf.com"),
   title: {
     default: tr.seoTitle,
-    template: `%s | Kozmograf Numeroloji`,
+    template: `%s | Kozmograf`,
   },
   description: tr.seoDescription,
   keywords: tr.seoKeywords,
@@ -46,13 +46,11 @@ export const metadata: Metadata = {
     siteName: "Kozmograf Numeroloji",
     title: tr.ogTitle,
     description: tr.ogDescription,
-    images: [{ url: "/api/og", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: tr.ogTitle,
     description: tr.ogDescription,
-    images: ["/api/og"],
   },
   robots: {
     index: true,

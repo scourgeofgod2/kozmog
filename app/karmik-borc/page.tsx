@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_DEFAULT } from "@/lib/site";
 import Link from "next/link";
 import { karmicDebts } from "@/lib/content/karmic";
 import { numberHref } from "@/lib/content/profiles";
@@ -6,13 +7,14 @@ import KarmicCalculator from "@/components/forms/KarmicCalculator";
 import { Breadcrumbs, Card, CTABand, FAQ, JsonLd, PageHero, RelatedLinks, Section, faqJsonLd } from "@/components/ds";
 
 export const metadata: Metadata = {
-  title: "Karmik Borç Sayısı Hesaplama — 13, 14, 16, 19 Ne Anlama Gelir?",
+  title: "Karmik Borç Sayısı Hesaplama: 13, 14, 16, 19",
   description:
     "Karmik borç sayıları 13, 14, 16 ve 19'un anlamı. Doğum tarihin ve isminle karmik borcun olup olmadığını ücretsiz hesapla, yaşam derslerini öğren.",
   keywords:
     "karmik borç, karmik borç sayısı, karmik borç hesaplama, karmik numeroloji, 13 karmik borç, 14 karmik borç, 16 karmik borç, 19 karmik borç",
   alternates: { canonical: "https://kozmograf.com/karmik-borc" },
   openGraph: {
+    images: OG_DEFAULT,
     title: "Karmik Borç Sayısı — 13, 14, 16, 19 | Kozmograf",
     description: "Doğum tarihinle karmik borç sayın var mı? Ücretsiz hesapla.",
     url: "https://kozmograf.com/karmik-borc",
