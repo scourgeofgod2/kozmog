@@ -1,5 +1,6 @@
 "use client";
 
+import DateInput from "@/components/forms/DateInput";
 import { useState } from "react";
 import { calculateLifePath, calculatePersonalYear } from "@/lib/numerology";
 
@@ -45,15 +46,7 @@ export default function QuickNumber({
         <label htmlFor="hizli-tarih" className="text-[13px] font-medium text-muted">
           {label}
         </label>
-        <input
-          id="hizli-tarih"
-          type="date"
-          min="1900-01-01"
-          max={today}
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="h-[52px] w-full rounded-[14px] border border-line bg-ink px-4 text-[17px] text-text outline-none focus:border-gold [color-scheme:dark]"
-        />
+        <DateInput id="hizli-tarih" value={date} onChange={setDate} max={today} />
       </div>
       <button
         type="submit"

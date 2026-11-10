@@ -1,5 +1,6 @@
 "use client";
 
+import DateInput from "@/components/forms/DateInput";
 import { useState } from "react";
 import Link from "next/link";
 import { calculateLifePath } from "@/lib/numerology";
@@ -10,8 +11,6 @@ import { buttonStyles } from "@/components/ds";
 // Matris 1–9 için tanımlı; usta sayılar temel sayılarıyla eşleştirilir.
 const toBase = (n: number) => (n === 11 ? 2 : n === 22 ? 4 : n === 33 ? 6 : n);
 
-const inputCls =
-  "h-[54px] w-full rounded-[14px] border border-line bg-ink px-4 text-[17px] text-text outline-none focus:border-gold [color-scheme:dark]";
 
 export default function CompatibilityCalculator() {
   const [d1, setD1] = useState("");
@@ -39,13 +38,13 @@ export default function CompatibilityCalculator() {
           <label htmlFor="uyum-1" className="text-[13px] font-medium text-muted">
             Senin doğum tarihin
           </label>
-          <input id="uyum-1" type="date" min="1900-01-01" max={today} value={d1} onChange={(e) => setD1(e.target.value)} className={inputCls} />
+          <DateInput id="uyum-1" value={d1} onChange={setD1} max={today} />
         </div>
         <div className="flex flex-col gap-1.5">
           <label htmlFor="uyum-2" className="text-[13px] font-medium text-muted">
             Onun doğum tarihi
           </label>
-          <input id="uyum-2" type="date" min="1900-01-01" max={today} value={d2} onChange={(e) => setD2(e.target.value)} className={inputCls} />
+          <DateInput id="uyum-2" value={d2} onChange={setD2} max={today} />
         </div>
         {error && (
           <p role="alert" className="rounded-[12px] border border-rose/40 bg-rose/10 px-4 py-3 text-[14px] text-rose">

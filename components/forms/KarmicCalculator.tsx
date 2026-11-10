@@ -1,5 +1,6 @@
 "use client";
 
+import DateInput from "@/components/forms/DateInput";
 import { useState } from "react";
 import { findKarmicDebts, type KarmicFinding } from "@/lib/numerology";
 import { buttonStyles } from "@/components/ds";
@@ -26,7 +27,7 @@ export default function KarmicCalculator() {
           <label htmlFor="karmik-tarih" className="text-[13px] font-medium text-muted">
             Doğum tarihin
           </label>
-          <input id="karmik-tarih" type="date" min="1900-01-01" max={today} value={date} onChange={(e) => setDate(e.target.value)} className={inputCls} />
+          <DateInput id="karmik-tarih" value={date} onChange={setDate} max={today} />
         </div>
         <div className="flex flex-col gap-1.5">
           <label htmlFor="karmik-isim" className="text-[13px] font-medium text-muted">

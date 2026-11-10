@@ -1,5 +1,6 @@
 "use client";
 
+import DateInput from "@/components/forms/DateInput";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { buttonStyles } from "@/components/ds";
@@ -41,18 +42,7 @@ export default function NumerologyForm({
         <label htmlFor="dogum-tarihi" className="text-[13px] font-medium text-muted">
           Doğum tarihin
         </label>
-        <input
-          id="dogum-tarihi"
-          type="date"
-          required
-          min="1900-01-01"
-          max={today}
-          value={birthDate}
-          onChange={(e) => setBirthDate(e.target.value)}
-          aria-invalid={!!error}
-          aria-describedby={error ? "form-hata" : undefined}
-          className={inputCls}
-        />
+        <DateInput id="dogum-tarihi" value={birthDate} onChange={setBirthDate} max={today} aria-invalid={!!error} aria-describedby={error ? "form-hata" : undefined} required />
       </div>
 
       {showName && (

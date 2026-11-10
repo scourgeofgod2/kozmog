@@ -38,6 +38,7 @@ export default function Header() {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
+    <>
     <header className="sticky top-0 z-50 border-b border-line/70 bg-ink/85 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" aria-label="Kozmograf ana sayfa" className="flex min-h-[44px] items-center">
@@ -81,8 +82,12 @@ export default function Header() {
         </div>
       </div>
 
+    </header>
+
+    {/* Menü header'ın DIŞINDA: header'daki backdrop-blur, içindeki fixed
+        öğeleri header yüksekliğine hapseder (mobilde menü sıkışıyordu). */}
       {open && (
-        <div id="mobil-menu" className="fixed inset-x-0 bottom-0 top-16 overflow-y-auto bg-ink px-4 pb-10 pt-4 lg:hidden">
+        <div id="mobil-menu" className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto overscroll-contain bg-ink px-4 pb-10 pt-4 lg:hidden">
           <Link
             href="/#hesapla"
             className="mb-6 flex min-h-[52px] items-center justify-center rounded-full bg-gold text-[15px] font-semibold text-ink"
@@ -112,6 +117,6 @@ export default function Header() {
           ))}
         </div>
       )}
-    </header>
+    </>
   );
 }
