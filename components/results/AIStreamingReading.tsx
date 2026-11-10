@@ -12,8 +12,19 @@ interface Props {
   focus?: ReadingFocus;
 }
 
-function markdownToHtml(text: string): string {
+function escapeHtml(text: string): string {
   return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+// Model çıktısı önce tamamen kaçırılır, sonra yalnızca bilinen markdown
+// kalıpları güvenli etiketlere çevrilir (XSS koruması).
+function markdownToHtml(text: string): string {
+  return escapeHtml(text)
     .replace(/^## (.+)$/gm, "<h3>$1</h3>")
     .replace(/^### (.+)$/gm, "<h4>$1</h4>")
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")

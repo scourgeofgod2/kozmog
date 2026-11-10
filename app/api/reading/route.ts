@@ -1,43 +1,77 @@
 import { NextRequest } from "next/server";
 import { callInworldStream } from "@/lib/claude";
 import { getSystemPrompt, buildUserQuery } from "@/lib/prompts";
-import type { NumerologyCalculations, ReadingFocus } from "@/types/numerology";
+import { calculateAll } from "@/lib/numerology";
+import { parseBirthDate, sanitizeName, parseFocus } from "@/lib/validation";
+import { hit, clientIp } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
+// IP başına: 5 dakikada 5, günde 20 yorum. Tüm site: günde READING_DAILY_CAP (varsayılan 3000).
+const PER_IP_SHORT = { limit: 5, windowMs: 5 * 60_000 };
+const PER_IP_DAY = { limit: 20, windowMs: 24 * 60 * 60_000 };
+const GLOBAL_DAY_CAP = Number(process.env.READING_DAILY_CAP ?? 3000);
+
+function json(status: number, body: object, extra?: HeadersInit) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json", ...extra },
+  });
+}
+
+function isSameOrigin(req: NextRequest): boolean {
+  const origin = req.headers.get("origin");
+  if (!origin) return false;
+  try {
+    return new URL(origin).host === req.headers.get("host");
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(req: NextRequest) {
   if (!process.env.INWORLD_API_KEY) {
-    return new Response(
-      JSON.stringify({ error: "INWORLD_API_KEY ortam değişkeni ayarlanmamış." }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
+    console.error("INWORLD_API_KEY is not set");
+    return json(500, { error: "Servis şu anda kullanılamıyor." });
   }
 
-  let body: {
-    birthDate: string;
-    fullName?: string;
-    calculations: NumerologyCalculations;
-    focus?: ReadingFocus;
-  };
+  // Başka sitelerin / scriptlerin API'yi doğrudan kullanmasını zorlaştır.
+  if (!isSameOrigin(req)) {
+    return json(403, { error: "İzin verilmeyen istek." });
+  }
 
+  const ip = clientIp(req.headers);
+  if (
+    !hit(`short:${ip}`, PER_IP_SHORT.limit, PER_IP_SHORT.windowMs) ||
+    !hit(`day:${ip}`, PER_IP_DAY.limit, PER_IP_DAY.windowMs)
+  ) {
+    return json(
+      429,
+      { error: "Çok fazla istek gönderdin. Biraz sonra tekrar dene." },
+      { "Retry-After": "300" }
+    );
+  }
+  if (!hit("global", GLOBAL_DAY_CAP, PER_IP_DAY.windowMs)) {
+    return json(503, { error: "Bugünlük yoğunluk sınırına ulaştık. Yarın tekrar dene." });
+  }
+
+  let body: Record<string, unknown>;
   try {
     body = await req.json();
   } catch {
-    return new Response(
-      JSON.stringify({ error: "Geçersiz istek gövdesi." }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
+    return json(400, { error: "Geçersiz istek gövdesi." });
   }
 
-  const { birthDate, fullName, calculations, focus } = body;
-
+  const birthDate = parseBirthDate(body.birthDate);
   if (!birthDate) {
-    return new Response(
-      JSON.stringify({ error: "Doğum tarihi eksik." }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
+    return json(400, { error: "Geçerli bir doğum tarihi gir." });
   }
+  const fullName = sanitizeName(body.fullName);
+  const focus = parseFocus(body.focus);
+
+  // Sayılar istemciden alınmaz, sunucuda yeniden hesaplanır.
+  const calculations = calculateAll(birthDate, fullName);
 
   try {
     const systemPrompt = getSystemPrompt(focus);
@@ -71,9 +105,11 @@ export async function POST(req: NextRequest) {
             controller.enqueue(encoder.encode(sseChunk));
           }
         } catch (err) {
-          const message = err instanceof Error ? err.message : "Bilinmeyen hata.";
+          console.error("reading stream error", err);
           controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify({ error: message })}\n\n`)
+            encoder.encode(
+              `data: ${JSON.stringify({ error: "Yorum oluşturulurken bir sorun oldu. Tekrar dene." })}\n\n`
+            )
           );
           controller.close();
         }
@@ -88,10 +124,7 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Bilinmeyen hata.";
-    return new Response(
-      JSON.stringify({ error: message }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
+    console.error("reading error", err);
+    return json(502, { error: "Yorum servisine ulaşılamadı. Tekrar dene." });
   }
 }

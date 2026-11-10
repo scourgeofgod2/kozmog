@@ -6,6 +6,7 @@ import ResultCard from "@/components/results/ResultCard";
 import AIStreamingReading from "@/components/results/AIStreamingReading";
 import ShareButton from "@/components/ui/ShareButton";
 import { tr } from "@/content/tr";
+import { parseBirthDate, sanitizeName } from "@/lib/validation";
 
 interface PageProps {
   searchParams: Promise<{ d?: string; n?: string }>;
@@ -13,7 +14,7 @@ interface PageProps {
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const params = await searchParams;
-  const name = params.n;
+  const name = sanitizeName(params.n);
   const title = name
     ? `${name} — ${tr.numerologyReadingTitle}`
     : tr.numerologyReadingTitle;
@@ -27,8 +28,8 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
 
 export default async function SonucPage({ searchParams }: PageProps) {
   const params = await searchParams;
-  const birthDate = params.d;
-  const fullName = params.n;
+  const birthDate = parseBirthDate(params.d);
+  const fullName = sanitizeName(params.n);
 
   if (!birthDate) {
     return (

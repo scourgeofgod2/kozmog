@@ -95,7 +95,7 @@ export default function RootLayout({
             </main>
             <Footer />
           </div>
-          <SunTimeDebugger />
+          {process.env.NODE_ENV === "development" && <SunTimeDebugger />}
         </SunThemeProvider>
       </body>
     </html>

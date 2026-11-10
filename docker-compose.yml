@@ -3,10 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        CORTEX_KEY: ${CORTEX_KEY}
     ports:
       - "3000:3000"
     environment:
-      - CORTEX_KEY=${CORTEX_KEY}
+      - INWORLD_API_KEY=${INWORLD_API_KEY}
+      - READING_DAILY_CAP=${READING_DAILY_CAP:-3000}
     restart: unless-stopped

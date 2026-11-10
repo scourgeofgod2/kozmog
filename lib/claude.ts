@@ -124,6 +124,7 @@ export async function callInworldStream(
       stream: true,
       chat_template_kwargs: { enable_thinking: false },
     }),
+    signal: AbortSignal.timeout(config.timeout),
   });
 
   if (!response.ok) {

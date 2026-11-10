@@ -14,9 +14,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build arguments for environment variables needed at build time
-ARG CORTEX_KEY
-ENV CORTEX_KEY=$CORTEX_KEY
+# API anahtarları build sırasında imaja gömülmez; çalışma zamanında
+# Coolify ortam değişkenlerinden okunur (INWORLD_API_KEY).
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
 
