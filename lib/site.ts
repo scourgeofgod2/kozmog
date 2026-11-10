@@ -5,3 +5,6 @@ export const LEGAL_UPDATED = "10 Kasım 2026";
 
 /** Varsayılan paylaşım görseli (app/opengraph-image.tsx) */
 export const OG_DEFAULT = [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Kozmograf numeroloji" }];
+
+export const INSTAGRAM_URL = "https://www.instagram.com/kozmografcom/";
+export const INSTAGRAM_HANDLE = "@kozmografcom";

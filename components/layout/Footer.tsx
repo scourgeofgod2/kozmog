@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { guideGroups, legalNav } from "@/lib/nav";
 import { Wordmark } from "./Header";
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -14,6 +15,19 @@ export default function Footer() {
             <p className="mt-3 text-[14px] leading-relaxed text-muted">
               Doğum tarihin ve isminle Pisagor numerolojisi. Ücretsiz hesapla, kişisel yorumunu oku.
             </p>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer me"
+              className="mt-4 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-line px-4 text-[14px] text-text transition-colors hover:border-gold hover:text-gold"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+              {INSTAGRAM_HANDLE}
+            </a>
           </div>
 
           {guideGroups.map((g) => (

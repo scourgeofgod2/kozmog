@@ -20,6 +20,7 @@ import { images, type ImageKey } from "@/lib/content/images.generated";
 import { ALL_NUMBERS, getProfile, numberHref } from "@/lib/content/profiles";
 import { tr } from "@/content/tr";
 import { packages } from "@/lib/content/packages";
+import { INSTAGRAM_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: { absolute: tr.seoTitle },
@@ -59,6 +60,7 @@ const jsonLd = {
       name: "Kozmograf Numeroloji",
       url: "https://kozmograf.com",
       logo: "https://kozmograf.com/brand/instagram-profil-koyu.png",
+      sameAs: [INSTAGRAM_URL],
       description: tr.siteDescription,
     },
     { "@type": "WebSite", name: "Kozmograf Numeroloji", url: "https://kozmograf.com", inLanguage: "tr" },
