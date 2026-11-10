@@ -1,34 +1,29 @@
-import type { Metadata } from "next";
-import { DM_Sans, Cormorant_Garamond, Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { SunThemeProvider } from "@/components/providers/SunThemeProvider";
-import SunTimeDebugger from "@/components/dev/SunTimeDebugger";
-import SunArc from "@/components/ui/SunArc";
 import { tr } from "@/content/tr";
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-dm-sans",
-  display: "swap",
-});
-
+// latin-ext: Türkçe ğ, ş, ı, İ harfleri için şart
 const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin", "latin-ext"],
+  weight: ["500", "600", "700"],
   style: ["normal", "italic"],
-  variable: "--font-playfair",
+  variable: "--font-cormorant",
   display: "swap",
 });
 
 const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin", "latin-ext"],
   variable: "--font-inter",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  themeColor: "#07070d",
+  colorScheme: "dark",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kozmograf.com"),
@@ -51,11 +46,13 @@ export const metadata: Metadata = {
     siteName: "Kozmograf Numeroloji",
     title: tr.ogTitle,
     description: tr.ogDescription,
+    images: [{ url: "/api/og", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: tr.ogTitle,
     description: tr.ogDescription,
+    images: ["/api/og"],
   },
   robots: {
     index: true,
@@ -76,27 +73,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr" className={`${dmSans.variable} ${cormorant.variable} ${inter.variable}`} suppressHydrationWarning>
-      <body className="font-sans min-h-screen antialiased">
-        <SunThemeProvider>
-          <div className="relative min-h-screen">
-            <Header />
-            <SunArc />
-            <div className="flex justify-center pb-6 -mt-2">
-              <img
-                src="/logo1.png"
-                alt="Kozmograf"
-                style={{ height: 110, width: "auto", opacity: 0.92 }}
-                draggable={false}
-              />
-            </div>
-            <main className="container mx-auto px-4 max-w-7xl py-10">
-              {children}
-            </main>
-            <Footer />
-          </div>
-          {process.env.NODE_ENV === "development" && <SunTimeDebugger />}
-        </SunThemeProvider>
+    <html lang="tr" className={`${cormorant.variable} ${inter.variable}`}>
+      <body className="koz-sky min-h-screen font-sans antialiased">
+        <a
+          href="#icerik"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-gold focus:px-4 focus:py-2 focus:text-ink"
+        >
+          İçeriğe geç
+        </a>
+        <Header />
+        <main id="icerik" className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

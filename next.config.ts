@@ -3,6 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
+  async redirects() {
+    return [
+      // Eski footer linkleri → yeni sayfalar
+      { source: "/melek-numeroloji", destination: "/melek-sayilari", permanent: true },
+      { source: "/karmik-numeroloji", destination: "/karmik-borc", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {
@@ -16,11 +23,6 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
-  },
-  experimental: {
-    serverActions: {
-      bodySizeLimit: "2mb",
-    },
   },
 };
 

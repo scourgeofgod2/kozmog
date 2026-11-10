@@ -23,7 +23,7 @@ Kozmograf'taki tüm özellikler ve analizler tamamen ücretsizdir.
 |---------|----------|-------------------|--------------------------------------------------|
 | Ücretsiz | 0 TL/ay  | Sınırsız kullanım | Tüm analizler, tüm sayfalar, kayıt gerekmez     |
 
-Ücretli plan, abonelik veya premium içerik bulunmamaktadır. Platform gelecekte de ücretsiz kalmayı hedeflemektedir.
+Şu anda ücretli plan, abonelik veya premium içerik bulunmamaktadır.
 
 ## Temel Sayfalar
 
@@ -36,6 +36,11 @@ Kozmograf'taki tüm özellikler ve analizler tamamen ücretsizdir.
 - İsim Numerolojisi: https://kozmograf.com/isim-numeroloji
 - Kariyer Numerolojisi Rehberi: https://kozmograf.com/kariyer-numerolojisi
 - Güçler ve Yetenekler: https://kozmograf.com/gucler-ve-yetenekler
+- 2027 Kişisel Yıl Sayısı: https://kozmograf.com/kisisel-yil
+- Melek Sayıları (111, 222, 444…): https://kozmograf.com/melek-sayilari
+- Karmik Borç Sayıları 13, 14, 16, 19: https://kozmograf.com/karmik-borc
+- Doğum Günü Sayısı (1-31): https://kozmograf.com/dogum-gunu-sayisi
+- Tek tek sayı rehberleri: https://kozmograf.com/sayilarin-anlami/1 … /9, /11, /22, /33
 
 ## Sunulan Analizler
 

@@ -1,383 +1,156 @@
 @import "tailwindcss";
 
+/* ──────────────────────────────────────────────────────────────
+   Kozmograf tasarım sistemi — "Gece Gökyüzü × Kozmik Bento"
+   A: koyu gece zemini, altın vurgu, Cormorant serif başlıklar
+   B: yuvarlatılmış bento kartlar, kalın sayılar, mor ikincil vurgu
+   ────────────────────────────────────────────────────────────── */
+
 @theme {
-  --font-family-sans: var(--font-inter), "Inter", var(--font-dm-sans), "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-family-display: "Cormorant Garamond", var(--font-playfair), Georgia, serif;
-  --font-family-inter: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+
+  --color-ink: #07070d;
+  --color-surface: #0e0d18;
+  --color-surface-2: #16141f;
+  --color-surface-3: #1f1c2c;
+  --color-line: #2a2840;
+  --color-line-strong: #3b3857;
+  --color-text: #ece8f5;
+  --color-muted: #a6a2bc;
+  --color-faint: #8a86a3;
+
+  --color-gold: #e9c46a;
+  --color-gold-strong: #f4d98b;
+  --color-gold-ink: #1a1405;
+  --color-violet: #7b5cff;
+  --color-violet-soft: #a594ff;
+  --color-violet-ink: #0f0a2a;
+  --color-rose: #ff7ab6;
+  --color-teal: #7fd1c7;
+
+  --radius-card: 24px;
+  --radius-tile: 18px;
 }
 
-@layer base {
-  :root {
-    --background: 240 20% 6%;
-    --foreground: 45 30% 92%;
-    --card: 240 18% 9%;
-    --card-foreground: 45 30% 92%;
-    --popover: 240 18% 9%;
-    --popover-foreground: 45 30% 92%;
-    --primary: 44 96% 56%;
-    --primary-foreground: 240 20% 6%;
-    --secondary: 240 15% 14%;
-    --secondary-foreground: 45 30% 82%;
-    --muted: 240 12% 16%;
-    --muted-foreground: 240 8% 52%;
-    --accent: 265 62% 48%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 68% 52%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 240 10% 18%;
-    --input: 240 10% 18%;
-    --ring: 44 96% 56%;
-    --radius: 0rem;
-
-    --koz-void: #080810;
-    --koz-deep: #0B0B18;
-    --koz-surface: #101022;
-    --koz-card: #13132A;
-    --koz-border: #1E1E3A;
-    --koz-border-bright: #2D2D55;
-    --koz-gold: #F5C842;
-    --koz-gold-dim: #A8882B;
-    --koz-violet: #7C3AED;
-    --koz-violet-bright: #9B59F5;
-    --koz-violet-dim: #3B1F7A;
-    --koz-star: #C4B5FD;
-    --koz-mist: rgba(196, 181, 253, 0.06);
-    --koz-text: #EAE6FF;
-    --koz-text-muted: #7B7A9E;
-    --koz-text-faint: #3E3D5C;
-
-    --sun-glow-1: rgba(255, 69, 0, 0.30);
-    --sun-glow-2: rgba(173, 20, 87, 0.20);
-    --sun-glow-3: rgba(255, 120, 50, 0.15);
-    --sun-rule-gradient: linear-gradient(90deg, transparent, #FF4500 30%, #E91E8C 70%, transparent);
-    --sun-btn-hover: #FF6633;
-    --sun-color: #FF2200;
-    --sun-glow-color: rgba(255,60,0,0.85);
-    --sun-horizon: rgba(255, 69, 0, 0.55);
-    --sun-horizon-glow: rgba(255, 140, 50, 0.40);
-    --sun-sky-top: rgba(5, 5, 15, 0.97);
-    --sun-sky-mid: rgba(40, 5, 15, 0.65);
-    --sun-position: 74%;
-  }
+:root {
+  color-scheme: dark;
 }
 
-@layer base {
-  * {
-    border-color: var(--koz-border);
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  html {
-    transition:
-      --koz-gold 1.4s ease,
-      --koz-gold-dim 1.4s ease,
-      --koz-violet 1.4s ease,
-      --koz-violet-bright 1.4s ease,
-      --koz-violet-dim 1.4s ease,
-      --koz-star 1.4s ease,
-      --sun-glow-color 1.4s ease,
-      --sun-horizon 1.4s ease,
-      --sun-horizon-glow 1.4s ease;
-  }
-
-  body {
-    background: var(--koz-void);
-    color: var(--koz-text);
-    font-family: var(--font-inter), "Inter", var(--font-dm-sans), "DM Sans", -apple-system, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-image:
-      radial-gradient(ellipse 100% 60% at 50% -5%, var(--sun-glow-1) 0%, transparent 65%),
-      radial-gradient(ellipse 60% 40% at 80% 15%, var(--sun-glow-2) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 35% at 15% 75%, var(--sun-glow-3) 0%, transparent 55%),
-      radial-gradient(ellipse 40% 25% at 50% 100%, var(--sun-horizon) 0%, transparent 60%);
-    transition: background-image 1.4s ease;
-  }
-
-  ::selection {
-    background: var(--koz-violet);
-    color: #fff;
-  }
-
-  ::-webkit-scrollbar {
-    width: 4px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--koz-void);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--koz-border-bright);
-    border-radius: 2px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--koz-violet-dim);
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
-/* ─── Typography utilities ─────────────────────────────── */
-
-.font-display {
-  font-family: "Cormorant Garamond", Georgia, serif;
+body {
+  background: var(--color-ink);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  /* Cormorant varsayılanı eski stil rakamlar: "1" harf "I" gibi görünür */
+  font-variant-numeric: lining-nums;
 }
 
-.koz-label {
-  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--koz-gold);
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
 }
 
-/* ─── Glass / surface utilities ────────────────────────── */
-
-.koz-glass {
-  background: rgba(16, 16, 34, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--koz-border-bright);
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
-.koz-card {
-  background: var(--koz-card);
-  border: 1px solid var(--koz-border);
+/* Arka plan yıldız dokusu — tek bir hafif katman, animasyon yok */
+.koz-sky {
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(236, 232, 245, 0.55) 50%, transparent 51%),
+    radial-gradient(1px 1px at 68% 8%, rgba(236, 232, 245, 0.4) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 84% 34%, rgba(233, 196, 106, 0.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 32% 46%, rgba(236, 232, 245, 0.35) 50%, transparent 51%),
+    radial-gradient(1px 1px at 52% 72%, rgba(236, 232, 245, 0.3) 50%, transparent 51%),
+    radial-gradient(1px 1px at 8% 82%, rgba(236, 232, 245, 0.35) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 92% 88%, rgba(165, 148, 255, 0.5) 50%, transparent 51%);
+  background-size: 640px 640px;
 }
 
-.koz-card-hover {
-  transition: border-color 200ms ease, background 200ms ease, transform 200ms ease;
+/* Uzun metin (AI yorumu ve rehber yazıları) */
+.koz-prose {
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.75;
 }
-.koz-card-hover:hover {
-  border-color: var(--koz-gold-dim);
-  background: color-mix(in srgb, var(--koz-violet) 8%, transparent);
-  transform: translateY(-2px);
+.koz-prose > * + * {
+  margin-top: 1em;
 }
-
-/* ─── Gold accent line ──────────────────────────────────── */
-
-.koz-rule {
-  height: 1px;
-  background: var(--sun-rule-gradient);
-  transition: background 1.8s ease;
-}
-
-/* ─── Glow effects ──────────────────────────────────────── */
-
-.koz-glow-gold {
-  box-shadow: 0 0 28px color-mix(in srgb, var(--koz-gold) 18%, transparent), 0 0 56px color-mix(in srgb, var(--koz-gold) 8%, transparent);
-}
-.koz-glow-violet {
-  box-shadow: 0 0 28px color-mix(in srgb, var(--koz-violet) 25%, transparent), 0 0 56px color-mix(in srgb, var(--koz-violet) 12%, transparent);
-}
-.koz-text-glow {
-  text-shadow: 0 0 40px color-mix(in srgb, var(--koz-gold) 50%, transparent);
-}
-
-/* ─── Buttons ───────────────────────────────────────────── */
-
-.koz-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: var(--koz-gold);
-  color: var(--koz-void);
-  font-family: var(--font-dm-sans), sans-serif;
-  font-weight: 900;
-  font-size: 12px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 14px 28px;
-  border: 1px solid var(--koz-gold);
-  transition: background 180ms ease, box-shadow 180ms ease, transform 120ms ease;
-}
-.koz-btn-primary:hover {
-  background: var(--sun-btn-hover);
-  box-shadow: 0 0 32px rgba(245, 200, 66, 0.25);
-  transform: translateY(-1px);
-}
-
-.koz-btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--koz-text-muted);
-  font-family: var(--font-dm-sans), sans-serif;
+.koz-prose h2,
+.koz-prose h3 {
+  font-family: var(--font-display);
+  color: var(--color-text);
   font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  border: 1px solid var(--koz-border);
-  background: transparent;
-  transition: color 180ms ease, border-color 180ms ease;
+  line-height: 1.15;
+  margin-top: 1.8em;
 }
-.koz-btn-ghost:hover {
-  color: var(--koz-text);
-  border-color: var(--koz-border-bright);
-}
-
-/* ─── Animations ────────────────────────────────────────── */
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.fade-up { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-.fade-up-d1 { animation: fadeUp 0.6s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.fade-up-d2 { animation: fadeUp 0.6s 0.22s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.fade-up-d3 { animation: fadeUp 0.6s 0.34s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.fade-up-d4 { animation: fadeUp 0.6s 0.46s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.fade-up-d5 { animation: fadeUp 0.6s 0.58s cubic-bezier(0.16, 1, 0.3, 1) both; }
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-.fade-in { animation: fadeIn 0.8s ease forwards; }
-
-@keyframes starFloat {
-  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
-  50%       { transform: translateY(-8px) rotate(5deg); opacity: 1; }
-}
-.star-float { animation: starFloat 4s ease-in-out infinite; }
-
-@keyframes orbitSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-.orbit-spin { animation: orbitSpin 20s linear infinite; }
-.orbit-spin-slow { animation: orbitSpin 40s linear infinite; }
-.orbit-spin-reverse { animation: orbitSpin 30s linear infinite reverse; }
-
-@keyframes pulseGold {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(245,200,66,0); }
-  50%       { opacity: 0.85; box-shadow: 0 0 0 8px rgba(245,200,66,0); }
-}
-.pulse-gold { animation: pulseGold 3s ease-in-out infinite; }
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0.2; transform: scale(1); }
-  50%       { opacity: 1; transform: scale(1.4); }
-}
-
-@keyframes shimmerKoz {
-  0%   { background-position: -600px 0; }
-  100% { background-position: 600px 0; }
-}
-.skeleton-shimmer {
-  background: linear-gradient(90deg,
-    var(--koz-card) 25%,
-    var(--koz-border) 50%,
-    var(--koz-card) 75%
-  );
-  background-size: 1200px 100%;
-  animation: shimmerKoz 2s ease-in-out infinite;
-}
-
-@keyframes marqueeScroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.marquee-track { animation: marqueeScroll 28s linear infinite; }
-
-@keyframes progressFill {
-  0%   { width: 0%; }
-  15%  { width: 20%; }
-  35%  { width: 45%; }
-  60%  { width: 68%; }
-  80%  { width: 85%; }
-  100% { width: 100%; }
-}
-.loading-progress { animation: progressFill 10s ease-in-out forwards; }
-
-@keyframes bounce3 {
-  0%, 80%, 100% { transform: translateY(0); }
-  40%           { transform: translateY(-6px); }
-}
-
-/* ─── Prose overrides ───────────────────────────────────── */
-
-.prose {
-  color: var(--koz-text-muted);
-}
-.prose h3 {
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.15rem;
+.koz-prose h2 { font-size: 1.9rem; }
+.koz-prose h3 { font-size: 1.55rem; }
+.koz-prose h4 {
+  color: var(--color-gold);
   font-weight: 600;
-  font-style: italic;
-  color: var(--koz-gold);
-  margin-top: 1.75rem;
-  margin-bottom: 0.75rem;
-  letter-spacing: 0.01em;
-  border: none;
-  padding: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  margin-top: 1.6em;
 }
-.prose h4 {
-  font-family: var(--font-inter), var(--font-dm-sans), sans-serif;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--koz-text);
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-.prose strong {
-  font-weight: 700;
-  color: var(--koz-text);
-  font-family: var(--font-inter), var(--font-dm-sans), sans-serif;
-}
-.prose ul {
-  padding-left: 1rem;
-  margin: 0.75rem 0;
-  space-y: 0.5rem;
-}
-.prose li {
-  color: var(--koz-text-muted);
-  font-size: 0.875rem;
-  line-height: 1.7;
-  font-weight: 400;
-  font-family: var(--font-inter), var(--font-dm-sans), sans-serif;
-}
-.prose li::marker {
-  content: "◦ ";
-  color: var(--koz-gold);
-}
-.prose p {
-  color: var(--koz-text-muted);
-  font-size: 0.875rem;
-  line-height: 1.8;
-  margin-bottom: 1rem;
-  font-weight: 400;
-  font-family: var(--font-inter), var(--font-dm-sans), sans-serif;
+.koz-prose strong { color: var(--color-text); font-weight: 600; }
+.koz-prose em { color: var(--color-text); }
+.koz-prose a { color: var(--color-gold); text-decoration: underline; text-underline-offset: 3px; }
+.koz-prose ul { padding-left: 1.2em; list-style: none; }
+.koz-prose li { position: relative; margin-top: 0.5em; }
+.koz-prose li::before {
+  content: "✦";
+  position: absolute;
+  left: -1.2em;
+  color: var(--color-gold);
+  font-size: 0.7em;
+  top: 0.35em;
 }
 
-/* ─── Legacy neo-shadow (backward compat) ───────────────── */
-.neo-shadow    { box-shadow: 4px 4px 0px color-mix(in srgb, var(--koz-violet) 40%, transparent); }
-.neo-shadow-sm { box-shadow: 2px 2px 0px color-mix(in srgb, var(--koz-violet) 30%, transparent); }
-.neo-shadow-md { box-shadow: 5px 5px 0px color-mix(in srgb, var(--koz-violet) 40%, transparent); }
-.neo-shadow-lg { box-shadow: 7px 7px 0px color-mix(in srgb, var(--koz-violet) 40%, transparent); }
+/* SSS akordeon */
+.koz-faq summary { list-style: none; cursor: pointer; }
+.koz-faq summary::-webkit-details-marker { display: none; }
+.koz-faq[open] .koz-faq-icon { transform: rotate(45deg); }
 
-/* ─── Fade-in-up (legacy alias) ─────────────────────────── */
-.fade-in-up            { animation: fadeUp 0.5s ease forwards; }
-.fade-in-up-delay-1    { animation: fadeUp 0.5s 0.1s ease both; }
-.fade-in-up-delay-2    { animation: fadeUp 0.5s 0.2s ease both; }
-.fade-in-up-delay-3    { animation: fadeUp 0.5s 0.3s ease both; }
-.fade-in-up-delay-4    { animation: fadeUp 0.5s 0.4s ease both; }
-
-/* ─── pulse-ring (legacy alias) ─────────────────────────── */
-@keyframes pulseRing {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50%       { transform: scale(1.08); opacity: 0.4; }
+/* Yükleme iskeleti */
+@keyframes koz-shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
 }
-.pulse-ring { animation: pulseRing 2.4s ease-in-out infinite; }
-
-/* ─── spin-slow (legacy alias) ──────────────────────────── */
-@keyframes spinSlow {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+.koz-skeleton {
+  background: linear-gradient(90deg, var(--color-surface-2) 0%, var(--color-surface-3) 50%, var(--color-surface-2) 100%);
+  background-size: 800px 100%;
+  animation: koz-shimmer 1.6s linear infinite;
 }
-.spin-slow { animation: spinSlow 8s linear infinite; }
+
+@keyframes koz-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.koz-fade-up { animation: koz-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@keyframes koz-blink { 50% { opacity: 0; } }
+.koz-caret {
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  background: var(--color-gold);
+  vertical-align: -0.12em;
+  animation: koz-blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

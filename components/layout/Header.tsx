@@ -2,151 +2,114 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import { tr } from "@/content/tr";
+import { useEffect, useState } from "react";
+import { primaryNav, guideGroups } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 
-const navLinks = [
-  { href: "/", label: tr.navHome },
-  { href: "/sayilarin-anlami", label: "Sayılar" },
-  { href: "/yasam-yolu", label: "Yaşam Yolu" },
-  { href: "/usta-sayilar", label: "11·22·33" },
-  { href: "/uyumluluk", label: tr.navCompatibility },
-  { href: "/saat-anlami", label: "Saatler" },
-  { href: "/isim-numeroloji", label: "İsim" },
-  { href: "/kariyer-numerolojisi", label: "Kariyer" },
-];
+export function Wordmark({ className }: { className?: string }) {
+  return (
+    <span className={cn("flex items-center gap-2", className)}>
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" className="text-gold">
+        <path d="M12 2 L13.6 10.4 L22 12 L13.6 13.6 L12 22 L10.4 13.6 L2 12 L10.4 10.4 Z" fill="currentColor" />
+      </svg>
+      <span className="font-display text-[22px] font-semibold tracking-[0.02em] text-text">Kozmograf</span>
+    </span>
+  );
+}
 
 export default function Header() {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  // Sayfa değişince mobil menüyü kapat
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
-        scrolled
-          ? "bg-[rgba(8,8,16,0.92)] backdrop-blur-xl border-b border-[#1E1E3A]"
-          : "bg-transparent border-b border-transparent"
-      )}
-    >
-      <div className="container mx-auto px-4 max-w-7xl">
-        <div className="flex items-center justify-between h-[68px]">
+    <header className="sticky top-0 z-50 border-b border-line/70 bg-ink/85 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+        <Link href="/" aria-label="Kozmograf ana sayfa" className="flex min-h-[44px] items-center">
+          <Wordmark />
+        </Link>
 
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-            <div className="relative w-9 h-9 flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 rounded-full border border-[--koz-gold]/30 group-hover:border-[--koz-gold]/60 transition-colors" />
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#1E1040] to-[#080810]" />
-              <span
-                className="relative font-display text-[--koz-gold] text-xl leading-none select-none"
-                style={{ fontWeight: 400 }}
-              >
-                ∞
-              </span>
-            </div>
-            <div>
-              <span
-                className="text-[15px] font-black text-[#EAE6FF] leading-tight block tracking-wide uppercase"
-                style={{ letterSpacing: "0.08em" }}
-              >
-                Kozmograf
-              </span>
-              <span className="text-[9px] font-medium text-[#7B7A9E] leading-none hidden sm:block uppercase tracking-[0.22em]">
-                Numeroloji
-              </span>
-            </div>
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-0.5">
-            {navLinks.map((link) => {
-              const isActive =
-                link.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(link.href);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors",
-                    isActive
-                      ? "text-[--koz-gold]"
-                      : "text-[#7B7A9E] hover:text-[#EAE6FF]"
-                  )}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Right side */}
-          <div className="flex items-center gap-3">
+        <nav aria-label="Ana menü" className="hidden items-center gap-1 lg:flex">
+          {primaryNav.map((l) => (
             <Link
-              href="/#numerology-form"
-              className="hidden sm:inline-flex items-center gap-2 text-[#080810] bg-[--koz-gold] text-[11px] font-black px-5 py-2.5 uppercase tracking-[0.14em] hover:bg-[--sun-btn-hover] transition-colors"
-              style={{ letterSpacing: "0.14em" }}
+              key={l.href}
+              href={l.href}
+              className={cn(
+                "rounded-full px-3.5 py-2 text-[14px] transition-colors",
+                isActive(l.href) ? "bg-surface-2 text-gold" : "text-muted hover:text-text"
+              )}
             >
-              <span>✦</span>
-              Hesapla
+              {l.label}
             </Link>
-            <button
-              className="lg:hidden w-9 h-9 border border-[#2D2D55] text-[#7B7A9E] flex items-center justify-center hover:text-[#EAE6FF] hover:border-[#7B7A9E] transition-colors"
-              onClick={() => setMobileOpen((o) => !o)}
-              aria-label="Menü"
-            >
-              {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-            </button>
-          </div>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <Link
+            href="/#hesapla"
+            className="hidden min-h-[44px] items-center rounded-full bg-gold px-5 text-[14px] font-semibold text-ink transition-colors hover:bg-gold-strong sm:inline-flex"
+          >
+            Sayımı bul
+          </Link>
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls="mobil-menu"
+            aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
+            className="grid h-11 w-11 place-items-center rounded-full border border-line text-text transition-colors hover:border-gold lg:hidden"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+              {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 8h16M4 16h16" />}
+            </svg>
+          </button>
         </div>
       </div>
 
-      {/* Mobile Nav */}
-      {mobileOpen && (
-        <div className="lg:hidden bg-[#0B0B18] border-b border-[#1E1E3A]">
-          <nav className="container mx-auto px-4 max-w-7xl py-3">
-            <div className="flex flex-col gap-0.5">
-              {navLinks.map((link) => {
-                const isActive =
-                  link.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(link.href);
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={cn(
-                      "px-3 py-3 text-sm font-semibold uppercase tracking-[0.1em] border-b border-[#1E1E3A]/60 transition-colors",
-                      isActive
-                      ? "text-[--koz-gold]"
-                      : "text-[#7B7A9E] hover:text-[#EAE6FF]"
-                    )}
-                  >
-                    {isActive && <span className="mr-2 text-[--koz-gold]/60">◦</span>}
-                    {link.label}
-                  </Link>
-                );
-              })}
-              <Link
-                href="/#numerology-form"
-                onClick={() => setMobileOpen(false)}
-                className="mt-3 mb-1 text-center bg-[--koz-gold] text-[#080810] text-sm font-black px-4 py-3 uppercase tracking-[0.14em] hover:bg-[--sun-btn-hover] transition-colors"
-              >
-                ✦ Ücretsiz Hesapla
-              </Link>
+      {open && (
+        <div id="mobil-menu" className="fixed inset-x-0 bottom-0 top-16 overflow-y-auto bg-ink px-4 pb-10 pt-4 lg:hidden">
+          <Link
+            href="/#hesapla"
+            className="mb-6 flex min-h-[52px] items-center justify-center rounded-full bg-gold text-[15px] font-semibold text-ink"
+          >
+            Ücretsiz sayımı bul
+          </Link>
+          {guideGroups.map((g) => (
+            <div key={g.title} className="mb-6">
+              <p className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-faint">{g.title}</p>
+              <ul className="overflow-hidden rounded-[var(--radius-tile)] border border-line bg-surface">
+                {g.items.map((it) => (
+                  <li key={it.href} className="border-b border-line last:border-0">
+                    <Link
+                      href={it.href}
+                      className={cn(
+                        "flex min-h-[52px] items-center justify-between px-4 text-[15px]",
+                        isActive(it.href) && it.href !== "/" ? "text-gold" : "text-text"
+                      )}
+                    >
+                      {it.label}
+                      <span aria-hidden="true" className="text-gold">→</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </nav>
+          ))}
         </div>
       )}
     </header>

@@ -1,142 +1,77 @@
-import NumberBadge from "@/components/ui/NumberBadge";
-import { tr } from "@/content/tr";
+import Link from "next/link";
+import { NumberTile } from "@/components/ds";
+import { getProfile, numberHref } from "@/lib/content/profiles";
 import { isMasterNumber } from "@/lib/numerology";
 import type { NumerologyCalculations } from "@/types/numerology";
 
-interface ResultCardProps {
-  calculations: NumerologyCalculations;
-  fullName?: string;
-}
-
-export default function ResultCard({ calculations, fullName }: ResultCardProps) {
+export default function ResultCard({ calculations }: { calculations: NumerologyCalculations }) {
   const { lifePath, birthDay, personalYear, destinyNumber, soulUrge, personalityNumber } = calculations;
+  const lp = getProfile(lifePath);
+  const year = new Date().getFullYear();
 
-  const hasMaster =
-    isMasterNumber(lifePath) ||
-    (destinyNumber !== undefined && isMasterNumber(destinyNumber)) ||
-    (soulUrge !== undefined && isMasterNumber(soulUrge));
+  const tiles: { label: string; value?: number }[] = [
+    { label: "Kader", value: destinyNumber },
+    { label: "Ruh", value: soulUrge },
+    { label: "Kişilik", value: personalityNumber },
+    { label: "Doğum Günü", value: birthDay },
+  ];
 
   return (
-    <div style={{
-      background: "var(--koz-card)",
-      border: "1px solid var(--koz-border)",
-      position: "relative",
-      overflow: "hidden",
-    }}>
-      <div style={{
-        position: "absolute",
-        top: 0, left: 0, right: 0,
-        height: "1px",
-        background: "linear-gradient(90deg, transparent, var(--koz-gold) 40%, var(--koz-violet) 70%, transparent)",
-      }} />
-
-      <div style={{
-        padding: "20px 24px 16px",
-        borderBottom: "1px solid var(--koz-border)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: "12px",
-      }}>
+    <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      <Link
+        href={numberHref(lifePath)}
+        className="col-span-2 row-span-2 flex min-h-[300px] flex-col justify-between rounded-[var(--radius-card)] bg-gold p-6 text-gold-ink transition-opacity hover:opacity-95"
+      >
         <div>
-          <p style={{
-            fontSize: "9px",
-            fontWeight: 700,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "var(--koz-gold)",
-            margin: 0,
-            fontFamily: "var(--font-inter), sans-serif",
-          }}>
-            {tr.yourCoreNumbers}
+          <p className="text-[13px] font-semibold">
+            Yaşam Yolu Sayın {isMasterNumber(lifePath) && "· Usta Sayı ✦"}
           </p>
-          {fullName && (
-            <p style={{
-              fontFamily: '"Cormorant Garamond", Georgia, serif',
-              fontSize: "1rem",
-              fontWeight: 500,
-              fontStyle: "italic",
-              color: "var(--koz-text-muted)",
-              margin: "4px 0 0",
-              letterSpacing: "0.01em",
-            }}>
-              {fullName}
-            </p>
-          )}
+          <p className="mt-1 font-display text-4xl font-semibold">{lp?.title}</p>
+          <p className="mt-2 max-w-[260px] text-[15px] leading-snug">{lp?.keyword}</p>
         </div>
+        <div className="flex items-end justify-between">
+          <span className="text-[13px] font-semibold underline underline-offset-4">Anlamını oku →</span>
+          <span className="font-display text-[9rem] font-semibold leading-[0.75]">{lifePath}</span>
+        </div>
+      </Link>
 
-        <div style={{ display: "flex", gap: "4px", flexShrink: 0 }}>
-          {[
-            "var(--koz-gold)",
-            "var(--koz-violet)",
-            "var(--koz-star)",
-          ].map((c) => (
-            <div key={c} style={{
-              width: "8px",
-              height: "8px",
-              background: c,
-              opacity: 0.7,
-            }} />
-          ))}
-        </div>
-      </div>
-
-      {hasMaster && (
-        <div style={{
-          margin: "16px 16px 0",
-          padding: "12px 16px",
-          background: "rgba(245,200,66,0.06)",
-          border: "1px solid rgba(245,200,66,0.25)",
-          display: "flex",
-          alignItems: "flex-start",
-          gap: "10px",
-        }}>
-          <span style={{ color: "var(--koz-gold)", fontSize: "14px", flexShrink: 0 }}>✦</span>
-          <div>
-            <p style={{
-              fontSize: "9px",
-              fontWeight: 700,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--koz-gold)",
-              margin: 0,
-              fontFamily: "var(--font-inter), sans-serif",
-            }}>
-              {tr.masterNumberDetected}
-            </p>
-            <p style={{
-              fontFamily: '"Cormorant Garamond", Georgia, serif',
-              fontSize: "0.8rem",
-              fontStyle: "italic",
-              color: "var(--koz-text-muted)",
-              margin: "3px 0 0",
-              lineHeight: 1.5,
-            }}>
-              Bu, yüksek ruhsal potansiyeli ve daha büyük yaşam zorluklarını gösterir.
-            </p>
-          </div>
-        </div>
+      {tiles.map((t) =>
+        t.value !== undefined ? (
+          <NumberTile
+            key={t.label}
+            label={t.label}
+            value={t.value}
+            sub={getProfile(t.value)?.title}
+            href={numberHref(t.value)}
+            tone={isMasterNumber(t.value) ? "violet" : "default"}
+          />
+        ) : (
+          <Link
+            key={t.label}
+            href="/#hesapla"
+            className="flex min-h-[132px] flex-col justify-between rounded-[var(--radius-tile)] border border-dashed border-line-strong p-4 text-faint transition-colors hover:border-gold hover:text-gold"
+          >
+            <span className="text-[12px] font-medium">{t.label}</span>
+            <span className="font-display text-5xl leading-none">?</span>
+            <span className="text-[12px]">İsminle hesapla</span>
+          </Link>
+        )
       )}
 
-      <div style={{
-        padding: "16px",
-        display: "grid",
-        gridTemplateColumns: "repeat(2, 1fr)",
-        gap: "8px",
-      }}>
-        <NumberBadge number={lifePath} label={tr.lifePathNumber} subtitle={tr.yourLifePurpose} />
-        <NumberBadge number={birthDay} label={tr.birthDayNumber} subtitle={tr.yourSpecialTalents} />
-        <NumberBadge number={personalYear} label={tr.personalYearNumber} subtitle={tr.yearTheme} />
-        {destinyNumber !== undefined && (
-          <NumberBadge number={destinyNumber} label={tr.destinyNumber} subtitle={tr.yourLifeMission} />
-        )}
-        {soulUrge !== undefined && (
-          <NumberBadge number={soulUrge} label={tr.soulUrgeNumber} subtitle={tr.yourInnerDesires} />
-        )}
-        {personalityNumber !== undefined && (
-          <NumberBadge number={personalityNumber} label={tr.personalityNumber} subtitle={tr.howOthersSeeYou} />
-        )}
-      </div>
+      <Link
+        href="/kisisel-yil"
+        className="col-span-2 flex items-center gap-4 rounded-[var(--radius-tile)] border border-line bg-surface-2 p-4 transition-colors hover:border-gold/70 md:col-span-4"
+      >
+        <span className="grid h-14 w-14 flex-none place-items-center rounded-[14px] bg-ink font-display text-3xl font-semibold text-gold">
+          {personalYear}
+        </span>
+        <span className="flex flex-col">
+          <span className="text-[15px] font-semibold text-text">
+            {year} kişisel yılın: {getProfile(personalYear)?.title}
+          </span>
+          <span className="text-[13px] text-muted">Bu yılın teması ve {year + 1} için hazırlık →</span>
+        </span>
+      </Link>
     </div>
   );
 }

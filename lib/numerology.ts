@@ -37,18 +37,18 @@ export function calculateLifePath(birthDate: string): number {
 
 // ─── Pisagor harf değerleri (Türkçe karakterler dahil) ───────────────────
 
-const LETTER_VALUES: Record<string, number> = {
+export const LETTER_VALUES: Record<string, number> = {
   A: 1,  B: 2,  C: 3,  Ç: 3,  D: 4,  E: 5,  F: 6,  G: 7,  Ğ: 7,
   H: 8,  I: 9,  İ: 9,  J: 1,  K: 2,  L: 3,  M: 4,  N: 5,  O: 6,
   Ö: 6,  P: 7,  Q: 8,  R: 9,  S: 1,  Ş: 1,  T: 2,  U: 3,  Ü: 3,
   V: 4,  W: 5,  X: 6,  Y: 7,  Z: 8,
 };
 
-const VOWELS = new Set(["A", "E", "I", "İ", "O", "Ö", "U", "Ü"]);
+export const VOWELS = new Set(["A", "E", "I", "İ", "O", "Ö", "U", "Ü"]);
 
-function cleanName(fullName: string): string {
+export function cleanName(fullName: string): string {
   return fullName
-    .toUpperCase()
+    .toLocaleUpperCase("tr-TR")
     .split("")
     .filter((ch) => ch in LETTER_VALUES)
     .join("");
@@ -237,4 +237,58 @@ export function getNumberColor(n: number): string {
     33: "from-rose-400 to-pink-600",
   };
   return colors[n] ?? "from-indigo-500 to-purple-600";
+}
+// ─── Karmik borç sayıları (13, 14, 16, 19) ────────────────────────────────
+// Bir çekirdek sayının indirgenmeden önceki ara toplamı 13, 14, 16 veya 19
+// ise o sayıda karmik borç olduğu kabul edilir.
+
+export const KARMIC_DEBTS = [13, 14, 16, 19] as const;
+
+function digitSum(n: number): number {
+  return String(n)
+    .split("")
+    .reduce((s, d) => s + Number(d), 0);
+}
+
+/** n'den başlayan indirgeme zincirindeki tüm ara değerler */
+function reductionChain(n: number): number[] {
+  const chain = [n];
+  while (n > 9 && n !== 11 && n !== 22 && n !== 33) {
+    n = digitSum(n);
+    chain.push(n);
+  }
+  return chain;
+}
+
+export interface KarmicFinding {
+  debt: number;
+  source: "Doğum günü" | "Yaşam yolu" | "Kader (isim)";
+}
+
+export function findKarmicDebts(birthDate: string, fullName?: string): KarmicFinding[] {
+  const found: KarmicFinding[] = [];
+  const add = (values: number[], source: KarmicFinding["source"]) => {
+    for (const v of values) {
+      if ((KARMIC_DEBTS as readonly number[]).includes(v) && !found.some((f) => f.source === source)) {
+        found.push({ debt: v, source });
+      }
+    }
+  };
+
+  const [year, month, day] = birthDate.split("-").map(Number);
+  add([day], "Doğum günü");
+
+  // Yaşam yolu: hem bileşenlerin toplamı hem de tüm rakamların toplamı zinciri
+  const parts = reduceToSingleDigit(digitSum(day)) + reduceToSingleDigit(digitSum(month)) + reduceToSingleDigit(digitSum(year));
+  const allDigits = digitSum(day) + digitSum(month) + digitSum(year);
+  add([...reductionChain(parts), ...reductionChain(allDigits)], "Yaşam yolu");
+
+  if (fullName?.trim()) {
+    const total = cleanName(fullName)
+      .split("")
+      .reduce((s, ch) => s + (LETTER_VALUES[ch] ?? 0), 0);
+    if (total > 0) add(reductionChain(total), "Kader (isim)");
+  }
+
+  return found;
 }

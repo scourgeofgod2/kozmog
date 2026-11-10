@@ -1,36 +1,45 @@
 "use client";
 
-import { Share2, Check } from "lucide-react";
 import { useState } from "react";
+import { buttonStyles } from "@/components/ds";
 
-interface ShareButtonProps {
-  label: string;
-}
-
-export default function ShareButton({ label }: ShareButtonProps) {
+export default function ShareButton({
+  label = "Sonucu paylaş",
+  text = "Numeroloji sonucuma bak!",
+  className,
+}: {
+  label?: string;
+  text?: string;
+  className?: string;
+}) {
   const [copied, setCopied] = useState(false);
 
-  function handleCopy() {
-    if (typeof window !== "undefined") {
-      navigator.clipboard.writeText(window.location.href).then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      });
+  async function handleShare() {
+    const url = window.location.href;
+    // Telefonda yerel paylaşım menüsü (Instagram, WhatsApp…), yoksa linki kopyala
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "Kozmograf", text, url });
+        return;
+      } catch {
+        // kullanıcı vazgeçti — kopyalamaya düş
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // panoya erişim yok
     }
   }
 
   return (
-    <button
-      onClick={handleCopy}
-      className="flex items-center justify-center gap-2 p-3 border-2 border-black bg-emerald-400 font-black text-black text-sm uppercase tracking-wide hover:translate-x-[2px] hover:translate-y-[2px] transition-transform cursor-pointer w-full"
-      style={{ boxShadow: "3px 3px 0px #000" }}
-    >
-      {copied ? (
-        <Check className="w-4 h-4" />
-      ) : (
-        <Share2 className="w-4 h-4" />
-      )}
-      {copied ? "✓ Kopyalandı!" : label}
+    <button type="button" onClick={handleShare} className={buttonStyles("secondary", className)}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+        <path d="M12 3v12M7 8l5-5 5 5M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5" />
+      </svg>
+      <span aria-live="polite">{copied ? "Link kopyalandı" : label}</span>
     </button>
   );
 }
