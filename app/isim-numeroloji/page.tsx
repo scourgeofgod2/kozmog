@@ -39,6 +39,7 @@ export default function IsimNumeroloji() {
       <JsonLd data={{ "@context": "https://schema.org", ...faqJsonLd(faqItems) }} />
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: "İsim numerolojisi" }]} />
       <PageHero
+        image="sayfa-isim-numerolojisi-harf-tablosu"
         eyebrow="Pisagor sistemi"
         title="İsminin taşıdığı"
         accent="gizli enerji"

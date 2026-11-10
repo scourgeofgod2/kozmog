@@ -26,6 +26,7 @@ export default function KariyerNumerolojisiPage() {
     <>
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: "Kariyer numerolojisi" }]} />
       <PageHero
+        image="sayfa-kariyer-numerolojisi"
         eyebrow="Kariyer rehberi"
         title="Sayın seni hangi"
         accent="mesleğe çağırıyor?"

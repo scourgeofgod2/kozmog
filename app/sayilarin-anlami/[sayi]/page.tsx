@@ -18,8 +18,10 @@ import {
   Pill,
   RelatedLinks,
   Section,
+  Illustration,
   faqJsonLd,
 } from "@/components/ds";
+import type { ImageKey } from "@/lib/content/images.generated";
 
 type Props = { params: Promise<{ sayi: string }> };
 
@@ -145,14 +147,7 @@ export default async function NumberPage({ params }: Props) {
             {master && <Pill>Temel sayı: {master.baseNumber}</Pill>}
           </div>
         </div>
-        <div
-          className={
-            "flex min-h-[240px] items-center justify-center rounded-[28px] font-display text-[11rem] font-semibold leading-none " +
-            (profile.master ? "bg-violet text-violet-ink" : "bg-gold text-gold-ink")
-          }
-        >
-          {n}
-        </div>
+        <Illustration k={`sayi-${n}` as ImageKey} priority sizes="(min-width: 768px) 320px, 100vw" />
       </section>
 
       <Section>

@@ -26,6 +26,7 @@ export default function GuclerVeYeteneklerPage() {
     <>
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: "Güçler ve yetenekler" }]} />
       <PageHero
+        image="sayfa-gucler-ve-yetenekler"
         eyebrow="Güçlü yanlar rehberi"
         title="Sayında yazılı olan"
         accent="potansiyel"

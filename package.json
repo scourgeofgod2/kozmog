@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "gorseller": "node scripts/gorseller/generate.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

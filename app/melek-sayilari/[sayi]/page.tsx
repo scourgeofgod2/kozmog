@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { angelNumbers, getAngel } from "@/lib/content/angel";
 import { getProfile, numberHref } from "@/lib/content/profiles";
-import { Breadcrumbs, Card, CTABand, Eyebrow, FAQ, JsonLd, Pill, RelatedLinks, Section, faqJsonLd } from "@/components/ds";
+import { Breadcrumbs, Card, CTABand, Eyebrow, FAQ, JsonLd, Pill, RelatedLinks, Section, faqJsonLd, Illustration } from "@/components/ds";
+import type { ImageKey } from "@/lib/content/images.generated";
 
 type Props = { params: Promise<{ sayi: string }> };
 
@@ -64,9 +65,7 @@ export default async function AngelPage({ params }: Props) {
             ))}
           </div>
         </div>
-        <div className="flex min-h-[220px] items-center justify-center rounded-[28px] bg-gold font-display text-[7rem] font-semibold leading-none text-gold-ink sm:text-[8rem]">
-          {a.slug}
-        </div>
+        <Illustration k={`melek-${a.slug}` as ImageKey} priority sizes="(min-width: 768px) 340px, 100vw" />
       </section>
 
       <Section>

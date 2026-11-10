@@ -27,6 +27,7 @@ export default function UstaSayilar() {
       <JsonLd data={{ "@context": "https://schema.org", ...faqJsonLd(faqItems) }} />
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: "Usta sayılar" }]} />
       <PageHero
+        image="sayfa-usta-sayilar-11-22-33"
         eyebrow="Master numbers"
         title="Usta sayılar"
         accent="11 · 22 · 33"

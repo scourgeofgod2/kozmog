@@ -1,6 +1,8 @@
 // Kozmograf ortak arayüz parçaları. Hepsi sunucu bileşeni.
 
 import Link from "next/link";
+import Image from "next/image";
+import { images, type ImageKey } from "@/lib/content/images.generated";
 import { cn } from "@/lib/utils";
 
 // ─── Yerleşim ─────────────────────────────────────────────────────────────
@@ -23,6 +25,7 @@ export function PageHero({
   accent,
   lead,
   children,
+  image,
 }: {
   eyebrow?: string;
   title: React.ReactNode;
@@ -30,10 +33,19 @@ export function PageHero({
   accent?: React.ReactNode;
   lead?: React.ReactNode;
   children?: React.ReactNode;
+  /** Sayfanın illüstrasyonu (masaüstünde sağda, mobilde altta) */
+  image?: ImageKey;
 }) {
   return (
-    <section className="relative pb-10 pt-10 sm:pb-14 sm:pt-16">
-      <Constellation className="pointer-events-none absolute right-0 top-4 hidden w-[420px] opacity-60 md:block" />
+    <section
+      className={cn(
+        "relative pb-10 pt-10 sm:pb-14 sm:pt-16",
+        image && "grid items-center gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-12"
+      )}
+    >
+      {!image && (
+        <Constellation className="pointer-events-none absolute right-0 top-4 hidden w-[420px] opacity-60 md:block" />
+      )}
       <div className="relative max-w-3xl">
         {eyebrow && <Eyebrow className="mb-4">{eyebrow}</Eyebrow>}
         <h1 className="font-display text-[2.6rem] font-medium leading-[1.02] tracking-[-0.01em] text-text sm:text-6xl">
@@ -42,6 +54,7 @@ export function PageHero({
         {lead && <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">{lead}</p>}
         {children && <div className="mt-7">{children}</div>}
       </div>
+      {image && <Illustration k={image} priority />}
     </section>
   );
 }
@@ -321,6 +334,44 @@ export function Breadcrumbs({ items }: { items: { href?: string; label: string }
         ))}
       </ol>
     </nav>
+  );
+}
+
+// ─── Görseller ────────────────────────────────────────────────────────────
+
+/** Üretilmiş illüstrasyon (public/gorseller). Alt metin manifestten gelir. */
+export function Illustration({
+  k,
+  className,
+  priority = false,
+  sizes = "(min-width: 1024px) 560px, 100vw",
+  caption,
+}: {
+  k: ImageKey;
+  className?: string;
+  priority?: boolean;
+  sizes?: string;
+  caption?: string;
+}) {
+  const img = images[k];
+  const pic = (
+    <Image
+      src={img.src}
+      alt={img.alt}
+      width={img.width}
+      height={img.height}
+      sizes={sizes}
+      priority={priority}
+      unoptimized
+      className={cn("h-auto w-full rounded-[var(--radius-card)] border border-line", !caption && className)}
+    />
+  );
+  if (!caption) return pic;
+  return (
+    <figure className={className}>
+      {pic}
+      <figcaption className="mt-2 text-[13px] text-faint">{caption}</figcaption>
+    </figure>
   );
 }
 

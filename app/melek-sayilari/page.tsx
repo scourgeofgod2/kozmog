@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { OG_DEFAULT } from "@/lib/site";
 import Link from "next/link";
+import Image from "next/image";
+import { images, type ImageKey } from "@/lib/content/images.generated";
 import { angelNumbers } from "@/lib/content/angel";
 import { Breadcrumbs, CTABand, FAQ, JsonLd, PageHero, RelatedLinks, Section, faqJsonLd } from "@/components/ds";
 
@@ -44,6 +46,7 @@ export default function MelekSayilari() {
       <JsonLd data={{ "@context": "https://schema.org", ...faqJsonLd(faq) }} />
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: "Melek sayıları" }]} />
       <PageHero
+        image="sayfa-melek-sayilari"
         eyebrow="Tekrar eden sayılar"
         title="Melek sayıları:"
         accent="sürekli görüyorsan"
@@ -52,21 +55,24 @@ export default function MelekSayilari() {
 
       <Section eyebrow="Rehber" title="Hangi sayıyı görüyorsun?">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {angelNumbers.map((a, i) => (
+          {angelNumbers.map((a) => (
             <Link
               key={a.slug}
               href={`/melek-sayilari/${a.slug}`}
-              className={
-                "flex min-h-[170px] flex-col justify-between rounded-[var(--radius-card)] p-5 transition-colors " +
-                (i === 4 ? "bg-gold text-gold-ink" : i === 1 ? "bg-violet text-violet-ink" : "border border-line bg-surface hover:border-gold/70")
-              }
+              className="group overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface transition-colors hover:border-gold/70"
             >
-              <span className={"font-display text-5xl font-semibold leading-none " + (i === 4 || i === 1 ? "" : "text-gold")}>
-                {a.slug}
-              </span>
-              <span>
-                <span className="block text-[16px] font-semibold">{a.title}</span>
-                <span className={"mt-1 block text-[13px] " + (i === 4 || i === 1 ? "opacity-85" : "text-muted")}>{a.essence}</span>
+              <Image
+                src={images[`melek-${a.slug}` as ImageKey].src}
+                alt={images[`melek-${a.slug}` as ImageKey].alt}
+                width={800}
+                height={800}
+                unoptimized
+                sizes="(min-width: 1024px) 270px, 50vw"
+                className="h-auto w-full"
+              />
+              <span className="block px-4 pb-4 pt-1">
+                <span className="block text-[15px] font-semibold text-text">{a.slug} · {a.title}</span>
+                <span className="mt-0.5 block text-[13px] text-muted">{a.essence}</span>
               </span>
             </Link>
           ))}

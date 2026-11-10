@@ -57,6 +57,7 @@ export default function YasamYoluPage() {
       <JsonLd data={jsonLd} />
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: "Yaşam yolu sayısı" }]} />
       <PageHero
+        image="sayfa-yasam-yolu-sayisi"
         eyebrow="Numeroloji rehberi"
         title="Yaşam yolu sayısı:"
         accent="doğum tarihinin mesajı"

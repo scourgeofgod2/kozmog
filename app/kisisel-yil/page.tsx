@@ -43,6 +43,7 @@ export default function KisiselYilPage() {
       <JsonLd data={{ "@context": "https://schema.org", ...faqJsonLd(faq) }} />
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: `${YEAR} kişisel yıl` }]} />
       <PageHero
+        image="sayfa-kisisel-yil-2027"
         eyebrow={`${YEAR} numerolojisi`}
         title={`${YEAR} senin için`}
         accent="nasıl geçecek?"

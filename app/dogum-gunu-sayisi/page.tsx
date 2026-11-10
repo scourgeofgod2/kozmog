@@ -44,6 +44,7 @@ export default function DogumGunuSayisi() {
       <JsonLd data={{ "@context": "https://schema.org", ...faqJsonLd(faq) }} />
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: "Doğum günü sayısı" }]} />
       <PageHero
+        image="sayfa-dogum-gunu-sayisi-takvim"
         eyebrow="Numeroloji"
         title="Ayın kaçında"
         accent="doğdun?"

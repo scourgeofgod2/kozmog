@@ -26,6 +26,7 @@ export default function SaatAnlami() {
       <JsonLd data={{ "@context": "https://schema.org", ...faqJsonLd(faqItems) }} />
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: "Ayna saatler" }]} />
       <PageHero
+        image="sayfa-ayna-saatler-11-11"
         eyebrow="Ayna saatler ve senkronisite"
         title="Saatlerin"
         accent="gizli mesajı"

@@ -22,6 +22,7 @@ export default function UyumlulukPage() {
       <JsonLd data={{ "@context": "https://schema.org", ...faqJsonLd(faq) }} />
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: "Aşk uyumu" }]} />
       <PageHero
+        image="sayfa-ask-uyumu-numeroloji"
         eyebrow="Numeroloji aracı"
         title="Sayıların"
         accent="aşk dili"

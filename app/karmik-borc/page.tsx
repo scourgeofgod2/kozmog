@@ -42,6 +42,7 @@ export default function KarmikBorcPage() {
       <JsonLd data={{ "@context": "https://schema.org", ...faqJsonLd(faq) }} />
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: "Karmik borç" }]} />
       <PageHero
+        image="sayfa-karmik-borc-sayilari"
         eyebrow="Karmik numeroloji"
         title="Karmik borç sayın"
         accent="var mı?"

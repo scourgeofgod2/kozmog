@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { OG_DEFAULT } from "@/lib/site";
 import Link from "next/link";
+import Image from "next/image";
+import { images, type ImageKey } from "@/lib/content/images.generated";
 import { numbers, faqItems } from "@/lib/content/numbers";
 import { masterNumbers } from "@/lib/content/master";
 import { numberHref } from "@/lib/content/profiles";
@@ -42,6 +44,7 @@ export default function SayilarinAnlami() {
       <JsonLd data={jsonLd} />
       <Breadcrumbs items={[{ href: "/", label: "Ana sayfa" }, { label: "Sayıların anlamı" }]} />
       <PageHero
+        image="sayfa-sayilarin-anlami-rehberi"
         eyebrow="Tam rehber"
         title="Sayıların"
         accent="gizli anlamı"
@@ -62,7 +65,14 @@ export default function SayilarinAnlami() {
                   <h3 className="mt-1 font-display text-3xl font-semibold">{n.title}</h3>
                   <p className="text-[14px] text-gold">{n.keyword}</p>
                 </div>
-                <span className="font-display text-7xl font-semibold leading-[0.8] text-gold">{n.n}</span>
+                <Image
+                  src={images[`sayi-${n.n}` as ImageKey].src}
+                  alt={images[`sayi-${n.n}` as ImageKey].alt}
+                  width={96}
+                  height={96}
+                  unoptimized
+                  className="h-24 w-24 flex-none rounded-[18px] border border-line"
+                />
               </div>
               <p className="mt-4 flex-1 text-[15px] leading-relaxed text-muted">{n.description}</p>
               <div className="mt-4 flex flex-wrap gap-2">

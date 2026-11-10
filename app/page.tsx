@@ -12,8 +12,11 @@ import {
   Section,
   Constellation,
   buttonStyles,
+  Illustration,
   faqJsonLd,
 } from "@/components/ds";
+import Image from "next/image";
+import { images, type ImageKey } from "@/lib/content/images.generated";
 import { ALL_NUMBERS, getProfile, numberHref } from "@/lib/content/profiles";
 import { tr } from "@/content/tr";
 
@@ -69,13 +72,13 @@ const jsonLd = {
   ],
 };
 
-const tools = [
-  { href: "/kisisel-yil", title: "2027 Kişisel Yılın", desc: "Yeni yıl sana hangi temayı getiriyor?", big: "2027", tone: "gold" as const },
-  { href: "/uyumluluk", title: "Aşk Uyumu", desc: "İki doğum tarihi, tek uyum skoru.", big: "♥", tone: "violet" as const },
-  { href: "/melek-sayilari", title: "Melek Sayıları", desc: "111, 222, 444… sürekli görüyorsan.", big: "444", tone: "default" as const },
-  { href: "/saat-anlami", title: "Ayna Saatler", desc: "11:11 ve 22:22 ne anlatıyor?", big: "11:11", tone: "default" as const },
-  { href: "/isim-numeroloji", title: "İsim Numerolojisi", desc: "Kader sayın isminde saklı.", big: "Aa", tone: "default" as const },
-  { href: "/karmik-borc", title: "Karmik Borç", desc: "13, 14, 16, 19 sende var mı?", big: "13", tone: "default" as const },
+const tools: { href: string; title: string; desc: string; img: ImageKey; featured?: boolean }[] = [
+  { href: "/kisisel-yil", title: "2027 Kişisel Yılın", desc: "Yeni yıl sana hangi temayı getiriyor?", img: "sayfa-kisisel-yil-2027", featured: true },
+  { href: "/uyumluluk", title: "Aşk Uyumu", desc: "İki doğum tarihi, tek uyum skoru.", img: "sayfa-ask-uyumu-numeroloji" },
+  { href: "/melek-sayilari", title: "Melek Sayıları", desc: "111, 222, 444… sürekli görüyorsan.", img: "sayfa-melek-sayilari" },
+  { href: "/saat-anlami", title: "Ayna Saatler", desc: "11:11 ve 22:22 ne anlatıyor?", img: "sayfa-ayna-saatler-11-11" },
+  { href: "/isim-numeroloji", title: "İsim Numerolojisi", desc: "Kader sayın isminde saklı.", img: "sayfa-isim-numerolojisi-harf-tablosu" },
+  { href: "/karmik-borc", title: "Karmik Borç", desc: "13, 14, 16, 19 sende var mı?", img: "sayfa-karmik-borc-sayilari" },
 ];
 
 const guides = [
@@ -139,33 +142,31 @@ export default function HomePage() {
 
       {/* ── Araçlar ───────────────────────────────────────────────── */}
       <Section eyebrow="Keşfet" title="Sayıların başka neler anlatıyor?">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
           {tools.map((t) => (
             <Link
               key={t.href}
               href={t.href}
               className={
-                "group flex min-h-[168px] flex-col justify-between rounded-[var(--radius-card)] p-5 transition-colors " +
-                (t.tone === "gold"
-                  ? "bg-gold text-gold-ink"
-                  : t.tone === "violet"
-                    ? "bg-violet text-violet-ink"
-                    : "border border-line bg-surface hover:border-gold/70")
+                "group overflow-hidden rounded-[var(--radius-card)] border bg-surface transition-colors hover:border-gold/70 " +
+                (t.featured ? "border-gold/60" : "border-line")
               }
             >
-              <span
-                className={
-                  "font-display text-4xl font-semibold leading-none " +
-                  (t.tone === "default" ? "text-gold" : "")
-                }
-              >
-                {t.big}
-              </span>
-              <span>
-                <span className="block text-[17px] font-semibold">{t.title}</span>
-                <span className={"mt-1 block text-[14px] " + (t.tone === "default" ? "text-muted" : "opacity-85")}>
-                  {t.desc}
+              <Image
+                src={images[t.img].src}
+                alt={images[t.img].alt}
+                width={images[t.img].width}
+                height={images[t.img].height}
+                unoptimized
+                sizes="(min-width: 1024px) 370px, 50vw"
+                className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+              <span className="block p-3 sm:p-5">
+                <span className="flex items-center justify-between gap-3">
+                  <span className="text-[15px] font-semibold leading-snug text-text sm:text-[17px]">{t.title}</span>
+                  <span aria-hidden="true" className="text-gold transition-transform group-hover:translate-x-1">→</span>
                 </span>
+                <span className="mt-1 block text-[13px] leading-snug text-muted sm:text-[14px]">{t.desc}</span>
               </span>
             </Link>
           ))}
@@ -185,12 +186,20 @@ export default function HomePage() {
               <Link
                 key={n}
                 href={numberHref(n)}
-                className="flex min-h-[104px] flex-col justify-between rounded-[var(--radius-tile)] border border-line bg-surface p-3 transition-colors hover:border-gold/70"
+                className="overflow-hidden rounded-[var(--radius-tile)] border border-line bg-surface transition-colors hover:border-gold/70"
               >
-                <span className={"font-display text-4xl font-semibold leading-none " + (p?.master ? "text-violet-soft" : "text-gold")}>
-                  {n}
+                <Image
+                  src={images[`sayi-${n}` as ImageKey].src}
+                  alt={images[`sayi-${n}` as ImageKey].alt}
+                  width={800}
+                  height={800}
+                  unoptimized
+                  sizes="(min-width: 640px) 180px, 33vw"
+                  className="h-auto w-full"
+                />
+                <span className="block px-3 pb-3 text-[13px] text-muted">
+                  {n} · {p?.title}
                 </span>
-                <span className="text-[13px] text-muted">{p?.title}</span>
               </Link>
             );
           })}
@@ -199,6 +208,12 @@ export default function HomePage() {
 
       {/* ── Rehber yazıları ──────────────────────────────────────── */}
       <Section eyebrow="Rehber" title={tr.seoArticleTitle}>
+        <Illustration
+          k="sayfa-ana-sayfa-numeroloji-haritasi"
+          className="mb-4"
+          sizes="(min-width: 1152px) 1104px, 100vw"
+          caption="Pisagor numerolojisinde 1'den 9'a sayılar ve aralarındaki enneagram ilişkisi."
+        />
         <div className="grid gap-3 md:grid-cols-2">
           {guides.map((g) => (
             <Card key={g.title} as="article">
