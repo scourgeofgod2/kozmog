@@ -1,5 +1,5 @@
-// Sipariş verisi: veritabanı yok. Sipariş, WhatsApp mesajındaki yönetim
-// linkinin URL parçasında (#o=...) taşınır; parça sunucuya gönderilmez,
+// Sipariş verisi: veritabanı yok. Sipariş, yöneticiye giden e-postadaki
+// rapor stüdyosu linkinin URL parçasında (#o=...) taşınır; parça sunucuya gönderilmez,
 // böylece müşteri verisi sunucu kayıtlarına düşmez.
 
 import { getPackage, type PackageSlug } from "@/lib/content/packages";
@@ -12,6 +12,7 @@ export interface Order {
   birthDate: string;
   partnerName?: string;
   partnerBirthDate?: string;
+  /** Raporun gönderileceği e-posta */
   contact: string;
   createdAt: string;
 }
@@ -23,14 +24,12 @@ export function newOrderCode(): string {
   return "KZ-" + Array.from(bytes, (b) => CODE_CHARS[b % CODE_CHARS.length]).join("");
 }
 
-/** Telefon (10–13 rakam) ya da e-posta; değilse null */
-export function parseContact(input: unknown): string | null {
+/** Geçerli e-posta adresi; değilse null */
+export function parseEmail(input: unknown): string | null {
   if (typeof input !== "string") return null;
-  const v = input.trim().slice(0, 80);
-  if (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return v.toLowerCase();
-  const digits = v.replace(/\D/g, "");
-  if (digits.length >= 10 && digits.length <= 13) return digits;
-  return null;
+  const v = input.trim().toLowerCase();
+  if (v.length > 254) return null;
+  return /^[^\s@<>()",;:]+@[^\s@<>()",;:]+\.[a-z]{2,}$/i.test(v) ? v : null;
 }
 
 export type OrderInput = Omit<Order, "code" | "createdAt">;
@@ -53,8 +52,8 @@ export function validateOrderInput(body: Record<string, unknown>): { ok: true; o
     if (!partnerName || !partnerBirthDate) return { ok: false, error: "Partnerinin adı ve doğum tarihi gerekli." };
   }
 
-  const contact = parseContact(body.contact);
-  if (!contact) return { ok: false, error: "Raporu gönderebilmemiz için geçerli bir WhatsApp numarası ya da e-posta gir." };
+  const contact = parseEmail(body.contact);
+  if (!contact) return { ok: false, error: "Raporu gönderebilmemiz için geçerli bir e-posta adresi gir." };
   if (body.consent !== true) return { ok: false, error: "Devam etmek için bilgilendirme metnini onaylamalısın." };
 
   return { ok: true, order: { pkg: pkg.slug, name, birthDate, partnerName, partnerBirthDate, contact } };

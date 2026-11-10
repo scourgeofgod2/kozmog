@@ -18,16 +18,28 @@ npm run gorseller    # illüstrasyonları yeniden üret (global playwright gerek
 | `INWORLD_API_KEY` | Evet | Yapay zekâ yorum/rapor servisi anahtarı |
 | `PAYMENT_PHONE` | Satış için | Kolay Adres telefon numarası (yalnızca ödeme ekranında gösterilir, kodda yer almaz) |
 | `ADMIN_TOKEN` | Satış için | Rapor stüdyosu anahtarı, en az 16 karakter, rastgele |
+| `ADMIN_EMAIL` | Satış için | Sipariş bildirimlerinin geleceği adres |
+| `RESEND_API_KEY` | Satış için | Resend API anahtarı (`re_…`) |
+| `MAIL_FROM` | Satış için | Gönderen, doğrulanmış alan adından: `Kozmograf <rapor@kozmograf.com>` |
 | `READING_DAILY_CAP` | Hayır | Günlük toplam ücretsiz yorum üst sınırı (varsayılan 3000) |
 
 ## Sipariş ve rapor akışı
 
-1. Müşteri `/paketler` → `/siparis?paket=…` formunu doldurur; `/api/order` sipariş kodu (`KZ-XXXXX`) üretir ve ödeme bilgisini döner.
-2. Müşteri Kolay Adres ile öder, "WhatsApp'tan bildir" butonuyla dekontu gönderir. Mesajda sipariş özeti ve **rapor linki** bulunur.
-3. Ödemeyi bankadan kontrol et → mesajdaki rapor linkine dokun (`/yonetim/rapor#o=…`) → `ADMIN_TOKEN` gir → bölümleri üret.
-4. "PDF olarak kaydet" → "Müşteriye WhatsApp aç" → PDF'i ekle, gönder. Söz verilen teslim süresi: 1 saat.
+1. Müşteri `/paketler` → `/siparis?paket=…` formunu doldurur (e-posta zorunlu). `/api/order` sipariş kodu (`KZ-XXXXX`) üretir;
+   **sana** (`ADMIN_EMAIL`) sipariş + rapor stüdyosu linki, **müşteriye** ödeme talimatı e-postası gider. Yönetici e-postası
+   gönderilemezse sipariş alınmaz (sipariş kaybolmasın diye).
+2. Müşteri Kolay Adres ile öder, açıklamaya sipariş kodunu yazar.
+3. Bankada ödemeyi gör → e-postadaki "Rapor stüdyosunu aç" → `ADMIN_TOKEN` gir → bölümleri üret.
+4. "PDF'i önizle" ile kontrol et → "Müşteriye e-postayla gönder": PDF sunucuda üretilir, Resend ile ek olarak gider.
 
-Sipariş verisi veritabanında tutulmaz; rapor linkinin `#` sonrası kısmında taşınır (sunucu kayıtlarına düşmez). Sunucu logunda yalnızca `[siparis] KOD paket tutar` satırı bulunur.
+Sipariş verisi veritabanında tutulmaz; stüdyo linkinin `#` sonrası kısmında taşınır (sunucu kayıtlarına düşmez).
+
+## Resend kurulumu
+
+1. resend.com → Domains → `kozmograf.com` ekle (bölge: eu-west-1 önerilir).
+2. Verilen DNS kayıtlarını (MX + TXT/SPF + DKIM) alan adının DNS paneline ekle, "Verify" de.
+3. API Keys → yalnızca "Sending access" yetkili anahtar oluştur → Coolify'da `RESEND_API_KEY`.
+4. `MAIL_FROM="Kozmograf <rapor@kozmograf.com>"`, `ADMIN_EMAIL=<senin adresin>` ekle, redeploy.
 
 ## Yapı
 

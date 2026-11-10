@@ -10,4 +10,7 @@ services:
       - READING_DAILY_CAP=${READING_DAILY_CAP:-3000}
       - PAYMENT_PHONE=${PAYMENT_PHONE}
       - ADMIN_TOKEN=${ADMIN_TOKEN}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - MAIL_FROM=${MAIL_FROM}
     restart: unless-stopped

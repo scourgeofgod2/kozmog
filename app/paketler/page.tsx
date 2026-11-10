@@ -20,11 +20,11 @@ export const metadata: Metadata = {
 const faq = [
   {
     q: "Ödemeyi nasıl yapıyorum?",
-    a: "Siparişini oluşturduktan sonra banka uygulamandan Kolay Adres (telefon numarası) ile ödemeyi yapıyorsun. Açıklamaya sipariş kodunu yazıp dekontu WhatsApp'tan gönderiyorsun. Kart bilgisi istenmez.",
+    a: "Siparişini oluşturduktan sonra banka uygulamandan Kolay Adres (telefon numarası) ile ödemeyi yapıyorsun. Açıklamaya sipariş kodunu yazman yeterli. Ödeme bilgilerin ayrıca e-postana da gönderilir. Kart bilgisi istenmez.",
   },
   {
     q: "Rapor ne zaman gelir?",
-    a: `Ödemen onaylandıktan sonra raporun ${DELIVERY_PROMISE} PDF olarak WhatsApp'ına ya da e-postana gönderilir.`,
+    a: `Ödemen onaylandıktan sonra raporun ${DELIVERY_PROMISE} PDF olarak e-posta adresine gönderilir.`,
   },
   {
     q: "Ücretsiz yorumdan farkı ne?",
@@ -104,8 +104,8 @@ export default function PaketlerPage() {
         <ol className="grid gap-3 md:grid-cols-3">
           {[
             { t: "Bilgilerini gir", d: "Paketini seç, adını ve doğum tarihini yaz. Sipariş kodun hemen oluşur." },
-            { t: "Kolay Adres ile öde", d: "Banka uygulamandan telefon numarasına ödeme yap, dekontu WhatsApp'tan gönder." },
-            { t: `${DELIVERY_PROMISE} teslim`, d: "Kişisel PDF raporun WhatsApp'ına ya da e-postana gelir." },
+            { t: "Kolay Adres ile öde", d: "Banka uygulamandan telefon numarasına ödeme yap, açıklamaya sipariş kodunu yaz." },
+            { t: `${DELIVERY_PROMISE} teslim`, d: "Kişisel PDF raporun e-postana gelir." },
           ].map((s, i) => (
             <li key={s.t}>
               <Card className="h-full">

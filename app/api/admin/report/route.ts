@@ -1,25 +1,16 @@
 import { NextRequest } from "next/server";
-import { timingSafeEqual, createHash } from "node:crypto";
 import { callInworldStream } from "@/lib/claude";
 import { buildReport } from "@/lib/reportPrompts";
 import { getPackage, type ReportSection } from "@/lib/content/packages";
 import { validateOrderInput } from "@/lib/order";
-import { clientIp, hit, isLimited } from "@/lib/rateLimit";
+import { clientIp } from "@/lib/rateLimit";
+import { checkAdmin } from "@/lib/admin/auth";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
 
 function json(status: number, body: object) {
   return new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
-}
-
-function tokenOk(given: unknown): boolean {
-  const expected = process.env.ADMIN_TOKEN ?? "";
-  if (expected.length < 16 || typeof given !== "string") return false;
-  // Uzunluk sızdırmamak için önce özetle
-  const a = createHash("sha256").update(given).digest();
-  const b = createHash("sha256").update(expected).digest();
-  return timingSafeEqual(a, b);
 }
 
 // Yönetici için ücretli rapor üretir (akış). ADMIN_TOKEN ile korunur.
@@ -32,13 +23,8 @@ export async function POST(req: NextRequest) {
     return json(400, { error: "Geçersiz istek." });
   }
 
-  // Kaba kuvvet koruması: 15 dakikada 10 hatalı denemeden sonra (doğru anahtar dahil) reddet
-  const failKey = `admin-fail:${ip}`;
-  if (isLimited(failKey, 10)) return json(429, { error: "Çok fazla hatalı deneme. 15 dakika sonra tekrar dene." });
-  if (!tokenOk(body.token)) {
-    hit(failKey, 10, 15 * 60_000);
-    return json(401, { error: "Yönetici anahtarı hatalı." });
-  }
+  const auth = checkAdmin(body.token, ip);
+  if (!auth.ok) return json(auth.status, { error: auth.error });
   if (!process.env.INWORLD_API_KEY) return json(500, { error: "INWORLD_API_KEY ayarlı değil." });
 
   const order = body.order && typeof body.order === "object" ? (body.order as Record<string, unknown>) : {};

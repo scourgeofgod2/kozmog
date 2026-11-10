@@ -32,9 +32,8 @@ export default function GizlilikPage() {
           </li>
           <li>
             <strong>Sipariş verileri (ücretli raporlar):</strong> Ad soyad, doğum tarihi, varsa partnerinin adı ve doğum
-            tarihi ile raporun gönderileceği WhatsApp numarası veya e-posta adresi. Bu bilgiler sipariş özetiyle birlikte
-            senin göndereceğin WhatsApp mesajı aracılığıyla bize ulaşır; sitede bir veritabanında saklanmaz. Ödeme
-            dekontu da WhatsApp üzerinden iletilir.
+            tarihi ile raporun gönderileceği e-posta adresi. Sipariş bilgileri bir veritabanında saklanmaz; sipariş
+            bildirimi ve rapor e-posta ile iletilir.
           </li>
         </ul>
         <p>Üyelik sistemi, çerez tabanlı reklam veya analitik takibi şu anda kullanılmamaktadır.</p>
@@ -54,9 +53,10 @@ export default function GizlilikPage() {
           aktarıma açık rıza vermiş olursun. Ad soyad alanını boş bırakarak yalnızca doğum tarihiyle de yorum alabilirsin.
         </p>
         <p>
-          Sipariş ve rapor yazışmaları WhatsApp (Meta) altyapısı üzerinden yürütülür. Veriler bunun dışında üçüncü
-          kişilerle paylaşılmaz, satılmaz. Sipariş yazışmaları ve fatura/muhasebe kayıtları yasal saklama süreleri
-          boyunca tutulur.
+          Sipariş onayı ve rapor e-postaları Resend (Resend Inc., ABD) e-posta altyapısı üzerinden gönderilir; bu
+          nedenle e-posta adresin, adın ve rapor içeriği yurt dışındaki sunuculara aktarılır. Sipariş verirken bu
+          aktarıma açık rıza vermiş olursun. Veriler bunun dışında üçüncü kişilerle paylaşılmaz, satılmaz. Sipariş
+          yazışmaları ve fatura/muhasebe kayıtları yasal saklama süreleri boyunca tutulur.
         </p>
 
         <h2>Ne kadar süre saklıyoruz?</h2>

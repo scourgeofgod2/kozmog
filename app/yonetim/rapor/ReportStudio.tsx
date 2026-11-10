@@ -35,6 +35,8 @@ export default function ReportStudio() {
   const [texts, setTexts] = useState<Partial<Record<ReportSection, string>>>({});
   const [status, setStatus] = useState<Partial<Record<ReportSection, Status>>>({});
   const [errors, setErrors] = useState<Partial<Record<ReportSection, string>>>({});
+  const [delivery, setDelivery] = useState<"idle" | "working" | "sent" | "error">("idle");
+  const [deliveryMsg, setDeliveryMsg] = useState("");
 
   useEffect(() => {
     try {
@@ -102,13 +104,39 @@ export default function ReportStudio() {
   }
 
   const allDone = pkg.sections.every((s) => status[s] === "done");
-  const first = order.name.split(" ")[0];
-  const contactIsEmail = order.contact.includes("@");
-  const msg = `Merhaba ${first}, Kozmograf ${pkg.name} raporun hazır ✨ PDF'i ekte gönderiyorum. Sipariş: ${order.code}`;
-  const sendHref = contactIsEmail
-    ? `mailto:${order.contact}?subject=${encodeURIComponent(`Kozmograf raporun hazır (${order.code})`)}&body=${encodeURIComponent(msg)}`
-    : `https://wa.me/${order.contact.replace(/^0/, "90").replace(/^(?!90)/, "90")}?text=${encodeURIComponent(msg)}`;
 
+  async function deliver(mode: "preview" | "send") {
+    // Önizleme penceresini tıklama anında aç (açılır pencere engelleyicisi için)
+    const win = mode === "preview" ? window.open("", "_blank") : null;
+    setDelivery("working");
+    setDeliveryMsg(mode === "preview" ? "PDF hazırlanıyor…" : "PDF hazırlanıp gönderiliyor…");
+    try {
+      const res = await fetch("/api/admin/deliver", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, order, texts, mode }),
+      });
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        throw new Error(d?.error ?? `HTTP ${res.status}`);
+      }
+      if (mode === "preview") {
+        const url = URL.createObjectURL(await res.blob());
+        if (win) win.location.href = url;
+        else window.open(url, "_blank");
+        setDelivery("idle");
+        setDeliveryMsg("Önizleme yeni sekmede açıldı. Uygunsa müşteriye gönder.");
+      } else {
+        const d = await res.json();
+        setDelivery("sent");
+        setDeliveryMsg(`Rapor ${d.to} adresine gönderildi.`);
+      }
+    } catch (err) {
+      win?.close();
+      setDelivery("error");
+      setDeliveryMsg(err instanceof Error ? err.message : "Hata");
+    }
+  }
   return (
     <div className="mx-auto max-w-3xl pb-16 pt-8">
       {/* ── Yönetim paneli (yazdırmada gizli) ── */}
@@ -124,7 +152,7 @@ export default function ReportStudio() {
               <dd className="inline text-text">{formatTL(pkg.price)}</dd>
             </div>
             <div>
-              <dt className="inline text-faint">Teslimat: </dt>
+              <dt className="inline text-faint">E-posta: </dt>
               <dd className="inline text-text">{order.contact}</dd>
             </div>
             <div>
@@ -181,15 +209,24 @@ export default function ReportStudio() {
         )}
 
         {allDone && (
-          <div className="flex flex-wrap gap-2 rounded-[var(--radius-card)] border border-gold/60 bg-surface p-4">
-            <button type="button" onClick={() => window.print()} className={buttonStyles("primary")}>
-              PDF olarak kaydet
-            </button>
-            <a href={sendHref} target="_blank" rel="noopener noreferrer" className={buttonStyles("secondary")}>
-              Müşteriye {contactIsEmail ? "e-posta" : "WhatsApp"} aç
-            </a>
-            <p className="w-full text-[13px] text-faint">
-              Yazdır penceresinde hedef olarak &quot;PDF olarak kaydet&quot;i seç, &quot;Arka plan grafikleri&quot; açık olsun.
+          <div className="flex flex-col gap-3 rounded-[var(--radius-card)] border border-gold/60 bg-surface p-4">
+            <div className="flex flex-wrap gap-2">
+              <button type="button" disabled={delivery === "working"} onClick={() => deliver("preview")} className={buttonStyles("secondary", "disabled:opacity-50")}>
+                PDF&apos;i önizle
+              </button>
+              <button
+                type="button"
+                disabled={delivery === "working" || delivery === "sent"}
+                onClick={() => {
+                  if (window.confirm(`${order.contact} adresine PDF gönderilsin mi?`)) deliver("send");
+                }}
+                className={buttonStyles("primary", "disabled:opacity-50")}
+              >
+                {delivery === "sent" ? "Gönderildi ✓" : delivery === "working" ? "Hazırlanıyor…" : "Müşteriye e-postayla gönder"}
+              </button>
+            </div>
+            <p aria-live="polite" className={"text-[14px] " + (delivery === "error" ? "text-rose" : "text-muted")}>
+              {deliveryMsg || `PDF ${order.contact} adresine ek olarak gönderilir. Önce önizleyip kontrol et.`}
             </p>
           </div>
         )}

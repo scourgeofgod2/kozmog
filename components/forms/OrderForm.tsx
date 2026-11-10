@@ -14,7 +14,8 @@ interface Payment {
   amountText: string;
   packageName: string;
   paymentPhone: string;
-  whatsappUrl: string;
+  email: string;
+  emailSent: boolean;
   delivery: string;
 }
 
@@ -106,21 +107,14 @@ export default function OrderForm({ pkg }: { pkg: Package }) {
             </div>
           </li>
           <li className="rounded-[var(--radius-card)] border border-line bg-surface p-5">
-            <p className="text-[13px] font-semibold text-gold">2. Dekontu WhatsApp&apos;tan gönder</p>
-            <p className="mt-1 text-[15px] text-muted">Mesaj sipariş bilgilerinle hazır açılır; dekontu ekleyip gönder.</p>
-            <a
-              href={payment.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 flex min-h-[54px] items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-[15px] font-semibold text-[#06210f]"
-            >
-              WhatsApp&apos;tan bildir
-            </a>
-          </li>
-          <li className="rounded-[var(--radius-card)] border border-line bg-surface p-5">
-            <p className="text-[13px] font-semibold text-gold">3. Raporun {payment.delivery} gelsin</p>
+            <p className="text-[13px] font-semibold text-gold">2. Raporun {payment.delivery} e-postanda</p>
             <p className="mt-1 text-[15px] text-muted">
-              Ödemen onaylanınca raporun PDF olarak {contact.includes("@") ? "e-postana" : "WhatsApp'ına"} gönderilir.
+              Ödemen onaylanınca kişisel PDF raporun <strong className="text-text">{payment.email}</strong> adresine gönderilir.
+            </p>
+            <p className="mt-3 text-[13px] text-faint">
+              {payment.emailSent
+                ? "Ödeme bilgilerini içeren onay e-postası da gönderildi. Gelen kutunda göremezsen spam klasörüne bak."
+                : "Onay e-postası şu an gönderilemedi; bu ekrandaki bilgilerle ödemeyi yapabilirsin, siparişin bize ulaştı."}
             </p>
           </li>
         </ol>
@@ -168,10 +162,23 @@ export default function OrderForm({ pkg }: { pkg: Package }) {
       <fieldset className="flex flex-col gap-4 rounded-[var(--radius-card)] border border-line bg-surface p-5">
         <legend className="px-1 text-[13px] font-semibold text-gold">Rapor nereye gelsin?</legend>
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="s-iletisim" className="text-[13px] font-medium text-muted">
-            WhatsApp numaran ya da e-postan
+          <label htmlFor="s-eposta" className="text-[13px] font-medium text-muted">
+            E-posta adresin
           </label>
-          <input id="s-iletisim" inputMode="email" autoComplete="tel" maxLength={80} value={contact} onChange={(e) => setContact(e.target.value)} placeholder="05xx xxx xx xx" className={inputCls} />
+          <input
+            id="s-eposta"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            autoCapitalize="none"
+            spellCheck={false}
+            maxLength={254}
+            value={contact}
+            onChange={(e) => setContact(e.target.value)}
+            placeholder="ornek@gmail.com"
+            className={inputCls}
+          />
+          <p className="text-[12px] text-faint">Ödeme bilgilerin ve PDF raporun bu adrese gelir.</p>
         </div>
         <label className="flex items-start gap-3 text-[14px] leading-relaxed text-muted">
           <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-5 w-5 flex-none accent-[var(--color-gold)]" />

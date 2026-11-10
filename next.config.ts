@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
+  // PDF kütüphanesi paketlenmeden Node modülü olarak yüklenir
+  serverExternalPackages: ["@react-pdf/renderer"],
   async redirects() {
     return [
       // Eski footer linkleri → yeni sayfalar
