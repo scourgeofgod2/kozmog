@@ -53,6 +53,14 @@ function open(): DB {
       delivered_at TEXT
     );
     CREATE INDEX IF NOT EXISTS orders_created ON orders(created_at DESC);
+    -- Anonim günlük sayaçlar (kişi bazında kayıt yok)
+    CREATE TABLE IF NOT EXISTS stats (
+      day TEXT NOT NULL,
+      kind TEXT NOT NULL,
+      key TEXT NOT NULL,
+      count INTEGER NOT NULL DEFAULT 0,
+      PRIMARY KEY (day, kind, key)
+    );
   `);
   return db;
 }
@@ -97,4 +105,37 @@ export function safely(fn: () => void, label: string) {
   } catch (err) {
     console.error(`[db] ${label}`, err);
   }
+}
+
+// ─── Anonim istatistikler ─────────────────────────────────────────────────
+
+export type StatKind = "uv" | "pv" | "src" | "evt" | "cihaz";
+
+/** Türkiye saatine göre YYYY-MM-DD */
+export function todayTR(d = new Date()): string {
+  return d.toLocaleDateString("sv-SE", { timeZone: "Europe/Istanbul" });
+}
+
+export function bump(kind: StatKind, key: string, n = 1, day = todayTR()) {
+  open()
+    .prepare(
+      `INSERT INTO stats (day, kind, key, count) VALUES (?, ?, ?, ?)
+       ON CONFLICT(day, kind, key) DO UPDATE SET count = count + excluded.count`
+    )
+    .run(day, kind, key, n);
+}
+
+export interface StatRow {
+  day: string;
+  kind: StatKind;
+  key: string;
+  count: number;
+}
+
+export function statsSince(fromDay: string): StatRow[] {
+  return open().prepare("SELECT day, kind, key, count FROM stats WHERE day >= ? ORDER BY day").all(fromDay) as unknown as StatRow[];
+}
+
+export function ordersSince(fromIso: string): OrderRow[] {
+  return open().prepare("SELECT * FROM orders WHERE created_at >= ? ORDER BY created_at").all(fromIso) as unknown as OrderRow[];
 }

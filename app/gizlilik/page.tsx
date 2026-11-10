@@ -41,6 +41,13 @@ export default function GizlilikPage() {
 
         <h2 id="cerezler">Çerezler ve analitik</h2>
         <p>
+          <strong>Anonim ziyaret istatistikleri:</strong> Sitenin hangi sayfalarının ne kadar ziyaret edildiğini görmek için
+          kendi sunucumuzda yalnızca günlük toplam sayılar tutarız (ör. &quot;bugün bir sayfa 40 kez görüntülendi&quot;,
+          &quot;ziyaretçilerin 30&apos;u Instagram&apos;dan geldi&quot;). Bunun için çerez kullanılmaz, IP adresi ve
+          kişiyi tanımlayan hiçbir bilgi saklanmaz; aynı gün içinde tekrar sayımı önlemek için kullanılan geçici özet
+          yalnızca bellekte tutulur ve her gün silinir.
+        </p>
+        <p>
           Siteyi nasıl kullandığını anlamak ve geliştirmek için, <strong>yalnızca onay verirsen</strong> Google Tag
           Manager ve Google Analytics aracılığıyla analitik çerezler kullanılır. Onay vermezsen bu çerezler
           yerleştirilmez. Toplanan veriler (ziyaret edilen sayfalar, cihaz ve tarayıcı bilgisi, yaklaşık konum) Google

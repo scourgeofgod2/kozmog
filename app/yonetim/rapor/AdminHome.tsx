@@ -5,6 +5,7 @@ import { buttonStyles } from "@/components/ds";
 import { getPackage } from "@/lib/content/packages";
 import { orderToHash } from "@/lib/orderHash";
 import ManualOrder from "./ManualOrder";
+import Dashboard from "./Dashboard";
 import type { OrderRow, OrderStatus } from "@/lib/db";
 
 const TOKEN_KEY = "kz-admin-token";
@@ -25,6 +26,7 @@ export default function AdminHome() {
   const [filter, setFilter] = useState<OrderStatus | "hepsi">("hepsi");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [tab, setTab] = useState<"genel" | "siparisler">("genel");
 
   const call = useCallback(
     async (payload: object, tk = token) => {
@@ -114,7 +116,7 @@ export default function AdminHome() {
   return (
     <div className="mx-auto max-w-4xl pb-16 pt-8">
       <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-gold">Yönetim</p>
-      <h1 className="mt-1 font-display text-4xl font-semibold">Siparişler</h1>
+      <h1 className="mt-1 font-display text-4xl font-semibold">Kozmograf paneli</h1>
 
       <form
         onSubmit={(e) => {
@@ -148,6 +150,37 @@ export default function AdminHome() {
       )}
 
       {orders && (
+        <div className="mt-6 flex gap-1 border-b border-line" role="tablist" aria-label="Panel bölümleri">
+          {(
+            [
+              ["genel", "Genel bakış"],
+              ["siparisler", `Siparişler (${orders.length})`],
+            ] as const
+          ).map(([k, label]) => (
+            <button
+              key={k}
+              type="button"
+              role="tab"
+              aria-selected={tab === k}
+              onClick={() => setTab(k)}
+              className={
+                "-mb-px min-h-[44px] border-b-2 px-4 text-[14px] font-semibold " +
+                (tab === k ? "border-gold text-text" : "border-transparent text-muted hover:text-text")
+              }
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {orders && tab === "genel" && (
+        <div className="mt-5">
+          <Dashboard token={token} />
+        </div>
+      )}
+
+      {orders && tab === "siparisler" && (
         <>
           <div className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
             {(["bekliyor", "odendi", "gonderildi"] as OrderStatus[]).map((s) => (

@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CONSENT_EVENT, GA4_ID, GTM_ID, gtag, isExcludedPath, readConsent, saveConsent } from "@/lib/analytics";
+import { CONSENT_EVENT, GA4_ID, GTM_ID, beacon, gtag, isExcludedPath, readConsent, saveConsent } from "@/lib/analytics";
 
 let gtmLoaded = false;
+let firstView = true;
 
 function loadGtm() {
   if (gtmLoaded) return;
@@ -48,6 +49,18 @@ export default function Analytics() {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- tarayıcı depolamasını okumak için tek seferlik
     setShowBanner(readConsent() === null);
   }, [excluded]);
+
+  // Anonim sayfa görüntüleme sayacı (tüm sayfalar; yalnızca yol gönderilir, sorgu/isim değil)
+  useEffect(() => {
+    if (pathname.startsWith("/yonetim")) return;
+    const data: Record<string, string> = { p: pathname };
+    if (firstView) {
+      firstView = false;
+      data.r = document.referrer;
+      data.u = new URLSearchParams(window.location.search).get("utm_source") ?? "";
+    }
+    beacon(data);
+  }, [pathname]);
 
   useEffect(() => {
     const open = () => setShowBanner(true);

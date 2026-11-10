@@ -28,6 +28,18 @@ export function gtag(..._args: unknown[]) {
   w.dataLayer.push(arguments);
 }
 
+/** Kendi anonim sayacımıza (/api/t) sinyal; çerez yok, yalnızca sayfa yolu/olay adı */
+export function beacon(data: Record<string, string>) {
+  try {
+    const body = JSON.stringify(data);
+    if (!navigator.sendBeacon?.("/api/t", body)) {
+      fetch("/api/t", { method: "POST", body, keepalive: true }).catch(() => {});
+    }
+  } catch {
+    /* sessiz */
+  }
+}
+
 /** Kişisel veri İÇERMEYEN özel olay gönderir (GTM'de "Custom Event" tetikleyicisiyle yakalanır). */
 export function track(event: string, params: Record<string, string | number | boolean> = {}) {
   if (typeof window === "undefined") return;
@@ -35,6 +47,7 @@ export function track(event: string, params: Record<string, string | number | bo
   w.dataLayer = w.dataLayer || [];
   // GA4 (gtag) olayı
   gtag("event", event, params);
+  beacon({ e: event });
   // GTM "Custom Event" tetikleyicileri için
   w.dataLayer.push({ event, ...params });
 }
