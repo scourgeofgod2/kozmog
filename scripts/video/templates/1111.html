@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Kozmograf · 11.11.2026</title>
+<style>
+@font-face{font-family:"Cormorant";font-weight:600;src:url("__ROOT__/public/fonts/CormorantGaramond-600.ttf")}
+@font-face{font-family:"Cormorant";font-weight:500;font-style:italic;src:url("__ROOT__/public/fonts/CormorantGaramond-500-italic.ttf")}
+@font-face{font-family:"Inter";font-weight:400;src:url("__ROOT__/public/fonts/Inter-400.ttf")}
+@font-face{font-family:"Inter";font-weight:600;src:url("__ROOT__/public/fonts/Inter-600.ttf")}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;background:#07070d;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#07070d;color:#ece8f5;font-family:Inter,sans-serif;font-variant-numeric:lining-nums}
+#cam{position:absolute;inset:0;transform-origin:540px 700px}
+.layer{position:absolute;inset:0;width:1080px;height:1920px}
+.scene{position:absolute;inset:0;opacity:0;visibility:hidden}
+.abs{position:absolute;left:0;width:1080px;text-align:center}
+.serif{font-family:Cormorant,serif;font-weight:600;line-height:1}
+.eyebrow{font-weight:600;letter-spacing:.45em;text-transform:uppercase;color:#e9c46a;font-size:34px;padding-left:.45em}
+.pill{display:inline-block;padding:14px 30px;border:2px solid rgba(233,196,106,.65);border-radius:999px;font-weight:600;font-size:32px;letter-spacing:.16em;text-transform:uppercase;color:#e9c46a;background:rgba(14,13,24,.75);opacity:0}
+.col{display:flex;flex-direction:column;align-items:center}
+.lbl{font-weight:600;letter-spacing:.35em;font-size:30px;color:#a6a2bc;margin-top:16px;padding-left:.35em;text-transform:uppercase}
+.bar{height:7px;width:100%;background:#e9c46a;border-radius:4px;margin-top:14px;transform-origin:center;transform:scaleX(0)}
+.glow{position:absolute;inset:0;opacity:0}
+#glowG{background:radial-gradient(circle 760px at 540px 650px,rgba(233,196,106,.26),rgba(233,196,106,0) 70%)}
+#glowV{background:radial-gradient(circle 760px at 540px 650px,rgba(123,92,255,.34),rgba(123,92,255,0) 70%)}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,rgba(0,0,0,0) 48%,rgba(0,0,0,.62) 100%);pointer-events:none}
+.star{position:absolute;border-radius:50%;background:#ece8f5}
+#cap .cap{position:absolute;left:80px;right:80px;bottom:690px;text-align:center;font-weight:600;font-size:60px;line-height:1.28;text-shadow:0 4px 28px rgba(0,0,0,.9);opacity:0}
+.w{color:rgba(236,232,245,.38)}
+.w.p{color:#ece8f5}
+.w.c{color:#e9c46a}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="glow" id="glowG"></div>
+  <div class="glow" id="glowV"></div>
+  <div id="stars"></div>
+
+  <div id="cam">
+    <!-- A · 11.11 -->
+    <section class="scene" id="sA">
+      <svg class="layer" viewBox="0 0 1080 1920"><g id="aR" style="transform-origin:540px 640px"></g></svg>
+      <div class="abs eyebrow" id="aEy" style="top:330px">Yarın</div>
+      <div class="abs serif" id="aBig" style="top:410px;font-size:360px;color:#f4d98b;text-shadow:0 0 70px rgba(233,196,106,.4)">11.11</div>
+      <div class="abs serif" id="aYear" style="top:850px;font-size:96px;color:#a6a2bc;letter-spacing:.25em;padding-left:.25em">2026</div>
+    </section>
+
+    <!-- B · iki usta sayı -->
+    <section class="scene" id="sB">
+      <div class="abs eyebrow" id="bEy" style="top:330px">İki usta sayı</div>
+      <svg class="layer" viewBox="0 0 1080 1920">
+        <g id="bC1" style="transform-origin:300px 650px"><circle cx="300" cy="650" r="200" fill="rgba(123,92,255,.18)" stroke="#a594ff" stroke-width="3"/><circle cx="300" cy="650" r="168" fill="none" stroke="#a594ff" stroke-width="1.5" stroke-dasharray="3 10" opacity=".7"/></g>
+        <g id="bC2" style="transform-origin:780px 650px"><circle cx="780" cy="650" r="200" fill="rgba(123,92,255,.18)" stroke="#a594ff" stroke-width="3"/><circle cx="780" cy="650" r="168" fill="none" stroke="#a594ff" stroke-width="1.5" stroke-dasharray="3 10" opacity=".7"/></g>
+        <path id="bStar" d="M540 610 L548 642 L580 650 L548 658 L540 690 L532 658 L500 650 L532 642 Z" fill="#e9c46a" style="transform-origin:540px 650px"/>
+      </svg>
+      <div class="serif" id="bN1" style="position:absolute;left:100px;width:400px;top:530px;text-align:center;font-size:230px;color:#ece8f5">11</div>
+      <div class="serif" id="bN2" style="position:absolute;left:580px;width:400px;top:530px;text-align:center;font-size:230px;color:#ece8f5">11</div>
+    </section>
+
+    <!-- C · 11 anlamı -->
+    <section class="scene" id="sC">
+      <svg class="layer" viewBox="0 0 1080 1920"><g id="cR" style="transform-origin:540px 650px"></g></svg>
+      <div class="abs serif" id="cBig" style="top:390px;font-size:540px;color:#ece8f5;text-shadow:0 0 80px rgba(165,148,255,.55)">11</div>
+      <div class="abs" style="top:900px;display:flex;justify-content:center;gap:16px"><span class="pill" id="cP1">Sezgi</span><span class="pill" id="cP2">İlham</span><span class="pill" id="cP3">Uyanış</span></div>
+    </section>
+
+    <!-- D · gün / ay / yıl -->
+    <section class="scene" id="sD">
+      <div class="abs" style="top:540px;display:flex;justify-content:center;align-items:flex-start;gap:60px">
+        <div class="col" id="dDay"><div class="serif" id="dDayN" style="font-size:190px">11</div><div class="lbl">Gün</div><div class="bar" id="dDayBar"></div></div>
+        <div class="col" id="dMon"><div class="serif" id="dMonN" style="font-size:190px">11</div><div class="lbl">Ay</div><div class="bar" id="dMonBar"></div></div>
+        <div class="col" id="dYr"><div class="serif" style="font-size:190px;color:#8a86a3">2026</div><div class="lbl">Yıl</div></div>
+      </div>
+    </section>
+
+    <!-- E · toplama -->
+    <section class="scene" id="sE">
+      <div class="abs" id="eRow" style="top:420px;display:flex;justify-content:center;align-items:center;gap:10px"></div>
+      <div class="abs serif" id="eRes" style="top:640px;font-size:320px;color:#f4d98b;text-shadow:0 0 70px rgba(233,196,106,.4)">= 14</div>
+    </section>
+
+    <!-- F · 1 + 4 -->
+    <section class="scene" id="sF">
+      <div class="abs serif" id="fTxt" style="top:540px;font-size:230px;color:#f4d98b">1 + 4</div>
+    </section>
+
+    <!-- G · 5 -->
+    <section class="scene" id="sG">
+      <svg class="layer" viewBox="0 0 1080 1920"><path id="gStar" fill="none" stroke="#e9c46a" stroke-width="4" stroke-linejoin="round" opacity=".8"/></svg>
+      <div class="abs serif" id="gBig" style="top:390px;font-size:560px;color:#f4d98b;text-shadow:0 0 80px rgba(233,196,106,.5)">5</div>
+      <div class="abs" style="top:910px;display:flex;justify-content:center;gap:16px"><span class="pill" id="gP1">Değişim</span><span class="pill" id="gP2">Özgürlük</span></div>
+    </section>
+
+    <!-- H · tarih kartı + adım -->
+    <section class="scene" id="sH">
+      <div id="hCard" style="position:absolute;left:190px;top:290px;width:700px;height:340px;border:3px solid #e9c46a;border-radius:36px;background:rgba(14,13,24,.9);box-shadow:0 0 80px rgba(233,196,106,.25)">
+        <div class="eyebrow" style="text-align:center;margin-top:34px;font-size:30px">Çarşamba</div>
+        <div class="serif" style="text-align:center;font-size:150px;margin-top:10px;color:#ece8f5">11 Kasım</div>
+        <div class="serif" style="text-align:center;font-size:70px;margin-top:6px;color:#a6a2bc;letter-spacing:.3em;padding-left:.3em">2026</div>
+      </div>
+      <div class="abs eyebrow" id="hLbl" style="top:680px;font-size:30px">Ertelediğin adım</div>
+      <svg class="layer" viewBox="0 0 1080 1920" id="hSvg"></svg>
+    </section>
+
+    <!-- I · saat 11:11 -->
+    <section class="scene" id="sI">
+      <div class="abs serif" id="iDig" style="top:290px;font-size:150px;color:#f4d98b;text-shadow:0 0 60px rgba(233,196,106,.35)">11:11</div>
+      <svg class="layer" viewBox="0 0 1080 1920" id="iSvg"></svg>
+    </section>
+
+    <!-- J · CTA -->
+    <section class="scene" id="sJ">
+      <img id="jMark" src="__ROOT__/public/brand/kozmograf-isaret-altin.svg" style="position:absolute;left:430px;top:290px;width:220px;height:220px" alt="">
+      <div class="abs serif" id="jQ" style="top:540px;font-size:118px;color:#ece8f5">Senin sayın kaç?</div>
+      <div class="abs" id="jUrl" style="top:710px"><span style="display:inline-block;background:#e9c46a;color:#07070d;font-weight:600;font-size:54px;padding:22px 50px;border-radius:999px">kozmograf.com</span></div>
+      <div class="abs" id="jIg" style="top:880px;font-weight:600;font-size:44px;color:#a6a2bc;letter-spacing:.04em">@kozmografcom</div>
+      <div class="abs" id="jDis" style="top:1010px;font-size:26px;color:#8a86a3;padding:0 130px;line-height:1.4">Numeroloji yorumları eğlence ve kişisel keşif amaçlıdır.</div>
+    </section>
+  </div>
+
+  <div id="vig"></div>
+  <div id="cap"></div>
+</div>
+
+<script>
+const SPEC = __SPEC__;
+const DUR = SPEC.duration;
+const NS = "http://www.w3.org/2000/svg";
+const E = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeIO = (x) => (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const ia = (t, a, d = .6) => easeOut(prog(t, a, a + d)); // giriş animasyonu
+const win = (t, a, b, f = .35) => Math.min(prog(t, a, a + f), 1 - prog(t, b - f, b));
+function put(el, o) {
+  const { o: op = 1, s = 1, x = 0, y = 0, r = 0 } = o || {};
+  el.style.opacity = op;
+  el.style.transform = `translate(${x}px,${y}px) scale(${s}) rotate(${r}deg)`;
+}
+function el(tag, attrs, parent) {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+function rings(gid, cx, cy, radii, color, op) {
+  const g = E(gid);
+  radii.forEach((r, i) => {
+    el("circle", { cx, cy, r, fill: "none", stroke: color, "stroke-width": i === 0 ? 2.5 : 1.5, opacity: op * (1 - i * .16), ...(i % 2 ? { "stroke-dasharray": "3 14" } : {}) }, g);
+  });
+}
+
+// ─── Başlangıç kurulumu ───────────────────────────────────────────────────
+let seed = 11;
+const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const STARS = [];
+for (let i = 0; i < 130; i++) {
+  const d = document.createElement("div");
+  const sz = rnd() < .1 ? 3 : rnd() < .4 ? 2 : 1.4;
+  d.className = "star";
+  d.style.width = d.style.height = sz + "px";
+  if (rnd() < .15) d.style.background = "#e9c46a";
+  E("stars").appendChild(d);
+  STARS.push({ d, x: rnd() * 1080, y: rnd() * 1920, v: 3 + rnd() * 10, ph: rnd() * 6.28, sp: .6 + rnd() * 1.6, b: .25 + rnd() * .6 });
+}
+rings("aR", 540, 640, [330, 400, 470], "#e9c46a", .4);
+rings("cR", 540, 650, [320, 390, 460], "#a594ff", .45);
+
+// E · rakam satırı
+const DIGITS = "11112026".split("");
+const eRow = E("eRow");
+const eItems = [];
+DIGITS.forEach((d, i) => {
+  if (i > 0) {
+    const p = document.createElement("div");
+    p.className = "serif";
+    p.style.cssText = "font-size:64px;color:#8a86a3;opacity:0";
+    p.textContent = "+";
+    eRow.appendChild(p);
+    eItems.push({ p, i });
+  }
+  const n = document.createElement("div");
+  n.className = "serif";
+  n.style.cssText = "font-size:120px;color:#ece8f5;opacity:0";
+  n.textContent = d;
+  eRow.appendChild(n);
+  eItems.push({ n, i });
+});
+
+// G · beş köşeli yıldız {5/2}
+const pts = [0, 1, 2, 3, 4].map((i) => [540 + 340 * Math.cos(-Math.PI / 2 + (2 * Math.PI * i) / 5), 670 + 340 * Math.sin(-Math.PI / 2 + (2 * Math.PI * i) / 5)]);
+const order = [0, 2, 4, 1, 3, 0];
+const gStar = E("gStar");
+gStar.setAttribute("d", order.map((k, j) => (j ? "L" : "M") + pts[k][0].toFixed(1) + " " + pts[k][1].toFixed(1)).join(" "));
+const GLEN = 5 * Math.hypot(pts[2][0] - pts[0][0], pts[2][1] - pts[0][1]);
+gStar.style.strokeDasharray = GLEN;
+
+// H · basamaklar
+const hSvg = E("hSvg");
+const STEP = [];
+for (let i = 0; i < 4; i++) {
+  const h = 45 * (i + 1), x = 190 + i * 175, y = 925 - h;
+  const r = el("rect", { x, y, width: 175, height: h, rx: 8, fill: "rgba(233,196,106,.18)", stroke: "#e9c46a", "stroke-width": 2 }, hSvg);
+  r.style.transformOrigin = `${x + 87}px 925px`;
+  STEP.push({ r, cx: x + 87, top: y });
+}
+const hDot = el("circle", { r: 22, fill: "#f4d98b" }, hSvg);
+const hRing = el("circle", { r: 40, fill: "none", stroke: "#e9c46a", "stroke-width": 3 }, hSvg);
+
+// I · saat
+const iSvg = E("iSvg");
+const CX = 540, CY = 700, CR = 250;
+el("circle", { cx: CX, cy: CY, r: CR + 14, fill: "#0e0d18", stroke: "#e9c46a", "stroke-width": 3 }, iSvg);
+for (let i = 0; i < 60; i++) {
+  const a = (i / 60) * 2 * Math.PI, big = i % 5 === 0;
+  el("line", { x1: CX + (CR - (big ? 30 : 14)) * Math.sin(a), y1: CY - (CR - (big ? 30 : 14)) * Math.cos(a), x2: CX + CR * Math.sin(a), y2: CY - CR * Math.cos(a), stroke: big ? "#e9c46a" : "#6b6788", "stroke-width": big ? 5 : 2 }, iSvg);
+}
+const hourH = el("line", { x1: CX, y1: CY, x2: CX, y2: CY - 135, stroke: "#e9c46a", "stroke-width": 14, "stroke-linecap": "round" }, iSvg);
+const minH = el("line", { x1: CX, y1: CY, x2: CX, y2: CY - 195, stroke: "#ece8f5", "stroke-width": 9, "stroke-linecap": "round" }, iSvg);
+hourH.style.transformOrigin = minH.style.transformOrigin = `${CX}px ${CY}px`;
+el("circle", { cx: CX, cy: CY, r: 15, fill: "#e9c46a" }, iSvg);
+const SPARK = "M0 -34 L8 -8 L34 0 L8 8 L0 34 L-8 8 L-34 0 L-8 -8 Z";
+const sp1 = el("path", { d: SPARK, fill: "#f4d98b" }, iSvg);
+const sp2 = el("path", { d: SPARK, fill: "#a594ff" }, iSvg);
+const a11 = (330 * Math.PI) / 180, a66 = (66 * Math.PI) / 180;
+const S1 = [CX + CR * Math.sin(a11), CY - CR * Math.cos(a11)];
+const S2 = [CX + CR * Math.sin(a66), CY - CR * Math.cos(a66)];
+
+// Altyazılar
+const CAPS = SPEC.segments.map((s, i) => {
+  const words = s.show.split(" ");
+  const div = document.createElement("div");
+  div.className = "cap";
+  const spans = words.map((w) => {
+    const sp = document.createElement("span");
+    sp.className = "w";
+    sp.textContent = w;
+    div.appendChild(sp);
+    div.appendChild(document.createTextNode(" "));
+    return sp;
+  });
+  E("cap").appendChild(div);
+  const lens = words.map((w) => w.length + 1);
+  const total = lens.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  const bounds = lens.map((l) => { const a = acc; acc += l; return [a / total, acc / total]; });
+  return { div, spans, bounds, s, words: words.length };
+});
+CAPS.forEach((c, i) => {
+  const next = CAPS[i + 1];
+  const nextA = next ? next.s.start - .12 : DUR;
+  c.a = c.s.start - .12;
+  c.b = Math.min(Math.max(c.s.end, c.s.start + 1.15) + .15, nextA);
+  c.hEnd = Math.min(Math.max(c.s.end, c.s.start + .32 * c.words), (next ? next.s.start : DUR) - .05);
+  c.state = "";
+});
+
+// ─── Sahneler ─────────────────────────────────────────────────────────────
+function drawA(t) {
+  put(E("aEy"), { o: ia(t, .1, .5), y: (1 - ia(t, .1, .5)) * -12 });
+  const k = ia(t, .2, .9);
+  put(E("aBig"), { o: k, s: .86 + .14 * k });
+  put(E("aYear"), { o: ia(t, .9, .6) });
+  E("aR").style.transform = `rotate(${t * 6}deg)`;
+}
+function drawB(t) {
+  put(E("bEy"), { o: ia(t, 3.2, .4) });
+  const k1 = ia(t, 3.35, .5), k2 = ia(t, 3.95, .5);
+  put(E("bC1"), { o: k1, s: .7 + .3 * k1 }); put(E("bN1"), { o: k1, s: .8 + .2 * k1 });
+  put(E("bC2"), { o: k2, s: .7 + .3 * k2 }); put(E("bN2"), { o: k2, s: .8 + .2 * k2 });
+  const ks = ia(t, 4.7, .5);
+  put(E("bStar"), { o: ks * (.65 + .35 * Math.sin(t * 6)), s: .5 + .5 * ks, r: t * 40 });
+}
+function drawC(t) {
+  const k = ia(t, 6.0, .8);
+  put(E("cBig"), { o: k, s: .85 + .15 * k });
+  [["cP1", 6.65], ["cP2", 7.5], ["cP3", 8.3]].forEach(([id, a]) => { const q = ia(t, a, .45); put(E(id), { o: q, y: (1 - q) * 20 }); });
+  E("cR").style.transform = `rotate(${-t * 5}deg)`;
+}
+function drawD(t) {
+  const d1 = ia(t, 10.45, .35), d2 = ia(t, 11.1, .35);
+  E("dDayN").style.color = d1 > .05 ? "#f4d98b" : "#ece8f5";
+  E("dMonN").style.color = d2 > .05 ? "#f4d98b" : "#ece8f5";
+  E("dDayBar").style.transform = `scaleX(${d1})`;
+  E("dMonBar").style.transform = `scaleX(${d2})`;
+  put(E("dDay"), { s: 1 + .06 * d1 * (1 - d2) });
+  put(E("dMon"), { s: 1 + .06 * d2 });
+}
+function drawE(t) {
+  eItems.forEach((it) => {
+    if (it.n) { const q = ia(t, 12.4 + it.i * .27, .3); put(it.n, { o: q, y: (1 - q) * 22, s: .8 + .2 * q }); }
+    else { const q = ia(t, 12.4 + it.i * .27 - .13, .25); it.p.style.opacity = q; }
+  });
+  const q = ia(t, 14.9, .55);
+  put(E("eRes"), { o: q * (1 - prog(t, 16.0, 16.3)), s: .8 + .2 * q });
+}
+function drawF(t) {
+  const q = ia(t, 16.28, .35);
+  put(E("fTxt"), { o: q * (1 - prog(t, 16.8, 17.0)), s: .85 + .15 * q + .1 * prog(t, 16.6, 17.0) });
+}
+function drawG(t) {
+  const q = ia(t, 17.0, .55);
+  put(E("gBig"), { o: q, s: .8 + .2 * q });
+  gStar.style.strokeDashoffset = GLEN * (1 - easeIO(prog(t, 16.95, 18.3)));
+  [["gP1", 17.7], ["gP2", 18.2]].forEach(([id, a]) => { const p = ia(t, a, .4); put(E(id), { o: p, y: (1 - p) * 20 }); });
+}
+function drawH(t) {
+  const q = ia(t, 19.3, .6);
+  const pulse = prog(t, 24.6, 26.4);
+  put(E("hCard"), { o: q, s: .9 + .1 * q + .02 * Math.sin(prog(t, 24.6, 26.4) * Math.PI * 3) * pulse });
+  E("hCard").style.boxShadow = `0 0 ${80 + 90 * pulse}px rgba(233,196,106,${.25 + .35 * pulse})`;
+  put(E("hLbl"), { o: ia(t, 21.0, .5) });
+  E("hLbl").textContent = t > 24.8 ? "Güçlü gün" : "Ertelediğin adım";
+  STEP.forEach((s, i) => { const p = ia(t, 21.0 + i * .45, .4); s.r.style.opacity = p; s.r.style.transform = `scaleY(${p})`; });
+  const J = [22.7, 23.4, 24.1, 24.8];
+  let idx = 0;
+  while (idx < 3 && t >= J[idx + 1]) idx++;
+  const from = STEP[idx], to = STEP[Math.min(3, idx + 1)];
+  const u = idx < 3 ? easeIO(prog(t, J[idx + 1] - .45, J[idx + 1])) : 0;
+  const cur = u > 0 && idx < 3 ? [from.cx + (to.cx - from.cx) * u, from.top - 22 + (to.top - from.top) * u - 70 * Math.sin(Math.PI * u)] : [from.cx, from.top - 22];
+  const dp = ia(t, 22.5, .3);
+  hDot.setAttribute("cx", cur[0]); hDot.setAttribute("cy", cur[1]); hDot.style.opacity = dp;
+  hRing.setAttribute("cx", cur[0]); hRing.setAttribute("cy", cur[1]);
+  hRing.setAttribute("r", 30 + 120 * pulse); hRing.style.opacity = pulse > 0 ? (1 - pulse) * .9 : 0;
+}
+function drawI(t) {
+  put(E("iDig"), { o: ia(t, 27.2, .5), s: .9 + .1 * ia(t, 27.2, .5) });
+  const sw = easeIO(prog(t, 27.4, 28.5));
+  hourH.style.transform = `rotate(${335.5 * sw}deg)`;
+  minH.style.transform = `rotate(${(66 + 360 * (1 - sw)) % 360 * 1}deg)`;
+  const k1 = ia(t, 28.4, .5), k2 = ia(t, 29.0, .5);
+  [[sp1, S1, k1, 0], [sp2, S2, k2, 1.3]].forEach(([n, p, k, ph]) => {
+    n.setAttribute("transform", `translate(${p[0]} ${p[1]}) scale(${(.4 + .6 * k) * (.9 + .12 * Math.sin(t * 6 + ph))}) rotate(${t * 30})`);
+    n.style.opacity = k;
+  });
+}
+function drawJ(t) {
+  const m = ia(t, 30.75, .6);
+  put(E("jMark"), { o: m, s: (.8 + .2 * m) * (1 + .03 * Math.sin(t * 2)) });
+  put(E("jQ"), { o: ia(t, 31.0, .5), y: (1 - ia(t, 31.0, .5)) * 24 });
+  put(E("jUrl"), { o: ia(t, 32.2, .5), s: .9 + .1 * ia(t, 32.2, .5) });
+  put(E("jIg"), { o: ia(t, 33.0, .5) });
+  put(E("jDis"), { o: ia(t, 35.1, .5) });
+}
+
+const SCENES = [
+  { id: "sA", a: 0, b: 3.2, f: .35, g: 1, d: drawA },
+  { id: "sB", a: 3.1, b: 6.0, f: .35, v: 1, d: drawB },
+  { id: "sC", a: 5.9, b: 10.2, f: .35, v: 1, d: drawC },
+  { id: "sD", a: 10.1, b: 12.2, f: .3, g: 1, d: drawD },
+  { id: "sE", a: 12.1, b: 16.4, f: .3, g: 1, d: drawE },
+  { id: "sF", a: 16.2, b: 17.1, f: .15, g: 1, d: drawF },
+  { id: "sG", a: 16.9, b: 19.4, f: .3, g: 1, d: drawG },
+  { id: "sH", a: 19.2, b: 27.3, f: .4, g: 1, d: drawH },
+  { id: "sI", a: 27.1, b: 30.8, f: .4, v: 1, d: drawI },
+  { id: "sJ", a: 30.6, b: DUR + 5, f: .4, g: 1, d: drawJ },
+];
+SCENES.forEach((s) => (s.el = E(s.id)));
+
+window.RENDER = function (t) {
+  E("cam").style.transform = `scale(${1 + .05 * (t / DUR)}) translateY(${-8 * (t / DUR)}px)`;
+  STARS.forEach((s) => {
+    const y = ((s.y - s.v * t) % 1920 + 1920) % 1920;
+    s.d.style.transform = `translate(${s.x}px,${y}px)`;
+    s.d.style.opacity = s.b * (.55 + .45 * Math.sin(t * s.sp + s.ph));
+  });
+  let wg = 0, wv = 0;
+  SCENES.forEach((s) => {
+    const w = clamp(win(t, s.a, s.b, s.f));
+    if (w <= .001) { s.el.style.visibility = "hidden"; return; }
+    s.el.style.visibility = "visible";
+    s.el.style.opacity = w;
+    s.el.style.transform = `translateY(${(1 - w) * 26}px)`;
+    if (s.g) wg += w; if (s.v) wv += w;
+    s.d(t);
+  });
+  E("glowG").style.opacity = clamp(wg) * (.85 + .15 * Math.sin(t * 1.4));
+  E("glowV").style.opacity = clamp(wv) * (.85 + .15 * Math.sin(t * 1.4 + 1));
+  CAPS.forEach((c) => {
+    const v = clamp(Math.min(prog(t, c.a, c.a + .12), 1 - prog(t, c.b - .1, c.b)));
+    if (v <= .001) { if (c.state !== "off") { c.div.style.opacity = 0; c.state = "off"; } return; }
+    c.state = "on";
+    c.div.style.opacity = v;
+    c.div.style.transform = `translateY(${(1 - v) * 14}px)`;
+    const p = clamp((t - c.s.start) / (c.hEnd - c.s.start));
+    c.spans.forEach((sp, i) => {
+      const [a, b] = c.bounds[i];
+      sp.className = "w " + (p >= b ? "p" : p >= a ? "c" : "");
+    });
+  });
+};
+window.RENDER(0);
+</script>
+</body>
+</html>
